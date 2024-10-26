@@ -78,6 +78,16 @@
 	justify-content: space-between;
 }
 
+.boton-reserva {
+    min-width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.boton-reserva .button {
+	width: fit-content;
+}
+
 /* -------------------- END PROPIOS --------------------  */
 
 .ie-panel{
@@ -4633,6 +4643,7 @@ h3 + .team-member-position {
 	vertical-align: middle;
 	margin-right: 15px;
 }
+
 
 @media (min-width: 992px) {
 	.contact-box {

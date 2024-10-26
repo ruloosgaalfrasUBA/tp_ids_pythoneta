@@ -16,8 +16,3 @@ def hoteles():
 @app.route("/reservas")
 def reservas():
     return render_template("reservas.html")
-
-
-@app.route("/contacto")
-def contacto():
-    return render_template("contacto.html")

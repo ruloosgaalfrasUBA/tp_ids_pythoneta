@@ -16,7 +16,6 @@ var userAgent = navigator.userAgent.toLowerCase(),
 		isTouch = "ontouchstart" in window,
 		onloadCaptchaCallback,
 		plugins = {
-			pointerEvents: isIE < 11 ? "js/pointer-events.min.js" : false,
 			bootstrapTooltip: $("[data-toggle='tooltip']"),
 			bootstrapModalDialog: $('.modal'),
 			bootstrapTabs: $(".tabs-custom-init"),
@@ -598,19 +597,19 @@ $(function () {
 		var regularConstraintsMessages = [
 			{
 				type: regula.Constraint.Required,
-				newMessage: "The text field is required."
+				newMessage: "El campo es requerido."
 			},
 			{
 				type: regula.Constraint.Email,
-				newMessage: "The email is not a valid email."
+				newMessage: "No es una email válido."
 			},
 			{
 				type: regula.Constraint.Numeric,
-				newMessage: "Only numbers are required"
+				newMessage: "Solo números son requeridos."
 			},
 			{
 				type: regula.Constraint.Selected,
-				newMessage: "Please choose an option."
+				newMessage: "Por favor selecciona una opción."
 			}
 		];
 
@@ -1515,12 +1514,12 @@ $(function () {
 			}
 		}
 	}
-	
 
 	/**
 	 * Bootstrap Date time picker
 	 */
 	if (plugins.bootstrapDateTimePicker.length) {
+
 		var i;
 		for (i = 0; i < plugins.bootstrapDateTimePicker.length; i++) {
 			var $dateTimePicker = $(plugins.bootstrapDateTimePicker[i]);
@@ -1537,6 +1536,22 @@ $(function () {
 			options["time"] = ($dateTimePicker.attr("data-time-picker") != "date");
 			options["date"] = ($dateTimePicker.attr("data-time-picker") != "time");
 			options["shortTime"] = true;
+
+			options["lang"] = 'es'
+			options["locale"] = 'es'
+			options["regional"] = 'es'
+			options["cancelText"] = 'Cancelar'
+			options["okText"] = 'Aceptar'
+			options["clearText"] = 'Limpiar'
+
+			moment.locale('es', {
+				months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+				monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+				weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sábado'.split('_'),
+				weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
+				weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+			  }
+			  );
 
 			$dateTimePicker.bootstrapMaterialDatePicker(options);
 		}
