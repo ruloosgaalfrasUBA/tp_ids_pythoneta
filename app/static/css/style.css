@@ -66,10 +66,19 @@
 *     6.2 MDI
 **/
 /*
+
 *
 * Main Styles
 * ==================================================
 */
+
+/* -------------------- PROPIOS --------------------  */
+
+.base-footer {
+	justify-content: space-between;
+}
+
+/* -------------------- END PROPIOS --------------------  */
 
 .ie-panel{
 	display: none;
