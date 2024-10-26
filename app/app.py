@@ -16,3 +16,6 @@ def hoteles():
 @app.route("/reservas")
 def reservas():
     return render_template("reservas.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
