@@ -1,0 +1,83 @@
+<!-- Breadcrumbs & Page title-->
+{% extends 'base.html' %} 
+{%block title%} Nuestros Hoteles {%endblock title%}
+{%block content%}
+<section class="section-md text-center bg-image breadcrumbs-01">
+  <div class="shell shell-fluid">
+    <div class="range range-xs-center">
+      <div class="cell-xs-12 cell-xl-11">
+        <h2 class="text-white">Hoteles</h2>
+        <ul class="breadcrumbs-custom">
+          <li><a href="{{url_for('index')}}">Inicio</a></li>
+          <li class="active">Hoteles</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section section-md">
+  <div class="shell">
+    <h3>Hoteles & Resorts</h3>
+    <p>
+      Royal Villas ofrece las mejores acomodaciones con diseños únicos que brindan un ambiente tanto lujoso como relajante.<br />
+      Las telas y acabados especialmente seleccionados varían de una habitación a otra, ofreciendo a los huéspedes una variedad de atmósferas hermosas y únicas para elegir.
+    </p>
+    <div class="range range-30" data-lightgallery="group">
+      <div class="cell-sm-6 cell-md-4">
+        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-1-1200x800_original.jpg')}}" data-lightgallery="item">
+          <figure><img src="{{url_for('static', filename='images/grid-gallery-1-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+          <div class="caption">
+            <p class="caption-title">Single Room</p>
+            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+          </div></a
+        >
+      </div>
+      <div class="cell-sm-6 cell-md-4">
+        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-2-1200x800_original.jpg')}}" data-lightgallery="item">
+          <figure><img src="{{url_for('static', filename='images/grid-gallery-2-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+          <div class="caption">
+            <p class="caption-title">Double Room</p>
+            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+          </div></a
+        >
+      </div>
+      <div class="cell-sm-6 cell-md-4">
+        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-3-1058x800_original.jpg')}}" data-lightgallery="item">
+          <figure><img src="{{url_for('static', filename='images/grid-gallery-3-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+          <div class="caption">
+            <p class="caption-title">Twin Room</p>
+            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+          </div></a
+        >
+      </div>
+      <div class="cell-sm-6 cell-md-4">
+        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-4-1200x797_original.jpg')}}" data-lightgallery="item">
+          <figure><img src="{{url_for('static', filename='images/grid-gallery-4-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+          <div class="caption">
+            <p class="caption-title">Family Room</p>
+            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+          </div></a
+        >
+      </div>
+      <div class="cell-sm-6 cell-md-4">
+        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-5-1200x800_original.jpg')}}" data-lightgallery="item">
+          <figure><img src="{{url_for('static', filename='images/grid-gallery-5-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+          <div class="caption">
+            <p class="caption-title">Executive Suite</p>
+            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+          </div></a
+        >
+      </div>
+      <div class="cell-sm-6 cell-md-4">
+        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-6-1200x800_original.jpg')}}" data-lightgallery="item">
+          <figure><img src="{{url_for('static', filename='images/grid-gallery-6-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+          <div class="caption">
+            <p class="caption-title">VIP Suite</p>
+            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+          </div></a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+{%endblock content%}
