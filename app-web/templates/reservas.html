@@ -3,7 +3,7 @@
 {% extends 'base.html' %} 
 {%block title%} Reservas {%endblock title%}
 {%block content%}
-<section class="section-md text-center bg-image breadcrumbs-01">
+<section class="section-md text-center bg-image breadcrumbs-02">
   <div class="shell shell-fluid">
     <div class="range range-xs-center">
       <div class="cell-xs-12 cell-xl-11">
@@ -23,19 +23,19 @@
       <div class="cell-sm-8">
         <div class="contact-box">
           <h3>Consultá tu reserva</h3>
-          <p>En Royal Villa estamos disponible 24/7 para vos. <br>Visualizá tus reservas por nuestra página web o por nuestra aplicación android completando los siguientes datos.</p>
+          <p>En Flask Seasons estamos disponible todos los días para vos. <br>Visualizá tus reservas por nuestra página web o por nuestra aplicación completando los siguientes datos.</p>
           <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
             <div class="range range-sm-bottom spacing-20">
               <div class="cell-sm-6">
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-first-name" type="text" name="name" data-constraints="@Required" autocomplete="on" />
-                  <label class="form-label" for="contact-first-name">Nombre Completo</label>
+                  <input class="form-input" id="contact-first-name" type="text" name="name" data-constraints="@Numeric @Required" autocomplete="on" />
+                  <label class="form-label" for="contact-first-name">Documento de identidad</label>
                 </div>
               </div>
               <div class="cell-sm-6">
                 <div class="form-wrap">
                   <input class="form-input" id="contact-last-name" type="text" name="phone" data-constraints="@Numeric @Required" autocomplete="on" />
-                  <label class="form-label" for="contact-last-name">Número de Reserva</label>
+                  <label class="form-label" for="contact-last-name">Número de reserva</label>
                 </div>
               </div>
               <div class="cell-sm-6">

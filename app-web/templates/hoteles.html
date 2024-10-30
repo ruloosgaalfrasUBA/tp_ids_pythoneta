@@ -1,7 +1,5 @@
 <!-- Breadcrumbs & Page title-->
-{% extends 'base.html' %} 
-{%block title%} Nuestros Hoteles {%endblock title%}
-{%block content%}
+{% extends 'base.html' %} {%block title%} Nuestros Hoteles {%endblock title%} {%block content%}
 <section class="section-md text-center bg-image breadcrumbs-01">
   <div class="shell shell-fluid">
     <div class="range range-xs-center">
@@ -17,63 +15,63 @@
 </section>
 <section class="section section-md">
   <div class="shell">
-    <h3>Hoteles & Resorts</h3>
+    <h3>Nuestros hoteles</h3>
     <p>
-      Royal Villas ofrece las mejores acomodaciones con diseños únicos que brindan un ambiente tanto lujoso como relajante.<br />
+      Flask Seasons ofrece las mejores acomodaciones con diseños únicos que brindan un ambiente tanto lujoso como relajante.<br />
       Las telas y acabados especialmente seleccionados varían de una habitación a otra, ofreciendo a los huéspedes una variedad de atmósferas hermosas y únicas para elegir.
     </p>
     <div class="range range-30" data-lightgallery="group">
       <div class="cell-sm-6 cell-md-4">
-        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-1-1200x800_original.jpg')}}" data-lightgallery="item">
-          <figure><img src="{{url_for('static', filename='images/grid-gallery-1-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+        <a class="thumbnail-classic" href="#">
+          <figure><img src="{{url_for('static', filename='images/hotel-1.jpg')}}" alt="" width="370" height="276" /></figure>
           <div class="caption">
-            <p class="caption-title">Single Room</p>
-            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+            <p class="caption-title">Flask Seasons<span>Bariloche Lagos Andinos</span></p>
+            <p class="caption-text">Toque para ver la disponibilidad</p>
           </div></a
         >
       </div>
       <div class="cell-sm-6 cell-md-4">
-        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-2-1200x800_original.jpg')}}" data-lightgallery="item">
-          <figure><img src="{{url_for('static', filename='images/grid-gallery-2-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+        <a class="thumbnail-classic" href="#">
+          <figure><img src="{{url_for('static', filename='images/hotel-2.jpg')}}" alt="" width="370" height="276" /></figure>
           <div class="caption">
-            <p class="caption-title">Double Room</p>
-            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+            <p class="caption-title">Flask Seasons<span>Mar del Plata Buenos Aires</span></p>
+            <p class="caption-text">Toque para ver la disponibilidad</p>
           </div></a
         >
       </div>
       <div class="cell-sm-6 cell-md-4">
-        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-3-1058x800_original.jpg')}}" data-lightgallery="item">
-          <figure><img src="{{url_for('static', filename='images/grid-gallery-3-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+        <a class="thumbnail-classic" href="#">
+          <figure><img src="{{url_for('static', filename='images/hotel-3.jpg')}}" alt="" width="370" height="276" /></figure>
           <div class="caption">
-            <p class="caption-title">Twin Room</p>
-            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+            <p class="caption-title">Flask Seasons<span>Cerro Siete Colores Jujuy</span></p>
+            <p class="caption-text">Toque para ver la disponibilidad</p>
           </div></a
         >
       </div>
       <div class="cell-sm-6 cell-md-4">
-        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-4-1200x797_original.jpg')}}" data-lightgallery="item">
-          <figure><img src="{{url_for('static', filename='images/grid-gallery-4-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+        <a class="thumbnail-classic" href="#">
+          <figure><img src="{{url_for('static', filename='images/hotel-4.jpg')}}" alt="" width="370" height="276" /></figure>
           <div class="caption">
-            <p class="caption-title">Family Room</p>
-            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+            <p class="caption-title">Flask Seasons<span>Selva Misionera Posadas</span></p>
+            <p class="caption-text">Toque para ver la disponibilidad</p>
           </div></a
         >
       </div>
       <div class="cell-sm-6 cell-md-4">
-        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-5-1200x800_original.jpg')}}" data-lightgallery="item">
-          <figure><img src="{{url_for('static', filename='images/grid-gallery-5-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+        <a class="thumbnail-classic" href="#">
+          <figure><img src="{{url_for('static', filename='images/hotel-5.jpg')}}" alt="" width="370" height="276" /></figure>
           <div class="caption">
-            <p class="caption-title">Executive Suite</p>
-            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+            <p class="caption-title">Flask Seasons<span>Valle de la Luna San Juan</span></p>
+            <p class="caption-text">Toque para ver la disponibilidad</p>
           </div></a
         >
       </div>
       <div class="cell-sm-6 cell-md-4">
-        <a class="thumbnail-classic" href="{{url_for('static', filename='images/grid-gallery-6-1200x800_original.jpg')}}" data-lightgallery="item">
-          <figure><img src="{{url_for('static', filename='images/grid-gallery-6-370x276.jpg')}}" alt="" width="370" height="276" /></figure>
+        <a class="thumbnail-classic" href="#">
+          <figure><img src="{{url_for('static', filename='images/hotel-6.jpg')}}" alt="" width="370" height="276" /></figure>
           <div class="caption">
-            <p class="caption-title">VIP Suite</p>
-            <p class="caption-text">Each room has its own unique décor and arrangement.</p>
+            <p class="caption-title">Flask Seasons<span>Cerro Fitz Roy El Chaltén</span></p>
+            <p class="caption-text">Toque para ver la disponibilidad</p>
           </div></a
         >
       </div>

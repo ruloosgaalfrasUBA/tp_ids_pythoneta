@@ -88,6 +88,11 @@
 	width: fit-content;
 }
 
+.thumbnail-classic .caption-title span {
+	display: block;
+	font-size: 18px;
+}
+
 /* -------------------- END PROPIOS --------------------  */
 
 .ie-panel{
@@ -3100,8 +3105,8 @@ dl {
 
 .thumbnail-classic .caption-title {
 	position: relative;
-	font-size: 18px;
-	line-height: 1.25;
+	font-size: 14px;
+	line-height: 1.5;
 	margin-bottom: 0;
 	padding: 0 15px;
 }
