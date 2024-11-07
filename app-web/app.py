@@ -18,6 +18,10 @@ def reservas():
     if request.method == 'POST':
         print(request.form)
     return render_template("reservas.html")
+    
+@app.route("/disponibilidad")
+def disponibilidad():
+    return render_template("disponibilidad.html")
 
 
 
