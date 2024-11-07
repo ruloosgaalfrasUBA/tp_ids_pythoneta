@@ -1518,6 +1518,7 @@ $(function () {
 	/**
 	 * Bootstrap Date time picker
 	 */
+
 	if (plugins.bootstrapDateTimePicker.length) {
 
 		var i;
@@ -1529,13 +1530,11 @@ $(function () {
 			if ($dateTimePicker.attr("data-time-picker") == "date") {
 				options['format'] = 'dddd DD MMMM YYYY';
 				options['minDate'] = new Date();
-			} else if ($dateTimePicker.attr("data-time-picker") == "time") {
-				options['format'] = 'HH:mm';
+			} else if ($dateTimePicker.attr("data-time-picker") == "date-no-limit") {
+				options['format'] = 'YYYY-MM-DD';
 			}
 
-			options["time"] = ($dateTimePicker.attr("data-time-picker") != "date");
-			options["date"] = ($dateTimePicker.attr("data-time-picker") != "time");
-			options["shortTime"] = true;
+			options["time"] = false
 
 			options["lang"] = 'es'
 			options["locale"] = 'es'
