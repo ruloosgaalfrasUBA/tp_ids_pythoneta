@@ -1,0 +1,46 @@
+{% extends 'base.html' %} 
+{%block title%} Hoteles {%endblock title%} 
+
+{%block content%}
+<section class="section section-md bg-white text-center">
+
+            <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
+              <div class="range range-sm-bottom spacing-20">
+                <div>
+                <p class="text-uppercase">Elegi el hotel </p>
+                <div class="cell-sm-6">
+                  <div class="form-wrap">
+                    <label  for="options" id="contact-first-name" ></labe l>
+                    <select id="option"> 
+                    <option value="hotel-1">Lagos Andinos</option>
+                    <option value="hotel-2">Mar del Plata s</option>
+                    <option value="hotel-3">Cerro Siete Colores</option>
+                    <option value="hotel-4">Selva Misionera </option>
+                    <option value="hotel-5">Valle de la Luna </option>
+                    <option value="hotel-6">Cerro Fitz Roy </option>
+                </select>
+                  </div>
+                </div>
+            </div>
+           
+                <div class="cell-sm-6">
+                  <p class="text-uppercase">Entrada</p>
+                  <div class="form-wrap">
+                    <label class="form-label form-label-icon" for="date-in-reserve"><span class="icon icon-primary fa-calendar "></span><span>Fecha de entrada</span></label>
+                    <input class="form-input" id="date-in-reserve" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
+                  </div>
+                </div>
+                <div class="cell-sm-6">
+                  <p class="text-uppercase">Salida</p>
+                  <div class="form-wrap">
+                    <label class="form-label form-label-icon" for="date-out-reserve"><span class="icon icon-primary fa-calendar"></span><span>Fecha de salida</span></label>
+                    <input class="form-input" id="date-out-reserve" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
+                  </div>
+                </div>
+                <div class="cell-sm-6 boton-reserva">
+                  <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
+                </div>
+              </div>
+            </form>
+        </section>
+{%endblock content%}
