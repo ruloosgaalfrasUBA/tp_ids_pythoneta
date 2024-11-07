@@ -93,6 +93,21 @@
 	font-size: 18px;
 }
 
+.form-reserva {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+}
+
+.form-reserva .cell-form {
+	width: 100% !important;
+}
+
+.label-form-reserva {
+	margin-bottom: 5px;
+	color: #363d41;
+}
+
 /* -------------------- END PROPIOS --------------------  */
 
 .ie-panel{

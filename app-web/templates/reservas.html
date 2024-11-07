@@ -24,35 +24,23 @@
         <div class="contact-box">
           <h3>Consultá tu reserva</h3>
           <p>En Flask Seasons estamos disponible todos los días para vos. <br>Visualizá tus reservas por nuestra página web o por nuestra aplicación completando los siguientes datos.</p>
-          <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
-            <div class="range range-sm-bottom spacing-20">
-              <div class="cell-sm-6">
+          <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{url_for('reservas')}}">
+            <div class="range range-sm-bottom spacing-20 form-reserva">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form ">
+                <p class="label-form-reserva">Documento de identidad</p>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-first-name" type="text" name="name" data-constraints="@Numeric @Required" autocomplete="on" />
-                  <label class="form-label" for="contact-first-name">Documento de identidad</label>
+                  <input class="form-input" id="identity-document" type="text" name="dni" data-constraints="@Numeric @Required" autocomplete="on" />
+                  <label class="form-label" for="identity-document">Número</label>
                 </div>
               </div>
-              <div class="cell-sm-6">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
+                <p class="label-form-reserva">Número de reserva</p>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-last-name" type="text" name="phone" data-constraints="@Numeric @Required" autocomplete="on" />
-                  <label class="form-label" for="contact-last-name">Número de reserva</label>
+                  <input class="form-input" id="booking-number" type="text" name="booking_number" data-constraints="@Numeric @Required" autocomplete="on" />
+                  <label class="form-label" for="booking-number">Número</label>
                 </div>
               </div>
-              <div class="cell-sm-6">
-                <p class="text-uppercase">Entrada</p>
-                <div class="form-wrap">
-                  <label class="form-label form-label-icon" for="date-in-reserve"><span class="icon icon-primary fa-calendar "></span><span>Fecha de entrada</span></label>
-                  <input class="form-input" id="date-in-reserve" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
-                </div>
-              </div>
-              <div class="cell-sm-6">
-                <p class="text-uppercase">Salida</p>
-                <div class="form-wrap">
-                  <label class="form-label form-label-icon" for="date-out-reserve"><span class="icon icon-primary fa-calendar"></span><span>Fecha de salida</span></label>
-                  <input class="form-input" id="date-out-reserve" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
-                </div>
-              </div>
-              <div class="cell-sm-6 boton-reserva">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-reserva">
                 <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
               </div>
             </div>
