@@ -24,7 +24,7 @@
         <div class="contact-box">
           <h3>Consultá tu reserva</h3>
           <p>En Flask Seasons estamos disponible todos los días para vos. <br>Visualizá tus reservas por nuestra página web o por nuestra aplicación completando los siguientes datos.</p>
-          <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{url_for('reservas')}}">
+          <form class="rd-mailform" method="post" action="{{url_for('reservas')}}">
             <div class="range range-sm-bottom spacing-20 form-reserva">
               <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form ">
                 <p class="label-form-reserva">Documento de identidad</p>
@@ -40,7 +40,8 @@
                   <label class="form-label" for="booking-number">Número</label>
                 </div>
               </div>
-              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-reserva">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva">
+                {% include 'error.html' %}
                 <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
               </div>
             </div>
@@ -90,5 +91,11 @@
     </div>
   </div>
 </section>
+
+{% if error %}
+<script>
+  document.querySelector('.text-error-message').scrollIntoView();
+</script>
+{% endif %}
 
 {%endblock content%}

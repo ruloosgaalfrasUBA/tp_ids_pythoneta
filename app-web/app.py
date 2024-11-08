@@ -13,12 +13,15 @@ def hoteles():
     return render_template("hoteles.html")
 
 
-@app.route("/reservas", methods=['GET', 'POST'])
+@app.route("/reservas", methods=["GET", "POST"])
 def reservas():
-    if request.method == 'POST':
-        print(request.form)
-    return render_template("reservas.html")
+    if request.method == "POST":
+        #  Llamada a la api y cosas del back...
+        error = "La reserva no existe. Verificar los datos ingresados."  # Para probar.
+        if error:
+            return render_template("reservas.html", error=error)
 
+    return render_template("reservas.html")
 
 
 if __name__ == "__main__":
