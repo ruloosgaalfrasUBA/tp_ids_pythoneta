@@ -20,7 +20,7 @@ def index():
 @app.route('/api/servicios', methods=['GET'])
 def obtener_servicios():
     try:
-        result = hotel.all_servicios()
+        result = hotel.obtener_todos_los_servicios()
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
@@ -41,7 +41,7 @@ def agregar_servicio_a_reserva():
             return jsonify({'error': f'Falta el dato {key}'}), 400
         
     try:
-        result = hotel.buscar_servicios_contratados_por_id(data['id'])
+        result = hotel.buscar_servicios_contratados_por_id(data['id_servicio'])
         if len(result)>0:
             return jsonify({'error': 'El servicio ya fue contratado anteriormente'}), 400
         
