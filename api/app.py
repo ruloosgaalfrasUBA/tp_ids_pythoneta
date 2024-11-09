@@ -17,7 +17,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/servicios', methods=['GET'])
+@app.route('/api/servicios', methods=['GET'])
 def obtener_servicios():
     try:
         result = hotel.all_servicios()
@@ -31,7 +31,7 @@ def obtener_servicios():
     return jsonify(response), 200
 
 
-@app.route('/servicios/contratar-servicio', methods=['POST'])
+@app.route('/api/servicios/contratar-servicio', methods=['POST'])
 def agregar_servicio_a_reserva():
     data = request.get_json()
 
@@ -53,7 +53,7 @@ def agregar_servicio_a_reserva():
     return jsonify(data), 201
 
 
-@app.route('/servicios/cancelar-servicio', methods=['POST'])
+@app.route('/api/servicios/cancelar-servicio', methods=['POST'])
 def quitar_servicio_de_reserva():
     data = request.get_json()
 
@@ -76,4 +76,4 @@ def quitar_servicio_de_reserva():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port="5000", debug=True)

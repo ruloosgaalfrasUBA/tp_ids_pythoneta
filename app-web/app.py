@@ -3,6 +3,8 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
+API_URL = 'http://localhost:5000/api/'
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -25,4 +27,4 @@ def reservas():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port="5001", debug=True)

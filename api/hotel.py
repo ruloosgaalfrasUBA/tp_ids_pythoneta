@@ -8,7 +8,7 @@ engine = create_engine("mysql://root:root@localhost:(puerto en el que esta la ba
 
 QUERY_TODOS_LOS_SERVICIOS = "SELECT * FROM servicio"
 
-QUERY_BUSCAR_SERVICIOS_CONTRATADOS_POR_ID = "SELECT * FROM alumnos WHERE id = :id"
+QUERY_BUSCAR_SERVICIOS_CONTRATADOS_POR_ID = "SELECT * FROM reserva_servicio WHERE id = :id"
 
 QUERY_CONTRATAR_SERVICIO = "INSERT INTO reserva_servicio (numero_reserva, id_servicio) VALUES (:numero_reserva, :id_servicio)"
 
