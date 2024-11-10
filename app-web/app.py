@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import requests
 
 app = Flask(__name__)
 
@@ -24,6 +25,21 @@ def reservas():
             return render_template("reservas.html", error=error)
 
     return render_template("reservas.html")
+
+
+
+@app.route("/todos-los-servicios")
+def todos_los_servicios():
+    try:
+        response = requests.get(API_URL+'servicios')
+        response.raise_for_status()
+        servicios = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        servicios = []
+
+    return render_template('pruebasServicio.html', servicios=servicios)
+
 
 
 if __name__ == "__main__":

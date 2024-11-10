@@ -27,7 +27,7 @@ def obtener_servicios():
     response = []
     for row in result:
         response.append({'id': row[0], 'nombre': row[1], 'descripcion': row[2]})
-    
+
     return jsonify(response), 200
 
 
