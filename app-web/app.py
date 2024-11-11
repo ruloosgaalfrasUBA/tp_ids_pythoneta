@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request
+import requests
 
 app = Flask(__name__)
+
+
+API_URI = "http://localhost:5001/api/v1"
 
 
 @app.route("/")
@@ -16,10 +20,15 @@ def hoteles():
 @app.route("/reservas", methods=["GET", "POST"])
 def reservas():
     if request.method == "POST":
-        #  Llamada a la api y cosas del back...
-        error = "La reserva no existe. Verificar los datos ingresados."  # Para probar.
-        if error:
-            return render_template("reservas.html", error=error)
+        nro_reserva = request.form.get("numero_reserva")
+        print(nro_reserva)
+        try:
+            response = requests.get(API_URI + f"/reservas/{nro_reserva}")
+            response.raise_for_status()
+            data = response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching data: {e}")
+            data = []
 
     return render_template("reservas.html")
 
