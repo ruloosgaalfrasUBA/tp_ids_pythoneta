@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-
+import json
 import hoteles
 
 app = Flask(__name__)
@@ -17,6 +17,26 @@ def get_all_hoteles():
 
     return jsonify(response), 200
 
+@app.route('/api/v1/hoteles/inicio$<inicio>/fin$<fin>', methods=['GET'])
+def get_all_hoteles_fecha_reserva(inicio, fin):
+    try:
+        indice = 0
+        result = hoteles.hotel_reservado(inicio, fin)
+        hotel = hoteles.all_hoteles()
+        for i in hotel:
+            for j in result:
+                if j[0] == i[0]:
+                    del hotel[indice]
+            indice += 1
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    response = []
+    for row in hotel:
+        response.append({'id_hotel': row[0], 'nombre': row[1], 'descripcion': row[2], 'provincia': row[3], 'estrellas': row[4]})
+
+
+    return jsonify(response), 200
 
 @app.route('/api/v1/hoteles/<int:id_hotel>', methods=['GET'])
 def get_by_id_hotel(id_hotel):
