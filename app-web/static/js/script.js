@@ -56,6 +56,7 @@ var userAgent = navigator.userAgent.toLowerCase(),
     maps: $(".google-map-container"),
   };
 
+  
 /**
  * @desc Check the element was been scrolled into the view
  * @param {object} elem - jQuery object
@@ -1690,16 +1691,11 @@ $(
         var $dateTimePicker = $(plugins.bootstrapDateTimePicker[i]);
         var options = {};
 
-        options["format"] = "dddd DD MMMM YYYY - HH:mm";
+        options["format"] = "YYYY-MM-DD";
         if ($dateTimePicker.attr("data-time-picker") == "date") {
-          options["format"] = "dddd DD MMMM YYYY";
           options["minDate"] = new Date();
-        } else if (
-          $dateTimePicker.attr("data-time-picker") == "date-no-limit"
-        ) {
-          options["format"] = "YYYY-MM-DD";
         }
-
+        
         options["time"] = false;
 
         options["lang"] = "es";

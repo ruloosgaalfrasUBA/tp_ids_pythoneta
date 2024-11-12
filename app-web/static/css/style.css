@@ -83,6 +83,7 @@
     display: flex;
 	align-items: flex-start;
     justify-content: space-between;
+	column-gap: 1rem;
 }
 
 .boton-container-reserva::before {
@@ -92,6 +93,15 @@
 .boton-container-reserva .button {
 	width: fit-content;
 	margin-top: 0;
+}
+
+.boton-container-reserva .button span {
+	display: block;
+	width: 100%;
+}
+
+.black-grey {
+	color: #363d41 !important;
 }
 
 .container-error-message {
@@ -121,13 +131,6 @@
 .form-reserva .cell-form {
 	width: 100% !important;
 }
-
-.label-form-reserva {
-	margin-bottom: 5px;
-	color: #363d41;
-}
-
-
 
 /* -------------------- END PROPIOS --------------------  */
 

@@ -21,16 +21,37 @@ def hoteles():
 def reservas():
     if request.method == "POST":
         nro_reserva = request.form.get("numero_reserva")
-        print(nro_reserva)
+        dni = request.form.get("dni")
+
+        if not nro_reserva or not dni:
+            return render_template("reservas.html", error="Complete los datos requeridos.")
+
         try:
-            response = requests.get(API_URI + f"/reservas/{nro_reserva}")
-            response.raise_for_status()
-            data = response.json()
+            respuesta = requests.get(API_URI + f"/reservas/{nro_reserva}")
+            respuesta.raise_for_status()
+            datos = respuesta.json()
+
+            for reserva in datos:
+                error = reserva.get("error")
+                if error:
+                    return render_template("reservas.html", error=error)
+                return render_template("reservas.html", reserva=reserva)
+
         except requests.exceptions.RequestException as e:
             print(f"Error fetching data: {e}")
-            data = []
+            datos = []
 
     return render_template("reservas.html")
+
+@app.route("/modificar_reserva", methods=["POST"])
+def modificar_reserva():
+    reserva = request.form.to_dict()
+    print(reserva)
+
+@app.route("/cancelar_reserva", methods=["POST"])
+def cancelar_reserva():
+    reserva = request.form.to_dict()
+    print(reserva)
 
 
 if __name__ == "__main__":
