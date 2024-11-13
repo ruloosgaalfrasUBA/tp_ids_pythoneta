@@ -82,7 +82,7 @@
     min-width: 100%;
     display: flex;
 	align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-end;
 	column-gap: 1rem;
 }
 
@@ -132,6 +132,32 @@
 	width: 100% !important;
 }
 
+.button {
+	overflow: visible !important;
+}
+
+.form-fecha-reserva::placeholder {
+	color: #363d41;
+}
+
+.justify-content-between {
+	justify-content: space-between;
+}
+
+.justify-content-end {
+	justify-content: flex-end;
+}
+
+.btn-purple {
+	color: #fff;
+    background-color: #8f859e;
+    border-color: #8f859e;
+}
+
+.btn-purple:hover {
+	color: #fff !important;
+	opacity: 0.5;
+}
 /* -------------------- END PROPIOS --------------------  */
 
 .ie-panel{

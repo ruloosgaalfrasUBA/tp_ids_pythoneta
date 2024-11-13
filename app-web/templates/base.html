@@ -16,6 +16,8 @@
     <!-- Scripts -->
   </head>
   <body>
+    <!-- Modal -->
+    {%include 'components/modal.html '%}
     <!-- Page-->
     <div class="text-center page">
       <!-- Page preloader-->
@@ -116,9 +118,9 @@
                 <div class="rd-navbar-nav-wrap">
                   <div class="rd-navbar-nav-scroll-holder">
                     <ul class="rd-navbar-nav">
-                      <li class="active"><a href="{{url_for('index')}}">Inicio</a></li>
-                      <li><a href="{{url_for('hoteles')}}">Hoteles</a></li>
-                      <li><a href="{{url_for('reservas')}}">Reservas</a></li>
+                      <li class="{{'active' if url_for(request.endpoint) == '/' else ''}}"><a href="{{url_for('index')}}">Inicio</a></li>
+                      <li class="{{'active' if url_for(request.endpoint).startswith('/hoteles') else ''}}"><a href="{{url_for('hoteles')}}">Hoteles</a></li>
+                      <li class="{{'active' if url_for(request.endpoint).startswith('/reservas') else ''}}"><a href="{{url_for('reservas')}}">Reservas</a></li>
                     </ul>
                   </div>
                 </div>
@@ -127,7 +129,7 @@
           </nav>
         </div>
       </header>
-      {%block content%}
+      {%block content%} 
       {%endblock content%}
       <!-- Page Footer-->
       <footer class="page-footer text-left text-sm-left">
@@ -161,9 +163,7 @@
                         </div>
                       </li>
                       <li>
-                        <p class="rights">
-                          <span>&copy;&nbsp;</span><span>2024</span><span>&nbsp;</span><span class="copyright-year"></span>Flask Seasons.
-                        </p>
+                        <p class="rights"><span>&copy;&nbsp;</span><span>2024</span><span>&nbsp;</span><span class="copyright-year"></span>Flask Seasons.</p>
                       </li>
                     </ul>
                   </div>

@@ -1,0 +1,82 @@
+<form class="rd-mailform form-info-reserva" method="post">
+  <input type="hidden" name="reserva" value="{{reserva}}" />
+  <div class="range range-sm-bottom spacing-20">
+    <div class="cell-sm-6 cell-form">
+      <p class="label-form-reserva">Nombre</p>
+      <div class="form-wrap">
+        <p class="form-input">{{reserva.nombre}}</p>
+      </div>
+    </div>
+    <div class="cell-sm-6 cell-form">
+      <p class="label-form-reserva">Apellido</p>
+      <div class="form-wrap">
+        <p class="form-input">{{reserva.apellido}}</p>
+      </div>
+    </div>
+    <div class="cell-sm-6 cell-form">
+      <p class="label-form-reserva">Número de reserva</p>
+      <div class="form-wrap">
+        <p class="form-input">{{reserva.numero_reserva}}</p>
+      </div>
+    </div>
+    <div class="cell-sm-6 cell-form">
+      <p class="label-form-reserva">Documento de identidad</p>
+      <div class="form-wrap">
+        <p class="form-input">{{reserva.dni}}</p>
+      </div>
+    </div>
+    <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
+      <p class="label-form-reserva">Hotel</p>
+      <div class="form-wrap">
+        <p class="form-input">{{reserva.hotel_nombre}}</p>
+      </div>
+    </div>
+    <hr class="divider divider-left divider-custom" />
+    <div class="cell-sm-6">
+      <p class="label-form-reserva black-grey">Fecha de entrada (*)</p>
+      <div class="form-wrap">
+        <label class="form-label form-label-icon" style="opacity: 1 !important" for="inicio_reserva"><span class="icon icon-primary fa-calendar"></span><span class="black-grey"></span></label>
+        <input
+          class="form-input black-grey form-fecha-reserva"
+          id="inicio_reserva"
+          data-time-picker="date"
+          type="text"
+          name="inicio_reserva"
+          data-constraints="@Required"
+          data-fecha-inicio="{{reserva.inicio_reserva}}"
+          role="button"
+          placeholder="{{reserva.inicio_reserva}}"
+          style="padding-left: 5rem"
+        />
+      </div>
+    </div>
+    <div class="cell-sm-6">
+      <p class="label-form-reserva black-grey">Fecha de salida (*)</p>
+      <div class="form-wrap">
+        <label class="form-label form-label-icon" style="opacity: 1 !important" for="fin_reserva"><span class="icon icon-primary fa-calendar"></span><span class="black-grey"></span></label>
+        <input
+          class="form-input black-grey form-fecha-reserva"
+          id="fin_reserva"
+          data-time-picker="date"
+          type="text"
+          name="fin_reserva"
+          data-constraints="@Required"
+          data-fecha-fin="{{reserva.fin_reserva}}"
+          role="button"
+          placeholder="{{reserva.fin_reserva}}"
+          style="padding-left: 5rem"
+        />
+      </div>
+    </div>
+    <p style="font-size: small">*Los cambios de fecha estarán sujetos a disponibilidad del hotel.</p>
+    <hr class="divider divider-left divider-custom" />
+
+    <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva">
+      {% if error %} {% include 'error.html' %} {% endif %}
+      <button class="button button-primary button-square button-block" id="cancelarReserva" type="button" data-toggle="modal" data-target="#myModal"><span>Cancelar</span></button>
+      <button class="button button-primary button-square button-block" id="modificarReserva" type="button" data-toggle="modal" data-target="#myModal"><span>Modificar</span></button>
+    </div>
+  </div>
+</form>
+
+<script src="{{url_for('static', filename='js/reservas.js')}}"></script>

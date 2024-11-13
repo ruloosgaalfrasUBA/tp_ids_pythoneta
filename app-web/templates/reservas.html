@@ -22,108 +22,31 @@
     <div class="range range-50 range-md-center">
       <div class="cell-sm-8">
         <div class="contact-box">
-          <h3>Consultá tu reserva</h3>
+          <h3>Consultá o modificá<br>tu reserva</h3>
           <p>En Flask Seasons estamos disponible todos los días para vos. <br />Visualizá tus reservas por nuestra página web o por nuestra aplicación completando los siguientes datos.</p>
           {%if reserva %}
-          <form class="rd-mailform form-info-reserva" method="post">
-            <input type="hidden" name="reserva" value="{{reserva}}" />
-            <div class="range range-sm-bottom spacing-20">
-              <div class="cell-sm-6 cell-form">
-                <p class="label-form-reserva">Nombre</p>
-                <div class="form-wrap">
-                  <p class="form-input">{{reserva.nombre}}</p>
-                </div>
-              </div>
-              <div class="cell-sm-6 cell-form">
-                <p class="label-form-reserva">Apellido</p>
-                <div class="form-wrap">
-                  <p class="form-input">{{reserva.apellido}}</p>
-                </div>
-              </div>
-              <div class="cell-sm-6 cell-form">
-                <p class="label-form-reserva">Número de reserva</p>
-                <div class="form-wrap">
-                  <p class="form-input">{{reserva.numero_reserva}}</p>
-                </div>
-              </div>
-              <div class="cell-sm-6 cell-form">
-                <p class="label-form-reserva">Documento de identidad</p>
-                <div class="form-wrap">
-                  <p class="form-input">{{reserva.dni}}</p>
-                </div>
-              </div>
-              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
-                <p class="label-form-reserva">Hotel</p>
-                <div class="form-wrap">
-                  <p class="form-input">{{reserva.hotel_nombre}}</p>
-                </div>
-              </div>
-              <hr class="divider divider-left divider-custom" />
-              <div class="cell-sm-6">
-                <p class="label-form-reserva">Fecha de entrada (*)</p>
-                <div class="form-wrap">
-                  <label class="form-label form-label-icon" style="opacity: 1 !important;" for="inicio_reserva"><span class="icon icon-primary fa-calendar" ></span><span class="black-grey"></span></label>
-                  <input
-                    class="form-input black-grey"
-                    id="inicio_reserva"
-                    data-time-picker="date"
-                    type="text"
-                    name="inicio_reserva"
-                    data-constraints="@Required"
-                    role="button"
-                    placeholder="{{reserva.inicio_reserva}}"
-                    style="padding-left: 5rem;"
-                  />
-                  <!-- <p class="form-input fecha">{{reserva.inicio_reserva}}</p> -->
-                </div>
-              </div>
-              <div class="cell-sm-6">
-                <p class="label-form-reserva">Fecha de salida (*)</p>
-                <div class="form-wrap">
-                  <label class="form-label form-label-icon" style="opacity: 1 !important;" for="fin_reserva"><span class="icon icon-primary fa-calendar"></span><span class="black-grey"></span></label>
-                  <input
-                    class="form-input black-grey"
-                    id="fin_reserva"
-                    data-time-picker="date"
-                    type="text"
-                    name="fin_reserva"
-                    data-constraints="@Required"
-                    role="button"
-                    placeholder="{{reserva.fin_reserva}}"
-                    style="padding-left: 5rem;"
-                  />
-                  <!-- <p class="form-input fecha">{{reserva.inicio_reserva}}</p> -->
-                </div>
-              </div>
-              <p style="font-size: small">*Los cambios de fecha estarán sujetos a disponibilidad del hotel.</p>
-              <hr class="divider divider-left divider-custom" />
-
-              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva">
-                {% include 'error.html' %}
-                <button class="button button-primary button-square button-block" formaction="{{url_for('cancelar_reserva')}}" type="submit"><span>Cancelar</span></button>
-                <button class="button button-primary button-square button-block" formaction="{{url_for('modificar_reserva')}}" type="submit"><span>Modificar</span></button>
-              </div>
-            </div>
-          </form>
+            {% include 'components/info_reserva.html' %}
           {% else %}
           <form class="rd-mailform" method="post" action="{{url_for('reservas')}}">
             <div class="range range-sm-bottom spacing-20 form-reserva">
               <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
-                <p class="label-form-reserva">Documento de identidad</p>
+                <p class="label-form-reserva black-grey">Documento de identidad</p>
                 <div class="form-wrap">
                   <input class="form-input" id="identity-document" type="text" name="dni" data-constraints="@Numeric @Required" autocomplete="on" />
                   <label class="form-label" for="identity-document">Número</label>
                 </div>
               </div>
               <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
-                <p class="label-form-reserva">Número de reserva</p>
+                <p class="label-form-reserva black-grey">Número de reserva</p>
                 <div class="form-wrap">
                   <input class="form-input" id="booking-number" type="text" name="numero_reserva" data-constraints="@Numeric @Required" autocomplete="on" />
                   <label class="form-label" for="booking-number">Número</label>
                 </div>
               </div>
-              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva">
-                {% include 'error.html' %}
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error else 'justify-content-end'}}">
+                {% if error %} 
+                  {% include 'components/error.html' %} 
+                {% endif %}
                 <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
               </div>
             </div>
@@ -181,16 +104,12 @@
 <script>
   document.querySelector('.text-error-message').scrollIntoView();
 </script>
-{% endif %} 
+{% endif %}
 
 {% if reserva %}
 <script>
   document.querySelector('.form-info-reserva').scrollIntoView();
-  $('#inicio_reserva').on('change', function (event, date) {
-    $('#fin_reserva').bootstrapMaterialDatePicker('setMinDate', moment(date).format('YYYY-MM-DD'))
-    $('#fin_reserva').bootstrapMaterialDatePicker('setDate', moment(date).format('YYYY-MM-DD'));
-    $('#fin_reserva').val( moment(date).format('YYYY-MM-DD'));
-  });
 </script>
-{% endif %} 
+{% endif %}
+
 {%endblock content%}

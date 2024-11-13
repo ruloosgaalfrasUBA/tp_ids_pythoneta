@@ -46,12 +46,12 @@ def reservas():
 @app.route("/modificar_reserva", methods=["POST"])
 def modificar_reserva():
     reserva = request.form.to_dict()
-    print(reserva)
+    return render_template('reservas.html', error="La reserva se modificó")
 
 @app.route("/cancelar_reserva", methods=["POST"])
 def cancelar_reserva():
     reserva = request.form.to_dict()
-    print(reserva)
+    return render_template('reservas.html', error="La reserva se canceló")
 
 
 if __name__ == "__main__":
