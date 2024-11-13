@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <table>
+  
+        <tr>
+          <th>id servicio</th>
+          <th>numero reserva</th>
+        </tr>
+        <tr>
+        {%for servicio in servicios_contratados %}
+          <td>{{servicio.id_servicio}}</td>
+          <td>{{servicio.numero_reserva}}</td>
+          <td>{{servicio.nombre_servicio}}</td>
+          <td>
+              <a href="{{ url_for('cancelar_servicio',numero_reserva=servicio.numero_reserva, id_servicio= servicio.id_servicio) }}" class="button">
+                  Cancelar servicio
+              </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+
+
+
+
+    
+</body>
+</html>

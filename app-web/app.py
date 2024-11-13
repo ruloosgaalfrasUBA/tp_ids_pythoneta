@@ -40,6 +40,53 @@ def todos_los_servicios():
 
     return render_template('pruebasServicio.html', servicios=servicios)
 
+@app.route("/servicios-contratados/reserva:<numero_reserva>")
+def servicios_contratados(numero_reserva):
+    try:
+        response = requests.get(API_URL+'servicos-por-reserva/'+numero_reserva)
+        response.raise_for_status()
+        servicios_contratados = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        servicios_contratados = []
+    
+    return render_template('pruebaServiciosContratados.html', servicios_contratados=servicios_contratados)
+ 
+
+@app.route('/buscar-servicios', methods=['POST'])
+def buscar_servicios():
+    numero_reserva = request.form['buscar_servicios_reserva']
+    return servicios_contratados(numero_reserva)
+
+
+@app.route('/agregar-servicios', methods=['POST'])
+def agregar_servicios():
+    numero_reserva = request.form['numero_reserva']
+    id_servicio = request.form['id_servicio']
+    return contratar_servicio(numero_reserva, id_servicio)
+
+
+@app.route("/cancelar-servicio/<numero_reserva>/<id_servicio>")
+def cancelar_servicio(numero_reserva, id_servicio):
+
+    try:
+        response = requests.post(API_URL + 'servicios/cancelar-servicio/'+numero_reserva+'/'+id_servicio)
+        response.raise_for_status()
+    except Exception as e:
+        print(f"Error: {e}")
+
+    return servicios_contratados(numero_reserva)
+
+
+@app.route("/contratar-servicio/<numero_reserva>/<id_servicio>")
+def contratar_servicio(numero_reserva, id_servicio):
+    try:
+        response = requests.post(API_URL+'servicios/contratar-servicio/'+numero_reserva+'/'+id_servicio)
+        response.raise_for_status()
+    except Exception as e:
+        print(f"el error esta acaError: {e}")
+
+    return servicios_contratados(numero_reserva)
 
 
 if __name__ == "__main__":

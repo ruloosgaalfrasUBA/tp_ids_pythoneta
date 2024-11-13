@@ -7,22 +7,45 @@
 </head>
 <body>
 
-
-    <table>
+  <table>
   
-        <tr>
-          <th>id servicio</th>
-          <th>nombre servicio</th>
-          <th>descripcion servicio</th>
-        </tr>
-        <tr>
-        {%for servicio in servicios %}
-          <td>{{servicio.id_servicio}}</td>
-          <td>{{servicio.nombre}}</td>
-          <td>{{servicio.descripcion}}</td>
-        </tr>
-        {% endfor %}
-      </table>
+    <tr>
+      <th>id servicio</th>
+      <th>nombre servicio</th>
+      <th>descripcion servicio</th>
+    </tr>
+    <tr>
+    {%for servicio in servicios %}
+      <td>{{servicio.id}}</td>
+      <td>{{servicio.nombre}}</td>
+      <td>{{servicio.descripcion}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+    
+    <br>
+    <br>
+
+    <form action="{{ url_for('agregar_servicios') }}" method="POST">
+      <label for="numero_reserva">Número de su reserva:</label>
+      <input type="text" name="numero_reserva" id="numero_reserva" placeholder="Número reserva">
+      <br>
+      <label for="id_servicio">ID del servicio que desea contratar:</label>
+      <input type="text" name="id_servicio" id="id_servicio" placeholder="ID servicio">
+      <br>
+      <button type="submit">Agregar a mi reserva</button>
+    </form>
+
+    <br>
+    <br>
+
+    <form method="POST" action="{{ url_for('buscar_servicios') }}">
+
+      <label for="buscar_servicios_reserva">Buscar servicios contratados</label>
+      <br>
+      <input type="text" name="buscar_servicios_reserva" id="buscar_servicios_reserva" placeholder="Ingrese su número de reserva">
+      <button type="submit">Buscar</button>
+    </form>
 
     
 </body>

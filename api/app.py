@@ -31,48 +31,46 @@ def obtener_servicios():
     return jsonify(response), 200
 
 
-@app.route('/api/servicios/contratar-servicio', methods=['POST'])
-def agregar_servicio_a_reserva():
-    data = request.get_json()
-
-    keys = ('numero_reserva', 'id_servicio')
-    for key in keys:
-        if key not in data:
-            return jsonify({'error': f'Falta el dato {key}'}), 400
-        
+@app.route('/api/servicos-por-reserva/<numero_reserva>', methods=['GET'])
+def obtener_servicios_por_reserva(numero_reserva):
     try:
-        result = hotel.buscar_servicios_contratados_por_id(data['id_servicio'])
-        if len(result)>0:
-            return jsonify({'error': 'El servicio ya fue contratado anteriormente'}), 400
-        
-        hotel.contratar_servicio(data)
-
+        numero_reserva = int(numero_reserva)
+        result = hotel.buscar_servicios_por_reserva(numero_reserva)
     except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'error': str(e)}), 500
+    
+    response = []
+    for row in result:
+        try:
+            servicio = hotel.buscar_servicio_por_id(row[1])
+            for s in servicio:
+                response.append({'numero_reserva': row[0], 'id_servicio': row[1], 'nombre_servicio': s[1]})
+                
+        except Exception as e:
+            print(f"Error al buscar servicio por ID: {e}")
+            return jsonify({'error': str(e)}), 500
+        
+    return jsonify(response), 200
+        
+@app.route('/api/servicios/cancelar-servicio/<numero_reserva>/<id_servicio>', methods=['POST'])
+def quitar_servicio_de_reserva(numero_reserva, id_servicio):
+    try:
+        hotel.cancelar_servicio(numero_reserva, id_servicio)
+        return jsonify({'message': 'Servicio cancelado exitosamente'}), 200
+    except Exception as e:
+        print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
 
-    return jsonify(data), 201
 
-
-@app.route('/api/servicios/cancelar-servicio', methods=['POST'])
-def quitar_servicio_de_reserva():
-    data = request.get_json()
-
-    keys = ('numero_reserva', 'id_servicio')
-    for key in keys:
-        if key not in data:
-            return jsonify({'error': f'Falta el dato {key}'}), 400
-        
+@app.route('/api/servicios/contratar-servicio/<numero_reserva>/<id_servicio>', methods=['POST'])
+def agregar_servicio_a_reserva(numero_reserva, id_servicio):
     try:
-        result = hotel.buscar_servicios_contratados_por_id(data['id'])
-        if len(result)==0:
-            return jsonify({'error': 'El servicio no está contratado'}), 400
-        
-        hotel.cancelar_servicio(data)
-
+        hotel.contratar_servicio(numero_reserva, id_servicio)
+        return jsonify({'message': 'Servicio contratado exitosamente'}), 200
     except Exception as e:
+        print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
-
-    return jsonify(data), 201
 
 
 if __name__ == '__main__':
