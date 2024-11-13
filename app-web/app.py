@@ -29,7 +29,7 @@ def reservas():
         try:
             respuesta = requests.get(API_URI + f"/reservas/{nro_reserva}")
             respuesta.raise_for_status()
-            datos = respuesta.json()
+            datos: list[dict] = respuesta.json()
 
             for reserva in datos:
                 error = reserva.get("error")
@@ -38,20 +38,58 @@ def reservas():
                 return render_template("reservas.html", reserva=reserva)
 
         except requests.exceptions.RequestException as e:
-            print(f"Error fetching data: {e}")
-            datos = []
+            print(e)
+            return render_template("reservas.html", error="Error interno.")
 
     return render_template("reservas.html")
+
 
 @app.route("/modificar_reserva", methods=["POST"])
 def modificar_reserva():
     reserva = request.form.to_dict()
-    return render_template('reservas.html', error="La reserva se modificó")
+    numero_reserva = reserva.get("numero_reserva")
+    if not reserva or not numero_reserva:
+        return render_template("reservas.html", error="Error en los datos para modificar.")
+
+    try:
+        respuesta = requests.post(API_URI + f"/modificar_reserva/{numero_reserva}", data=reserva)
+        respuesta.raise_for_status()
+        datos: list[dict] = respuesta.json()
+
+        for reserva in datos:
+            error = reserva.get("error")
+            if error:
+                return render_template("reservas.html", error=error)
+            return render_template("reservas.html", success="La reserva se modificó exitosamente!")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+
+    return render_template("reservas.html")
+
 
 @app.route("/cancelar_reserva", methods=["POST"])
 def cancelar_reserva():
     reserva = request.form.to_dict()
-    return render_template('reservas.html', error="La reserva se canceló")
+    numero_reserva = reserva.get("numero_reserva")
+    if not reserva or not numero_reserva:
+        return render_template("reservas.html", error="Error en los datos para modificar.")
+
+    try:
+        respuesta = requests.post(API_URI + f"/cancelar_reserva/{numero_reserva}", data=reserva)
+        respuesta.raise_for_status()
+        datos: list[dict] = respuesta.json()
+
+        for reserva in datos:
+            error = reserva.get("error")
+            if error:
+                return render_template("reservas.html", error=error)
+            return render_template("reservas.html", success="La reserva se canceló exitosamente!")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+
+    return render_template("reservas.html")
 
 
 if __name__ == "__main__":

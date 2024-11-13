@@ -3494,6 +3494,10 @@ select[multiple].input-lg,
 	color: #8a6d3b;
 }
 
+.text-error {
+	color: #a94442;
+}
+
 .has-error .help-block,
 .has-error .control-label,
 .has-error .radio,

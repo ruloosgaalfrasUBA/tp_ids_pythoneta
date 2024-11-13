@@ -1,8 +1,6 @@
 <!-- Breadcrumbs & Page title-->
 
-{% extends 'base.html' %} 
-{%block title%} Reservas {%endblock title%} 
-{%block content%}
+{% extends 'base.html' %} {%block title%} Reservas {%endblock title%} {%block content%}
 <section class="section-md text-center bg-image breadcrumbs-02">
   <div class="shell shell-fluid">
     <div class="range range-xs-center">
@@ -22,11 +20,9 @@
     <div class="range range-50 range-md-center">
       <div class="cell-sm-8">
         <div class="contact-box">
-          <h3>Consultá o modificá<br>tu reserva</h3>
+          <h3>Consultá o modificá<br />tu reserva</h3>
           <p>En Flask Seasons estamos disponible todos los días para vos. <br />Visualizá tus reservas por nuestra página web o por nuestra aplicación completando los siguientes datos.</p>
-          {%if reserva %}
-            {% include 'components/info_reserva.html' %}
-          {% else %}
+          {%if reserva %} {% include 'components/info_reserva.html' %} {% else %}
           <form class="rd-mailform" method="post" action="{{url_for('reservas')}}">
             <div class="range range-sm-bottom spacing-20 form-reserva">
               <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
@@ -44,9 +40,7 @@
                 </div>
               </div>
               <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error else 'justify-content-end'}}">
-                {% if error %} 
-                  {% include 'components/error.html' %} 
-                {% endif %}
+                {% if error %} {% include 'components/mensaje_de_estado.html' %} {% endif %}
                 <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
               </div>
             </div>
@@ -100,16 +94,13 @@
   </div>
 </section>
 
-{% if error %}
+{% if error or success %}
 <script>
-  document.querySelector('.text-error-message').scrollIntoView();
+  document.querySelector('.container-status-message').scrollIntoView();
 </script>
-{% endif %}
-
+{% endif %} 
 {% if reserva %}
 <script>
   document.querySelector('.form-info-reserva').scrollIntoView();
 </script>
-{% endif %}
-
-{%endblock content%}
+{% endif %} {%endblock content%}

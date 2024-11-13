@@ -104,18 +104,18 @@
 	color: #363d41 !important;
 }
 
-.container-error-message {
+.container-status-message {
 	height: 100%;
 	width: 50%;
 }
 
-.container-error-message .text-error-message {
+/* .container-status-message .text-error-message {
 	text-wrap: balance;
     color: #d9534f;
 	font-size: 16px;
 	line-height: 20px;
 	transition: .3s;
-}
+} */
 
 .thumbnail-classic .caption-title span {
 	display: block;
