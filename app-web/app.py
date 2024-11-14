@@ -42,6 +42,10 @@ def reservas():
             return render_template("reservas.html", error="Error interno.")
 
     return render_template("reservas.html")
+    
+@app.route("/disponibilidad")
+def disponibilidad():
+    return render_template("disponibilidad.html")
 
 
 @app.route("/modificar_reserva", methods=["POST"])
