@@ -78,20 +78,56 @@
 	justify-content: space-between;
 }
 
-.boton-reserva {
+.boton-container-reserva {
     min-width: 100%;
     display: flex;
-    justify-content: flex-end;
+	align-items: flex-start;
+    justify-content: space-between;
 }
 
-.boton-reserva .button {
+.boton-container-reserva::before {
+	display: none !important;
+}
+
+.boton-container-reserva .button {
 	width: fit-content;
+	margin-top: 0;
+}
+
+.container-error-message {
+	height: 100%;
+	width: 50%;
+}
+
+.container-error-message .text-error-message {
+	text-wrap: balance;
+    color: #d9534f;
+	font-size: 16px;
+	line-height: 20px;
+	transition: .3s;
 }
 
 .thumbnail-classic .caption-title span {
 	display: block;
 	font-size: 18px;
 }
+
+.form-reserva {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+}
+
+.form-reserva .cell-form {
+	width: 100% !important;
+}
+
+.label-form-reserva {
+	margin-bottom: 5px;
+	color: #363d41;
+}
+
+
 
 /* -------------------- END PROPIOS --------------------  */
 
