@@ -2,17 +2,16 @@
 {%block title%} Hoteles {%endblock title%} 
 
 {%block content%}
-<div id="reserva-vista">
-<table class="section section-md bg-white text-center" id="reservas_hoteles">
-
+        <div id="reserva-vista">
+          <table class="section section-md bg-white text-center" id="reservas_hoteles">
             <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
               <div class="range range-sm-bottom spacing-20">
                 <div>
-                  <p class="text-uppercase">Elegi el hotel</p>
                   <div class="cell-sm-6">
                     <div class="form-wrap">
+                      <p class="text-uppercase">Elegi el hotel</p>
                       <label for="reserve_hotel" id="contact-first-name"></label>
-                      <input class="form-input" id="reserve_hotel" type="text" name="hotel" data-constraints="@Required" readonly role="button"/>
+                      <input class="form-input" id="reserve_hotel" type="text" name="hotel" data-constraints="@Required" readonly role="button" style="display: none;" />
                       <select id="hotel-options" onchange="updateHotelName()">
                         <option value="">Selecciona un hotel...</option>
                         <option value="Lagos Andinos">Lagos Andinos</option>
@@ -45,6 +44,51 @@
                 </div>
               </div>
             </form>
-</table>
-</div>
+          </table>
+        </div>
+        <section class="section section-md bg-white text-center text-sm-left">
+          <div class="shell-wide">
+            <div class="range range-10 range-middle">
+              <div class="cell-sm-6">
+                <h3>Nuestros Hoteles</h3>
+              </div>
+            </div>
+            <hr />
+            <div class="isotope-wrap">
+              <!-- Isotope Content-->
+              <div class="row isotope" data-isotope-layout="masonry" data-isotope-group="gallery" data-lightgallery="group">
+                <div class="col-xs-12 col-sm-6 col-md-3 grid-sizer"></div>
+                <div class="col-xs-12 col-sm-6 col-md-3 isotope-item wow fadeInUp" data-filter="Category 1" data-wow-delay=".1s">
+                  <a class="portfolio-item thumbnail-classic" href="{{url_for('static', filename='images/hotel-1.jpg')}}" data-size="533x800" data-lightgallery="item"
+                    ><img src="{{url_for('static', filename='images/hotel-1-copia.jpg')}}" alt="" width="420" height="584" />
+                    <figure></figure>
+                    <div class="caption"><span class="icon mdi-eye"></span></div></a
+                  >
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 isotope-item wow fadeInUp" data-filter="Category 1" data-wow-delay=".2s">
+                  <a class="portfolio-item thumbnail-classic" href="{{url_for('static', filename='images/hotel-2.jpg')}}" data-size="1199x800" data-lightgallery="item"
+                    ><img src="{{url_for('static', filename='images/hotel-2-copia.jpg')}}" alt="" width="420" height="584" />
+                    <figure></figure>
+                    <div class="caption"><span class="icon mdi-eye"></span></div></a
+                  >
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 isotope-item wow fadeInUp" data-filter="Category 1" data-wow-delay=".4s">
+                  <a class="portfolio-item thumbnail-classic" href="{{url_for('static', filename='images/hotel-3.jpg')}}" data-size="584x800" data-lightgallery="item"
+                    ><img src="{{url_for('static', filename='images/hotel-3-copia.jpg')}}" alt="" width="420" height="584" />
+                    <figure></figure>
+                    <div class="caption"><span class="icon mdi-eye"></span></div></a
+                  >
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 isotope-item wow fadeInUp" data-filter="Category 1" data-wow-delay=".5s">
+                  <a class="portfolio-item thumbnail-classic" href="{{url_for('static', filename='images/hotel-4.jpg')}}" data-size="1200x800" data-lightgallery="item"
+                    ><img src="{{url_for('static', filename='images/hotel-4-copia.jpg')}}" alt="" width="420" height="278" />
+                    <figure></figure>
+                    <div class="caption"><span class="icon mdi-eye"></span></div></a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
 {%endblock content%}
