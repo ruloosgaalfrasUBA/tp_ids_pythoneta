@@ -15,22 +15,25 @@ VALUES (:numero_reserva, :nombre, :apellido, :dni, :inicio_reserva, :fin_reserva
 ;
 """
 
+QUERY_CANCELAR_RESERVA = """
+UPDATE detalle_reservas
+SET activo = 0
+WHERE id_reserva = :id_reserva
+"""
+
 engine = create_engine("mysql+mysqlconnector://root:root@localhost:3306/hoteles")
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
         result = conn.execute(text(query), parameters)
         conn.commit()
-
     return result
 
-def crear_reserva(numero_reserva, nombre, apellido, dni, inicio_reserva, fin_reserva, id_hotel):
-    
+def crear_reserva(numero_reserva, nombre, apellido, dni, inicio_reserva, fin_reserva, id_hotel): 
     reserva = {
         "numero_reserva": numero_reserva,
         "id_hotel": id_hotel,
-    }
-    
+    }  
     detalles = {
         "numero_reserva": numero_reserva,
         "nombre": nombre,
@@ -39,6 +42,11 @@ def crear_reserva(numero_reserva, nombre, apellido, dni, inicio_reserva, fin_res
         "inicio_reserva": inicio_reserva,
         "fin_reserva": fin_reserva,
     }
-    
     run_query(QUERY_CREAR_RESERVA, reserva)    
     run_query(QUERY_CREAR_DETALLES_DE_RESERVA, detalles)
+
+def cancelar_reserva(id_reserva):
+    reserva = {
+        "id_reserva": id_reserva,
+    }
+    run_query(QUERY_CANCELAR_RESERVA, reserva)
