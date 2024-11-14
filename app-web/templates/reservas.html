@@ -23,7 +23,7 @@
           <h3>Consultá o modificá<br />tu reserva</h3>
           <p>En Flask Seasons estamos disponible todos los días para vos. <br />Visualizá tus reservas por nuestra página web o por nuestra aplicación completando los siguientes datos.</p>
           {%if reserva %} 
-            {% include 'components/info_reserva.html' %} 
+            {% include 'info_reserva.html' %} 
           {% else %}
           <form class="rd-mailform" method="post" action="{{url_for('reservas')}}">
             <div class="range range-sm-bottom spacing-20 form-reserva">
@@ -43,7 +43,7 @@
               </div>
               <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error else 'justify-content-end'}}">
                 {% if error %} 
-                  {% include 'components/mensaje_de_estado.html' %} 
+                  {% include 'mensaje_de_estado.html' %} 
                 {% endif %}
                 <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
               </div>
