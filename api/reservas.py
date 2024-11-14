@@ -31,6 +31,16 @@ WHERE dr.numero_reserva = :numero_reserva AND dr.dni = :dni
 ;
 """
 
+QUERY_MODIFICAR_RESERVA_INICIO = """
+UPDATE detalle_reservas
+
+"""
+QUERY_MODIFICAR_RESERVA_FIN = """
+WHERE id_reserva = :id_reserva
+;
+"""
+
+
 engine = create_engine("mysql+mysqlconnector://root:root@localhost:3306/hoteles")
 
 def run_query(query, parameters=None):
@@ -67,3 +77,9 @@ def consultar_reserva(numero_reserva, dni):
         "dni": dni
     }
     return run_query(QUERY_CONSULTAR_RESERVA, reserva).fetch_all()
+
+def modificar_reserva(id_reserva, data):
+    query = QUERY_MODIFICAR_RESERVA_INICIO
+    query += "SET ".join([f"{key} = '{value}' \n" for key, value in data.items()])
+    query += QUERY_MODIFICAR_RESERVA_FIN
+    run_query(query,{"id_reserva": id_reserva})
