@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
-engine = create_engine("mysql://root:capybara1@localhost:3306/bbdd_pythoneta")
+engine = create_engine("mysql://root:contrasenia@localhost:3306/bbdd_pythoneta")
 
 
 def run_query(query, parameters=None):
