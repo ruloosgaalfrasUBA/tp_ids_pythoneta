@@ -72,11 +72,12 @@ def modificar_reserva():
 def cancelar_reserva():
     reserva = request.form.to_dict()
     numero_reserva = reserva.get("numero_reserva")
+
     if not reserva or not numero_reserva:
         return render_template("reservas.html", error="Error en los datos para modificar.")
 
     try:
-        respuesta = requests.post(API_URI + f"/cancelar_reserva/{numero_reserva}", data=reserva)
+        respuesta = requests.post(API_URI + f"/cancelar_reserva/{numero_reserva}", data=numero_reserva)
         respuesta.raise_for_status()
         datos: list[dict] = respuesta.json()
 
