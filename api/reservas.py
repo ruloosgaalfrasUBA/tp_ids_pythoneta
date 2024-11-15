@@ -4,8 +4,8 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
 QUERY_CREAR_RESERVA = """
-INSERT INTO reserva (numero_reserva, id_hotel) 
-VALUES (:numero_reserva, :id_hotel)
+INSERT INTO reserva (id_hotel) 
+VALUES (:id_hotel)
 ;
 """
 
