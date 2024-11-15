@@ -6,4 +6,4 @@ DROP TABLE reserva
 
 DROP TABLE servicio
 
-DROP TABLE hoteles
+DROP TABLE hotel

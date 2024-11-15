@@ -1,4 +1,4 @@
-INSERT INTO hoteles (nombre, descripcion, provincia, estrellas) VALUES 
+INSERT INTO hotel (nombre, descripcion, provincia, estrellas) VALUES 
 ('Flask Seasons Bariloche', 'Ubicado en el centro de Bariloche', 'Río Negro', 4),
 ('Flask Seasons Mar del Plata', 'Hotel con vista al mar', 'Buenos Aires', 3),
 ('Flask Seasons Cerro Siete Colores', 'Con vista al famoso cerro', 'Jujuy', 3),
