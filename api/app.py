@@ -1,6 +1,3 @@
-from flask import Flask, jsonify, request
-import json
-
 from flask import Flask, jsonify, request, render_template
 
 import hotel
@@ -163,10 +160,10 @@ def crear_reserva():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/v1/reservas/cancelar-reserva/<id_reserva>', methods=['GET'])
-def cancelar_reserva(id_reserva):
+@app.route('/api/v1/reservas/cancelar-reserva/<numero_reserva>', methods=['POST'])
+def cancelar_reserva(numero_reserva):
     try:
-        reservas.cancelar_reserva(id_reserva)
+        reservas.cancelar_reserva(numero_reserva)
         return jsonify({'message': 'Reserva cancelada exitosamente'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -184,10 +181,11 @@ def consultar_reserva(numero_reserva, dni):
         "nombre": result[0],
         "apellido": result[1],
         "numero_reserva": result[2],
-        "inicio_reserva": result[3],
-        "fin_reserva": result[4],
-        "nombre_hotel": result[5],
-        "provincia": result[6],
+        "dni": result[3],
+        "inicio_reserva": result[4],
+        "fin_reserva": result[5],
+        "nombre_hotel": result[6],
+        "provincia": result[7],
     }
     return jsonify(response)
 
@@ -197,4 +195,4 @@ def modificar_reserva():
 ################################################################################
 
 if __name__ == "__main__":
-    app.run("127.0.0.1", port="5000", debug=True)
+    app.run(port="5001", debug=True)

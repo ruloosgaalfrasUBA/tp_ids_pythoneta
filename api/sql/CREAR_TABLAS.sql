@@ -1,9 +1,6 @@
-CREATE DATABASE bbdd_pythoneta
-    DEFAULT CHARACTER SET utf8;
-
 USE bbdd_pythoneta;
 
-CREATE TABLE bbdd_pythoneta.hoteles (    
+CREATE TABLE bbdd_pythoneta.hotel (    
     id_hotel BIGINT UNIQUE AUTO_INCREMENT,
     nombre VARCHAR(255),
     descripcion VARCHAR(255),

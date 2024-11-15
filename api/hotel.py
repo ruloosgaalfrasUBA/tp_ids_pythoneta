@@ -59,14 +59,13 @@ QUERY_BUSCAR_SERVICIO_POR_ID = "SELECT * FROM servicio WHERE id_servicio = :id_s
 
 QUERY_TODOS_LOS_SERVICIOS = "SELECT * FROM servicio"
 
-engine = create_engine("mysql+mysqlconnector://root:root@localhost:3306/hoteles")
+engine = create_engine("mysql+mysqlconnector://root:root@localhost:3306/bbdd_pythoneta")
 
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
         result = conn.execute(text(query), parameters)
         conn.commit()
-
     return result
 
 def all_hoteles():
