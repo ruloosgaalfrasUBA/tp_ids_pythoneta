@@ -4,8 +4,7 @@ import json
 from flask import Flask, jsonify, request, render_template
 
 import hotel
-#import hoteles
-
+import reservas
 
 app = Flask(__name__)
 
@@ -139,6 +138,20 @@ def agregar_servicio_a_reserva(numero_reserva, id_servicio):
         print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
 
+
+@app.route('/api/v1/reservas/crear-reserva', methods=['POST'])
+def crear_reserva():
+
+    return
+
+def cancelar_reserva():
+    return
+
+def consultar_reserva():
+    return
+
+def modificar_reserva():
+    return
 
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5000", debug=True)
