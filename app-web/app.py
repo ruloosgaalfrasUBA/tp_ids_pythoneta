@@ -22,23 +22,18 @@ def reservas():
     if request.method == "POST":
         nro_reserva = request.form.get("numero_reserva")
         dni = request.form.get("dni")
-
         if not nro_reserva or not dni:
-            return render_template(
-                "reservas.html", error="Complete los datos requeridos."
-            )
+            return render_template("reservas.html", error="Complete los datos requeridos.")
 
         try:
-            respuesta = requests.get(API_URI + f"/reservas/{nro_reserva}/{dni}")
-            respuesta.raise_for_status()
+            respuesta = requests.get(API_URI + f"/reservas/consultar-reserva/{nro_reserva}/{dni}")
             datos: dict | list[dict] = respuesta.json()
 
-            if type(datos) == dict:
-                error = datos.get("error")
+            error = datos.get("error")
+            if error:
                 return render_template("reservas.html", error=error)
 
-            for reserva in datos:
-                return render_template("reservas.html", reserva=reserva)
+            return render_template("reservas.html", reserva=datos)
 
         except requests.exceptions.RequestException:
             return render_template("reservas.html", error="Error interno.")
@@ -54,13 +49,11 @@ def modificar_reserva():
     fecha_fin = request.form.get("fecha_fin")
 
     if not id_reserva or not fecha_inicio or not fecha_fin:
-        return render_template(
-            "reservas.html", error="Error en los datos para modificar."
-        )
+        return render_template("reservas.html", error="Error en los datos para modificar.")
 
     try:
         respuesta = requests.post(
-            API_URI + f"/modificar_reserva/{id_reserva}",
+            API_URI + f"/reservas/modificar_reserva/{id_reserva}",
             data={
                 "id_reserva": id_reserva,
                 "fecha_inicio": fecha_inicio,
@@ -84,29 +77,25 @@ def modificar_reserva():
 
 @app.route("/cancelar_reserva", methods=["POST"])
 def cancelar_reserva():
-    id_reserva = request.form.get("id_reserva")
-
-    if not id_reserva:
-        return render_template(
-            "reservas.html", error="Error en los datos para modificar."
-        )
+    numero_reserva = request.form.get("numero_reserva")
+    if not numero_reserva:
+        return render_template("reservas.html", error="Error en los datos para modificar.")
 
     try:
         respuesta = requests.post(
-            API_URI + f"/cancelar_reserva/{id_reserva}",
+            API_URI + f"/reservas/cancelar-reserva/{numero_reserva}",
             data={
-                "id_reserva": id_reserva,
+                "numero_reserva": numero_reserva,
             },
         )
-        respuesta.raise_for_status()
         resultado: dict = respuesta.json()
+
 
         error = resultado.get("error")
         success = resultado.get("message")
 
         if error:
             return render_template("reservas.html", error=error)
-
         return render_template("reservas.html", success=success)
 
     except requests.exceptions.RequestException as e:

@@ -1,13 +1,13 @@
-from flask import Flask, jsonify, request
-import json
-
 from flask import Flask, jsonify, request, render_template
 
 import hotel
-#import hoteles
-
+import reservas
 
 app = Flask(__name__)
+
+################################################################################
+# HOTELES                                                                      #
+################################################################################
 
 @app.route('/api/v1/hoteles', methods=['GET'])
 def get_all_hoteles():
@@ -82,7 +82,9 @@ def get_by_estrellas(estrellas):
 
     return jsonify(response), 200
 
-
+################################################################################
+# SERVICIOS                                                                    #
+################################################################################
 
 @app.route('/api/v1/servicios', methods=['GET'])
 def obtener_servicios():
@@ -139,6 +141,59 @@ def agregar_servicio_a_reserva(numero_reserva, id_servicio):
         print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
 
+################################################################################
+# RESERVAS                                                                     #
+################################################################################
+
+@app.route('/api/v1/reservas/crear-reserva', methods=['POST'])
+def crear_reserva():
+    data = request.get_json()
+    keys = ("nombre", "apellido", "dni", "inicio_reserva", "fin_reserva", "id_hotel")
+    for key in keys:
+        if key not in data:
+            return jsonify({'error': f'Falta el dato {key}'}), 400
+    try:
+        id_hotel = data.pop("id_hotel")
+        reservas.crear_reserva(id_hotel)
+        reservas.crear_detalles_reserva(data)
+        return jsonify(data), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/v1/reservas/cancelar-reserva/<numero_reserva>', methods=['POST'])
+def cancelar_reserva(numero_reserva):
+    try:
+        reservas.cancelar_reserva(numero_reserva)
+        return jsonify({'message': 'Reserva cancelada exitosamente'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/v1/reservas/consultar-reserva/<numero_reserva>/<dni>', methods=['GET'])
+def consultar_reserva(numero_reserva, dni):
+    try:
+        result = reservas.consultar_reserva(numero_reserva, dni)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500  
+    if len(result) == 0:
+        print(result)
+        return jsonify({'error': 'No se encontró la reserva'}), 404
+    result = result[0]
+    response = {
+        "nombre": result[0],
+        "apellido": result[1],
+        "numero_reserva": result[2],
+        "dni": result[3],
+        "inicio_reserva": result[4],
+        "fin_reserva": result[5],
+        "nombre_hotel": result[6],
+        "provincia": result[7],
+    }
+    return jsonify(response)
+
+def modificar_reserva():
+    return
+
+################################################################################
 
 if __name__ == "__main__":
     app.run(port="5001", debug=True)
