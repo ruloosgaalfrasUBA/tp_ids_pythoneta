@@ -10,15 +10,13 @@ VALUES (:id_hotel)
 """
 
 QUERY_CREAR_DETALLES_DE_RESERVA = """
-INSERT INTO detalle_reservas (id_reserva, 
-                              numero_reserva, 
+INSERT INTO detalle_reservas (id_reserva,
                               nombre, 
                               apellido, 
                               dni, 
                               inicio_reserva, 
                               fin_reserva)
-VALUES ((SELECT MAX(id_reserva) as id_reserva FROM reserva), 
-        :numero_reserva, 
+VALUES ((SELECT MAX(id_reserva) as id_reserva FROM reserva),
         :nombre, 
         :apellido, 
         :dni, 
