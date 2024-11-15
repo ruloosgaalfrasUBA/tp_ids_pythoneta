@@ -20,7 +20,7 @@ CREATE TABLE bbdd_pythoneta.reserva (
 
 CREATE TABLE bbdd_pythoneta.detalle_reservas (
     id_reserva BIGINT,
-    numero_reserva BIGINT,
+    numero_reserva BIGINT UNIQUE AUTO_INCREMENT,
     nombre VARCHAR(255),
     apellido VARCHAR(255),
     dni BIGINT,
@@ -29,6 +29,8 @@ CREATE TABLE bbdd_pythoneta.detalle_reservas (
     activo BOOLEAN DEFAULT 1,
     FOREIGN KEY (id_reserva) REFERENCES bbdd_pythoneta.reserva(id_reserva)
     );
+
+ALTER TABLE bbdd_pythoneta.detalle_reservas AUTO_INCREMENT = 100;
 
 CREATE TABLE bbdd_pythoneta.reserva_servicio (
     numero_reserva BIGINT,
