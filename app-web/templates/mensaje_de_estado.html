@@ -1,0 +1,8 @@
+<!-- Componente error -->
+<span class="container-status-message">
+  {%if error %}
+  <p class="text-error">{{error}}</p>
+  {% else %}
+  <p class="text-success">{{success}}</p>
+  {% endif %}
+</span>

@@ -78,15 +78,44 @@
 	justify-content: space-between;
 }
 
-.boton-reserva {
+.boton-container-reserva {
     min-width: 100%;
     display: flex;
+	align-items: flex-start;
     justify-content: flex-end;
+	column-gap: 1rem;
 }
 
-.boton-reserva .button {
-	width: fit-content;
+.boton-container-reserva::before {
+	display: none !important;
 }
+
+.boton-container-reserva .button {
+	width: fit-content;
+	margin-top: 0;
+}
+
+.boton-container-reserva .button span {
+	display: block;
+	width: 100%;
+}
+
+.black-grey {
+	color: #363d41 !important;
+}
+
+.container-status-message {
+	height: 100%;
+	width: 50%;
+}
+
+/* .container-status-message .text-error-message {
+	text-wrap: balance;
+    color: #d9534f;
+	font-size: 16px;
+	line-height: 20px;
+	transition: .3s;
+} */
 
 .thumbnail-classic .caption-title span {
 	display: block;
@@ -103,11 +132,32 @@
 	width: 100% !important;
 }
 
-.label-form-reserva {
-	margin-bottom: 5px;
+.button {
+	overflow: visible !important;
+}
+
+.form-fecha-reserva::placeholder {
 	color: #363d41;
 }
 
+.justify-content-between {
+	justify-content: space-between;
+}
+
+.justify-content-end {
+	justify-content: flex-end;
+}
+
+.btn-purple {
+	color: #fff;
+    background-color: #8f859e;
+    border-color: #8f859e;
+}
+
+.btn-purple:hover {
+	color: #fff !important;
+	opacity: 0.5;
+}
 /* -------------------- END PROPIOS --------------------  */
 
 .ie-panel{

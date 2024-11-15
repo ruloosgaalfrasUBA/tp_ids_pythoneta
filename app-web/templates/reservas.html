@@ -1,8 +1,6 @@
 <!-- Breadcrumbs & Page title-->
 
-{% extends 'base.html' %} 
-{%block title%} Reservas {%endblock title%}
-{%block content%}
+{% extends 'base.html' %} {%block title%} Reservas {%endblock title%} {%block content%}
 <section class="section-md text-center bg-image breadcrumbs-02">
   <div class="shell shell-fluid">
     <div class="range range-xs-center">
@@ -22,29 +20,36 @@
     <div class="range range-50 range-md-center">
       <div class="cell-sm-8">
         <div class="contact-box">
-          <h3>Consultá tu reserva</h3>
-          <p>En Flask Seasons estamos disponible todos los días para vos. <br>Visualizá tus reservas por nuestra página web o por nuestra aplicación completando los siguientes datos.</p>
-          <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{url_for('reservas')}}">
+          <h3>Consultá o modificá<br />tu reserva</h3>
+          <p>En Flask Seasons estamos disponible todos los días para vos. <br />Visualizá tus reservas por nuestra página web o por nuestra aplicación completando los siguientes datos.</p>
+          {%if reserva %} 
+            {% include 'info_reserva.html' %} 
+          {% else %}
+          <form class="rd-mailform" method="post" action="{{url_for('reservas')}}">
             <div class="range range-sm-bottom spacing-20 form-reserva">
-              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form ">
-                <p class="label-form-reserva">Documento de identidad</p>
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
+                <p class="label-form-reserva black-grey">Documento de identidad</p>
                 <div class="form-wrap">
                   <input class="form-input" id="identity-document" type="text" name="dni" data-constraints="@Numeric @Required" autocomplete="on" />
                   <label class="form-label" for="identity-document">Número</label>
                 </div>
               </div>
               <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
-                <p class="label-form-reserva">Número de reserva</p>
+                <p class="label-form-reserva black-grey">Número de reserva</p>
                 <div class="form-wrap">
-                  <input class="form-input" id="booking-number" type="text" name="booking_number" data-constraints="@Numeric @Required" autocomplete="on" />
+                  <input class="form-input" id="booking-number" type="text" name="numero_reserva" data-constraints="@Numeric @Required" autocomplete="on" />
                   <label class="form-label" for="booking-number">Número</label>
                 </div>
               </div>
-              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-reserva">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error else 'justify-content-end'}}">
+                {% if error %} 
+                  {% include 'mensaje_de_estado.html' %} 
+                {% endif %}
                 <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
               </div>
             </div>
           </form>
+          {% endif %}
         </div>
       </div>
       <div class="cell-sm-4">
@@ -71,7 +76,9 @@
               <hr class="divider divider-left divider-custom" />
               <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
                 <div class="unit__left"><span class="text-middle icon icon-sm mdi mdi-map-marker icon-primary"></span></div>
-                <div class="unit__body"><a class="text-middle link link-gray-dark" href="http://maps.google.com/?q=avenida+paseo+colon+850" target="_blank">Avenida Paseo Colón 850, C.A.B.A., C1063ACV</a></div>
+                <div class="unit__body">
+                  <a class="text-middle link link-gray-dark" href="http://maps.google.com/?q=avenida+paseo+colon+850" target="_blank">Avenida Paseo Colón 850, C.A.B.A., C1063ACV</a>
+                </div>
               </div>
             </div>
             <div class="cell-xs-6 cell-sm-12">
@@ -91,4 +98,20 @@
   </div>
 </section>
 
-{%endblock content%}
+{% if error or success %}
+<script>
+  document.querySelector('.container-status-message').scrollIntoView();
+</script>
+{% endif %} 
+
+{% if reserva %}
+<script>
+  document.querySelector('.form-info-reserva').scrollIntoView();
+</script>
+{% endif %} 
+
+{%endblock content%} 
+
+{%block scripts%}
+<script src="{{url_for('static', filename='js/reservas.js')}}"></script>
+{%endblock scripts%}
