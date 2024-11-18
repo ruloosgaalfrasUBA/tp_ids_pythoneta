@@ -8,13 +8,13 @@ INSERT INTO hotel (nombre, descripcion, provincia, estrellas) VALUES
 -- 6 hoteles
 
 INSERT INTO reserva (id_hotel) VALUES (4);
-INSERT INTO detalle_reservas (id_reserva, numero_reserva, nombre, apellido, dni, inicio_reserva, fin_reserva) VALUES 
-((SELECT MAX(id_reserva) as id_reserva FROM reserva), 100, 'Elon', 'Musk', 12312345, '2024-11-15', '2024-11-20');
+INSERT INTO detalle_reservas (id_reserva, nombre, apellido, dni, inicio_reserva, fin_reserva) VALUES 
+((SELECT MAX(id_reserva) as id_reserva FROM reserva), 'Elon', 'Musk', 12312345, '2024-11-15', '2024-11-20');
 -- Elon Musk en Flask Seasons Bariloche
 
 INSERT INTO reserva (id_hotel) VALUES (1);
-INSERT INTO detalle_reservas (id_reserva, numero_reserva, nombre, apellido, dni, inicio_reserva, fin_reserva) VALUES
-((SELECT MAX(id_reserva) as id_reserva FROM reserva), 101, 'Lionel', 'Messi', 45659875, '2024-12-01', '2024-12-10');
+INSERT INTO detalle_reservas (id_reserva, nombre, apellido, dni, inicio_reserva, fin_reserva) VALUES
+((SELECT MAX(id_reserva) as id_reserva FROM reserva), 'Lionel', 'Messi', 45659875, '2024-12-01', '2024-12-10');
 -- Lionel Messi en Flask Seasons Mar del Plata
 
 -- 2 clientes

@@ -41,8 +41,8 @@
                   <label class="form-label" for="booking-number">Número</label>
                 </div>
               </div>
-              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error else 'justify-content-end'}}">
-                {% if error %} 
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error or success else 'justify-content-end'}}">
+                {% if error or success %} 
                   {% include 'mensaje_de_estado.html' %} 
                 {% endif %}
                 <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
@@ -111,7 +111,3 @@
 {% endif %} 
 
 {%endblock content%} 
-
-{%block scripts%}
-<script src="{{url_for('static', filename='js/reservas.js')}}"></script>
-{%endblock scripts%}
