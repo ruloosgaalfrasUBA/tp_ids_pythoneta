@@ -44,6 +44,11 @@
                 </div>
               </div>
             </form>
+              {% if error %}
+              <p class="msj_error">{{ error }}</p>
+          {% elif mensaje %}
+              <p class="msj_error">{{ mensaje }}</p>
+          {% endif %}
           </table>
         </div>
         <section class="section section-md bg-white text-center text-sm-left">

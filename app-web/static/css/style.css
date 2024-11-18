@@ -31826,3 +31826,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 		transform: translate(-100%, -60%);
 	}
 }
+
+.msj_error{
+	color: red;
+}

@@ -10,20 +10,7 @@ app = Flask(__name__)
 ################################################################################
 
 
-from sqlalchemy import create_engine
 
-# Configura tu conexión
-engine = create_engine("mysql+mysqlconnector://root:hola@localhost:3306/bbdd_pythoneta")
-
-try:
-    # Intenta conectarte
-    with engine.connect() as connection:
-        # Ejecuta una consulta básica
-        result = connection.execute("SELECT 1")
-        print("Conexión exitosa:", result.fetchone())
-except Exception as e:
-    # Maneja errores
-    print("Error al conectar a la base de datos:", e)
 
 
 
@@ -100,6 +87,8 @@ def get_by_estrellas(estrellas):
 
     return jsonify(response), 200
 
+
+
 ################################################################################
 # SERVICIOS                                                                    #
 ################################################################################
@@ -110,7 +99,7 @@ def obtener_servicios():
         result = hotel.obtener_todos_los_servicios()
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
     response = []
     for row in result:
         response.append({'id': row[0], 'nombre': row[1], 'descripcion': row[2]})
@@ -126,20 +115,20 @@ def obtener_servicios_por_reserva(numero_reserva):
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
-    
+
     response = []
     for row in result:
         try:
             servicio = hotel.buscar_servicio_por_id(row[1])
             for s in servicio:
                 response.append({'numero_reserva': row[0], 'id_servicio': row[1], 'nombre_servicio': s[1]})
-                
+
         except Exception as e:
             print(f"Error al buscar servicio por ID: {e}")
             return jsonify({'error': str(e)}), 500
-        
+
     return jsonify(response), 200
-        
+
 @app.route('/api/v1/servicios/cancelar-servicio/<numero_reserva>/<id_servicio>', methods=['POST'])
 def quitar_servicio_de_reserva(numero_reserva, id_servicio):
     try:
@@ -191,7 +180,7 @@ def consultar_reserva(numero_reserva, dni):
     try:
         result = reservas.consultar_reserva(numero_reserva, dni)
     except Exception as e:
-        return jsonify({'error': str(e)}), 500  
+        return jsonify({'error': str(e)}), 500
     if len(result) == 0:
         return jsonify({'error': 'No se encontró la reserva'}), 404
     result = result[0]
@@ -209,6 +198,28 @@ def consultar_reserva(numero_reserva, dni):
 
 def modificar_reserva():
     return
+
+
+@app.route('/api/v1/disponibilidad', methods=['GET'])
+def verificar_disponibilidad():
+    try:
+        hotel_id = request.args.get('id_hotel')
+        inicio = request.args.get('inicio')
+        fin = request.args.get('fin')
+
+        if not hotel_id or not inicio or not fin:
+            return jsonify({"error": "Faltan parámetros: id_hotel, inicio, fin"}), 400
+
+        reservas_activas = hotel.hoteles_fechas(hotel_id, inicio, fin)
+
+        if reservas_activas >= 3:
+            return jsonify({"disponibilidad": False, "mensaje": "No hay lugar en el hotel."})
+        else:
+            return jsonify({"disponibilidad": True, "mensaje": "Hay lugar disponible en el hotel."})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 ################################################################################
 

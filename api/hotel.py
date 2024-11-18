@@ -72,7 +72,7 @@ QUERY_BUSCAR_SERVICIO_POR_ID = "SELECT * FROM servicio WHERE id_servicio = :id_s
 
 QUERY_TODOS_LOS_SERVICIOS = "SELECT * FROM servicio"
 
-engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/bbdd_pythoneta")
+engine = create_engine("mysql+mysqlconnector://root:1234@127.0.0.1:3306/bbdd_pythoneta")
 
 
 def run_query(query, parameters=None):

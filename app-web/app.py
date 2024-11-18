@@ -97,9 +97,30 @@ def cancelar_reserva():
     except requests.exceptions.RequestException as e:
         return render_template("reservas.html")
     
-@app.route("/disponibilidad")
+@app.route("/disponibilidad", methods=["GET", "POST"])
 def disponibilidad():
+    if request.method == "POST":
+        hotel_id = request.form.get("id_hotel")
+        inicio_reserva = request.form.get("inicio_reserva")
+        fin_reserva = request.form.get("fin_reserva")
+
+        if not hotel_id or not inicio_reserva or not fin_reserva:
+            return render_template("disponibilidad.html", error="Complete los datos requeridos.")
+
+        try:
+            respuesta = hotel_fechas(hotel_id, inicio_reserva, fin_reserva)
+
+            if not respuesta:
+                return render_template("disponibilidad.html", error="No hay disponibilidad para esas fechas.")
+
+            return render_template("disponibilidad.html", mensaje="Hay disponibilidad para las fechas seleccionadas.")
+
+        except Exception as e:
+            return render_template("disponibilidad.html", error=f"Error interno")
+
     return render_template("disponibilidad.html")
+
+
 
 
 @app.route("/todos-los-servicios")
