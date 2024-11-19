@@ -1,0 +1,15 @@
+# Kivy with Android tutorial
+
+https://www.youtube.com/watch?v=6gNpSuE01qE
+
+
+
+# VS Code extension
+
+https://marketplace.visualstudio.com/items?itemName=watchakorn-18k.kivy-snippets
+
+
+
+# Kivy docs
+
+https://kivy.org/doc/stable/gettingstarted/first_app.html

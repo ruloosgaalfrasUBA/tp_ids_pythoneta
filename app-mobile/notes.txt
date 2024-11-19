@@ -1,0 +1,34 @@
+# Install Kivy
+
+sudo apt-get -y install python3-pip
+pip install kivy
+
+
+
+# Run App
+
+cd Desktop/HelloWorldApp
+python3 main.py
+
+    // the main file must be called main.py,
+    // else the APK compilation fails
+
+
+
+# Compile APK for Android
+
+    ## Install dependencies
+
+        pip install cython
+        sudo apt-get -y install openjdk-17-jdk
+        sudo apt-get -y install autoconf
+        sudo apt-get -y install libtool
+        pip3 install --user --upgrade buildozer
+
+        // Restart vscode if using vscode terminal
+
+    ## Compile app
+
+        cd Desktop/HelloWorldApp
+        buildozer init
+        buildozer -v android debug

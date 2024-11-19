@@ -1,0 +1,27 @@
+#:kivy 1.9.0
+
+<MyRoot>:
+
+    main_title: hello_world_label
+
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/jellyfish-1459351.jpg'
+        Label:
+            id: hello_world_label
+            text: "Hello World!"
+            font_name:"Montserrat"
+            font_size: 50
+            color: (234, 114, 0, 1)
+        Button:
+            text: "Change color!"
+            font_size: 24
+            # size: 100, 50
+            size_hint: 0.5, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_press: root.change_color()
+
