@@ -1,39 +1,68 @@
 import kivy
+import requests
+
+kivy.require("2.3.0")
+
 from kivy.app import App
-from kivy.core.text import LabelBase
-# from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
-from utils.colors import new_rgb_color
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+from kivy.core.window import Window
+
+API_URI = "http://localhost:5001/api/v1"
+
+class Inicio(BoxLayout):
+
+    def consultarAPI(self):
+        url = f"{API_URI}/reservas/consultar-reserva/{self.input_nro_reserva.text}/{self.input_dni.text}"
+
+        payload = {}
+        headers = {}
+
+        response = requests.request("GET", url, headers=headers, data=payload)
+        
+        data = response.json()
+
+        self.titulo.text = f"{data.get('nombre')}\n{data.get('apellido')}\n{data.get('dni')}"
+
+        print(response.text)
+
+    def on_button_click(self, instance):
+        self.consultarAPI()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.orientation = "vertical"
+        self.padding = 20
+        self.spacing = 15
+
+        self.titulo = Label(text="Flask Seasons", font_size=24, size_hint=(1, 0.2), color=(0, 0, 0, 1))
+        self.add_widget(self.titulo)
+
+        self.input_dni = TextInput(hint_text="Documento de identidad", size_hint=(1, None), height=50)
+        # self.input_dni.text = "12312345"
+        self.add_widget(self.input_dni)
+
+        self.input_nro_reserva = TextInput(hint_text="Número de reserva", size_hint=(1, None), height=50)
+        # self.input_nro_reserva.text = "100"
+        self.add_widget(self.input_nro_reserva)
+
+        self.consult_button = Button(text="Consultar", size_hint=(1, None), height=50, background_color=(0.6, 0.4, 0.8, 1))
+        self.consult_button.bind(on_press=self.on_button_click)
+        self.add_widget(self.consult_button)
 
 
-kivy.require('1.9.0')
+class FlaskSeasonsApp(App):
 
-
-# Add custom fonts
-LabelBase.register(
-    name='Montserrat', 
-    fn_regular='assets/fonts/Montserrat-Bold.ttf'
-)
-
-
-class MyRoot(BoxLayout):
-    def __init__(self):
-        super(MyRoot, self).__init__()
-
-    def change_color(self):
-        self.main_title.color = new_rgb_color()
-
-
-class HelloWorld(App):
-
-    # .kv files path
-    kv_directory = "templates"
+    def configurar_ventana(self):
+        Window.clearcolor = (1, 1, 1, 1)
+        Window.size = (300, 700)
 
     def build(self):
-        # return Label(text="Hello World!")
-        return MyRoot()
+        self.configurar_ventana()
+        return Inicio()
 
-    
+
 if __name__ == "__main__":
-    app = HelloWorld()
-    app.run() 
+    FlaskSeasonsApp().run()
