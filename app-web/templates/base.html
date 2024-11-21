@@ -17,7 +17,7 @@
   </head>
   <body>
     <!-- Modal -->
-    {%include 'modal.html '%}
+    {%include 'modal.html' %}
     <!-- Page-->
     <div class="text-center page">
       <!-- Page preloader-->
@@ -121,6 +121,7 @@
                       <li class="{{'active' if url_for(request.endpoint) == '/' else ''}}"><a href="{{url_for('index')}}">Inicio</a></li>
                       <li class="{{'active' if url_for(request.endpoint).startswith('/hoteles') else ''}}"><a href="{{url_for('hoteles')}}">Hoteles</a></li>
                       <li class="{{'active' if url_for(request.endpoint).startswith('/reservas') else ''}}"><a href="{{url_for('reservas')}}">Reservas</a></li>
+                      <li class="{{'active' if url_for(request.endpoint).startswith('/servicios') else ''}}"><a href="{{url_for('servicios')}}">Servicios</a></li>
                     </ul>
                   </div>
                 </div>
