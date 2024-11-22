@@ -1872,7 +1872,6 @@ function updateHotelName() { // SE UTILIZA PARA EL OPTIONS DE EL TEMPLATE DISPON
 	var input = document.getElementById("reserve_hotel");  
 	input.value = select.options[select.selectedIndex].text;
 }
-//sirve para cargar los datos de las fechas
 document.addEventListener("DOMContentLoaded", function () {
   var form = document.querySelector('.rd-mailform');
 
@@ -1897,5 +1896,31 @@ document.addEventListener("DOMContentLoaded", function () {
           
           form.submit();
       });
+  }
+});
+document.getElementById("disponibilidad-form").addEventListener("submit", async (event) => {
+  event.preventDefault(); 
+
+  const hotelId = document.getElementById("hotel-options").value;
+  const inicio = document.getElementById("inicio").value;
+  const fin = document.getElementById("fin").value;
+
+  if (!hotelId || !inicio || !fin) {
+    alert("Por favor, completa todos los campos.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/v1/disponibilidad?id_hotel=${hotelId}&inicio=${inicio}&fin=${fin}`);
+    const data = await response.json();
+
+    if (data.disponibilidad) {
+      window.location.href = `/inicio?inicio=${inicio}&fin=${fin}`;
+    } else {
+      alert(data.mensaje || "No hay disponibilidad para las fechas seleccionadas.");
+    }
+  } catch (error) {
+    console.error("Error al consultar disponibilidad:", error);
+    alert("Hubo un error al procesar la solicitud. Intenta nuevamente.");
   }
 });

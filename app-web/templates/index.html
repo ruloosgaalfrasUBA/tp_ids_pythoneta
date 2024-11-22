@@ -65,13 +65,31 @@
         <div class="hotel-booking-form">
           <h3>Reservar habitación</h3>
           <!-- RD Mailform-->
-          <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
+          <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="submit">
             <div class="range range-sm-bottom spacing-20">
               <div class="cell-lg-12 cell-md-4">
-                <p class="text-uppercase">Nombre Completo</p>
+                <p class="text-uppercase">Hotel </p>
+                <div class="form-wrap">
+                <select id="hotel-options" onchange="updateHotelName()">
+                  <option value="">Selecciona un hotel...</option>
+                  {%for i in hoteles %}
+                    <option value"{{ i['id_hotel'] }}">{{ i['nombre'] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+              <div class="cell-lg-12 cell-md-4">
+                <p class="text-uppercase">Nombre </p>
                 <div class="form-wrap">
                   <input class="form-input" id="contact-first-name" type="text" name="name" data-constraints="@Required" autocomplete="on" />
-                  <label class="form-label" for="contact-first-name">Nombre y apellido</label>
+                  <label class="form-label" for="contact-first-name">Nombre</label>
+                </div>
+              </div>
+              <div class="cell-lg-12 cell-md-4">
+                <p class="text-uppercase">Apellido</p>
+                <div class="form-wrap">
+                  <input class="form-input" id="contact-last-name" type="text" name="name" data-constraints="@Required" autocomplete="on" />
+                  <label class="form-label" for="contact-last-name">Apellido</label>
                 </div>
               </div>
               <div class="cell-lg-12 cell-md-4 cell-sm-6">
@@ -88,36 +106,14 @@
                   <input class="form-input" id="fin_reserva" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
                 </div>
               </div>
-              <div class="cell-lg-6 cell-md-4 cell-xs-6">
-                <p class="text-uppercase">Adultos</p>
-                <div class="form-wrap form-wrap-validation">
-                  <!--Select 2-->
-                  <select class="form-input select-filter" data-minimum-results-search="-1" data-placeholder="1" data-constraints="@Required">
-                    <option>&nbsp;</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                </div>
-              </div>
-              <div class="cell-lg-6 cell-md-4 cell-xs-6">
-                <p class="text-uppercase">Niños</p>
-                <div class="form-wrap form-wrap-validation">
-                  <!--Select 2-->
-                  <select class="form-input select-filter" data-minimum-results-search="-1" data-placeholder="0" data-constraints="@Required">
-                    <option>&nbsp;</option>
-                    <option value="1">0</option>
-                    <option value="2">1</option>
-                    <option value="3">2</option>
-                    <option value="4">3</option>
-                    <option value="5">4</option>
-                  </select>
-                </div>
-              </div>
               <div class="cell-lg-12 cell-md-4">
-                <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Ver disponibilidad</span></button>
+                <p class="text-uppercase">DNI</p>
+                <div class="form-wrap">
+                  <input class="form-input" id="dni" type="text" name="name" data-constraints="@Required" autocomplete="on" />
+                  <label class="form-label" for="dni">DNI</label>
+                </div>
+              </div>
+                <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>RERSERVAR</span></button>
               </div>
             </div>
           </form>

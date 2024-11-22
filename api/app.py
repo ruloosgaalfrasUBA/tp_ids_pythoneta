@@ -199,7 +199,6 @@ def consultar_reserva(numero_reserva, dni):
 def modificar_reserva():
     return
 
-
 @app.route('/api/v1/disponibilidad', methods=['GET'])
 def verificar_disponibilidad():
     try:
@@ -219,6 +218,7 @@ def verificar_disponibilidad():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 ################################################################################

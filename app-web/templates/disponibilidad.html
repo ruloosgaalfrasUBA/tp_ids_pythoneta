@@ -4,7 +4,7 @@
 {%block content%}
         <div id="reserva-vista">
           <table class="section section-md bg-white text-center" id="reservas_hoteles">
-            <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
+            <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="get" action="{{url_for('disponibilidad')}}">
               <div class="range range-sm-bottom spacing-20">
                 <div>
                   <div class="cell-sm-6">
@@ -14,12 +14,9 @@
                       <input class="form-input" id="reserve_hotel" type="text" name="hotel" data-constraints="@Required" readonly role="button" style="display: none;" />
                       <select id="hotel-options" onchange="updateHotelName()">
                         <option value="">Selecciona un hotel...</option>
-                        <option value="Lagos Andinos">Lagos Andinos</option>
-                        <option value="Mar del Plata">Mar del Plata</option>
-                        <option value="Cerro Siete Colores">Cerro Siete Colores</option>
-                        <option value="Selva Misionera">Selva Misionera</option>
-                        <option value="Valle de la Luna">Valle de la Luna</option>
-                        <option value="Cerro Fitz Roy">Cerro Fitz Roy</option>
+                        {%for i in hoteles %}
+                          <option value="{{ i['id_hotel'] }}">{{ i['nombre'] }}</option>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>

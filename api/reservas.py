@@ -59,7 +59,7 @@ WHERE id_reserva = :id_reserva
 ;
 """
 
-engine = create_engine("mysql+mysqlconnector://root:root@localhost:3306/bbdd_pythoneta")
+engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/bbdd_pythoneta")
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:

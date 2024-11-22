@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request ,redirect ,url_for
 import requests
 
 app = Flask(__name__)
@@ -8,7 +8,14 @@ API_URI = "http://localhost:5001/api/v1"
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    try:
+        response = requests.get(API_URI+'/hoteles')
+        response.raise_for_status()
+        hoteles = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        hoteles = []
+    return render_template("index.html",hoteles=hoteles)
 
 
 @app.route("/hoteles")
@@ -97,33 +104,52 @@ def cancelar_reserva():
     except requests.exceptions.RequestException as e:
         return render_template("reservas.html")
     
+
 @app.route("/disponibilidad", methods=["GET", "POST"])
 def disponibilidad():
+    try:
+        response = requests.get(API_URI + '/hoteles')
+        response.raise_for_status()
+        hoteles = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching hotels: {e}")
+        hoteles = []
+        return render_template("disponibilidad.html", hoteles=hoteles, error="No se pudieron cargar los hoteles.")
+
     if request.method == "POST":
         hotel_id = request.form.get("id_hotel")
         inicio_reserva = request.form.get("inicio_reserva")
         fin_reserva = request.form.get("fin_reserva")
 
         if not hotel_id or not inicio_reserva or not fin_reserva:
-            return render_template("disponibilidad.html", error="Complete los datos requeridos.")
+            return render_template("disponibilidad.html", hoteles=hoteles, error="Complete los datos requeridos.")
 
         try:
-            respuesta = hotel_fechas(hotel_id, inicio_reserva, fin_reserva)
+            disponibilidad_response = requests.get(
+                API_URI + f"/disponibilidad?id_hotel={hotel_id}&inicio={inicio_reserva}&fin={fin_reserva}"
+            )
+            disponibilidad_response.raise_for_status()
+            respuesta = disponibilidad_response.json()
 
-            if not respuesta:
-                return render_template("disponibilidad.html", error="No hay disponibilidad para esas fechas.")
+            if not respuesta.get("disponible"):
+                return render_template(
+                    "disponibilidad.html",
+                    hoteles=hoteles,
+                    error="No hay disponibilidad para esas fechas."
+                )
 
-            return render_template("disponibilidad.html", mensaje="Hay disponibilidad para las fechas seleccionadas.")
+            return redirect(url_for("index", inicio_reserva=inicio_reserva, fin_reserva=fin_reserva))
 
-        except Exception as e:
-            return render_template("disponibilidad.html", error=f"Error interno")
+        except requests.exceptions.RequestException as e:
+            print(f"Error checking availability: {e}")
+            return render_template(
+                "disponibilidad.html",
+                hoteles=hoteles,
+                error="Error al verificar la disponibilidad. Inténtelo nuevamente."
+            )
 
-    return render_template("disponibilidad.html")
+    return render_template("disponibilidad.html", hoteles=hoteles)
 
-
-
-
-@app.route("/todos-los-servicios")
 def todos_los_servicios():
     try:
         response = requests.get(API_URI+'servicios')
