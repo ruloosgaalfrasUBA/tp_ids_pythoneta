@@ -1,4 +1,5 @@
- <table>
+{% extends 'base.html' %} {%block title%} Reservas {%endblock title%} {%block content%}
+<table>
   
     <tr>
       <th>id servicio</th>
@@ -37,3 +38,6 @@
       <input type="text" name="buscar_servicios_reserva" id="buscar_servicios_reserva" placeholder="Ingrese su número de reserva">
       <button type="submit">Buscar</button>
     </form>
+
+
+{%endblock content%}

@@ -1,23 +1,22 @@
+{% extends 'base.html' %} {%block title%} Reservas {%endblock title%} {%block content%}
+<form action="{{ url_for('cancelar_servicio') }}" method="post">
 
-<table>
+  <input type="text" name="" id="" value="id servicio">
+  <input type="text" name="" id="" value="numero reserva">
+  <input type="text" name="" id="" value="nombre servicio">
+  <br>
+  {%for servicio in servicios_contratados %}
+    <input type="text" name="id_servicio" id="id_servicio" value="{{servicio.id_servicio}}">
+    <input type="text" name="numero_reserva" id="numero_reserva" value="{{servicio.numero_reserva}}">
+    <input type="text" name="nombre_servicio" id="nombre_servicio" value="{{servicio.nombre_servicio}}">
+    <button type="submit">Cancelar servicio</button>
+    <br>
+  {% endfor %}
 
-    <tr>
-      <th>id servicio</th>
-      <th>numero reserva</th>
-    </tr>
-    <tr>
-    {%for servicio in servicios_contratados %}
-      <td>{{servicio.id_servicio}}</td>
-      <td>{{servicio.numero_reserva}}</td>
-      <td>{{servicio.nombre_servicio}}</td>
-      <td>
-          <a href="{{ url_for('cancelar_servicio',numero_reserva=servicio.numero_reserva, id_servicio= servicio.id_servicio) }}" class="button">
-              Cancelar servicio
-          </a>
-          
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+</form>
 
+  
   <a href="{{ url_for('servicios') }}">Volver a todos los servicios</a>
+  
+  
+  {%endblock content%}

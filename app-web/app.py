@@ -132,7 +132,7 @@ def servicios():
 @app.route("/servicios-contratados/reserva:<numero_reserva>")
 def servicios_contratados(numero_reserva):
     try:
-        response = requests.get(API_URI+'/servicios-por-reserva/'+numero_reserva)
+        response = requests.get(API_URI+f'/servicios-por-reserva/{numero_reserva}')
         response.raise_for_status()
         servicios_contratados = response.json()
     except requests.exceptions.RequestException as e:
@@ -155,16 +155,23 @@ def agregar_servicios():
     return contratar_servicio(numero_reserva, id_servicio)
 
 
-@app.route("/cancelar-servicio/<numero_reserva>/<id_servicio>", methods=['GET'])
-def cancelar_servicio(numero_reserva, id_servicio):
+@app.route("/cancelar-servicio", methods=['GET', 'POST'])
+def cancelar_servicio():
+
+    numero_reserva = request.form.get("numero_reserva")
+    id_servicio = request.form.get("id_servicio")
 
     try:
-        response = requests.post(API_URI + '/servicios/cancelar-servicio/'+numero_reserva+'/'+id_servicio)
+        response = requests.post(API_URI + f'/servicios/cancelar-servicio/{(numero_reserva)}/{id_servicio}')
         response.raise_for_status()
+        return servicios_contratados(numero_reserva)
+
     except Exception as e:
         print(f"Error: {e}")
 
-    return servicios_contratados(numero_reserva)
+
+    return servicios()    
+
 
 
 @app.route("/contratar-servicio/<numero_reserva>/<id_servicio>")
