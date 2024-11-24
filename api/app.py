@@ -190,9 +190,12 @@ def consultar_reserva(numero_reserva, dni):
     }
     return jsonify(response)
 
-def modificar_reserva():
-    return
-
+def modificar_reserva(numero_reserva, data):
+    try:
+        reservas.modificar_reserva(numero_reserva, data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
 ################################################################################
 
 if __name__ == "__main__":
