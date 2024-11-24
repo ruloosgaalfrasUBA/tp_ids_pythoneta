@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
-  <table>
+{% extends 'base.html' %} {%block title%} Reservas {%endblock title%} {%block content%}
+<table>
   
     <tr>
       <th>id servicio</th>
@@ -47,6 +39,5 @@
       <button type="submit">Buscar</button>
     </form>
 
-    
-</body>
-</html>
+
+{%endblock content%}

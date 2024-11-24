@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
+import db
 
 QUERY_CREAR_RESERVA = """
 INSERT INTO reserva (id_hotel) 
@@ -55,33 +54,25 @@ UPDATE detalle_reservas
 
 """
 QUERY_MODIFICAR_RESERVA_FIN = """
-WHERE id_reserva = :id_reserva
+WHERE numero_reserva = :numero_reserva
 ;
 """
 
-engine = create_engine("mysql+mysqlconnector://root:root@localhost:3306/bbdd_pythoneta")
-
-def run_query(query, parameters=None):
-    with engine.connect() as conn:
-        result = conn.execute(text(query), parameters)
-        conn.commit()
-    return result
-
 def crear_reserva(id_hotel):
-    run_query(QUERY_CREAR_RESERVA, {"id_hotel": id_hotel})
+    db.run_query(QUERY_CREAR_RESERVA, {"id_hotel": id_hotel})
 
 def crear_detalles_reserva(data):
-    run_query(QUERY_CREAR_DETALLES_DE_RESERVA, data)
+    db.run_query(QUERY_CREAR_DETALLES_DE_RESERVA, data)
 
 def cancelar_reserva(numero_reserva):
-    run_query(QUERY_CANCELAR_RESERVA, {"numero_reserva": numero_reserva})
+    db.run_query(QUERY_CANCELAR_RESERVA, {"numero_reserva": numero_reserva})
 
 def consultar_reserva(numero_reserva, dni):
     datos = {"numero_reserva": numero_reserva, "dni": dni}
-    return run_query(QUERY_CONSULTAR_RESERVA, datos).fetchall()
+    return db.run_query(QUERY_CONSULTAR_RESERVA, datos).fetchall()
 
-def modificar_reserva(id_reserva, data):
+def modificar_reserva(numero_reserva, data):
     query = QUERY_MODIFICAR_RESERVA_INICIO
     query += "SET ".join([f"{key} = '{value}' \n" for key, value in data.items()])
     query += QUERY_MODIFICAR_RESERVA_FIN
-    run_query(query,{"id_reserva": id_reserva})
+    db.run_query(query,{"numero_reserva": numero_reserva})
