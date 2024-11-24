@@ -1866,61 +1866,11 @@ $(
     }
   })()
 );
-
 function updateHotelName() { // SE UTILIZA PARA EL OPTIONS DE EL TEMPLATE DISPONIBILIDAD
-	var select = document.getElementById("hotel-options");
-	var input = document.getElementById("reserve_hotel");  
-	input.value = select.options[select.selectedIndex].text;
+  var select = document.getElementById("hotel-options");
+  var selectedOption = select.options.selectedIndex;
+ 
+  document.getElementById("id_hotel").value=selectedOption ;
+
 }
-document.addEventListener("DOMContentLoaded", function () {
-  var form = document.querySelector('.rd-mailform');
 
-  if (form) {
-      form.addEventListener('submit', function(event) {
-          event.preventDefault();
-          
-          var inicio = document.getElementById('inicio_reserva').value;
-          var fin = document.getElementById('fin_reserva').value;
-          
-          var inputInicio = document.createElement('input');
-          inputInicio.type = 'hidden';
-          inputInicio.name = 'inicio_reserva';
-          inputInicio.value = inicio;
-          form.appendChild(inputInicio);
-          
-          var inputFin = document.createElement('input');
-          inputFin.type = 'hidden';
-          inputFin.name = 'fin_reserva';
-          inputFin.value = fin;
-          form.appendChild(inputFin);
-          
-          form.submit();
-      });
-  }
-});
-document.getElementById("disponibilidad-form").addEventListener("submit", async (event) => {
-  event.preventDefault(); 
-
-  const hotelId = document.getElementById("hotel-options").value;
-  const inicio = document.getElementById("inicio").value;
-  const fin = document.getElementById("fin").value;
-
-  if (!hotelId || !inicio || !fin) {
-    alert("Por favor, completa todos los campos.");
-    return;
-  }
-
-  try {
-    const response = await fetch(`/api/v1/disponibilidad?id_hotel=${hotelId}&inicio=${inicio}&fin=${fin}`);
-    const data = await response.json();
-
-    if (data.disponibilidad) {
-      window.location.href = `/inicio?inicio=${inicio}&fin=${fin}`;
-    } else {
-      alert(data.mensaje || "No hay disponibilidad para las fechas seleccionadas.");
-    }
-  } catch (error) {
-    console.error("Error al consultar disponibilidad:", error);
-    alert("Hubo un error al procesar la solicitud. Intenta nuevamente.");
-  }
-});

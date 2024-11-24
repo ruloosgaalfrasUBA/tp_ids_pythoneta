@@ -154,18 +154,24 @@ def agregar_servicio_a_reserva(numero_reserva, id_servicio):
 
 @app.route('/api/v1/reservas/crear-reserva', methods=['POST'])
 def crear_reserva():
-    data = request.get_json()
     keys = ("nombre", "apellido", "dni", "inicio_reserva", "fin_reserva", "id_hotel")
-    for key in keys:
-        if key not in data:
-            return jsonify({'error': f'Falta el dato {key}'}), 400
     try:
+        
+        data = request.get_json()
+        print(data)
+
+        for key in keys:
+            if key not in data or not data[key]:
+                return jsonify({'error': f'Falta el dato {key}'}), 400
+
         id_hotel = data.pop("id_hotel")
         reservas.crear_reserva(id_hotel)
         reservas.crear_detalles_reserva(data)
-        return jsonify(data), 201
+
+        return jsonify({'success': 'Reserva creada exitosamente'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/api/v1/reservas/cancelar-reserva/<numero_reserva>', methods=['POST'])
 def cancelar_reserva(numero_reserva):
@@ -205,6 +211,7 @@ def verificar_disponibilidad():
         hotel_id = request.args.get('id_hotel')
         inicio = request.args.get('inicio')
         fin = request.args.get('fin')
+        print(hotel_id,inicio,fin)
 
         if not hotel_id or not inicio or not fin:
             return jsonify({"error": "Faltan parámetros: id_hotel, inicio, fin"}), 400

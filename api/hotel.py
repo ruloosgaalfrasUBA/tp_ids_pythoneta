@@ -10,7 +10,7 @@ QUERY_SELECT_HOTELES_ID = "SELECT * FROM hotel WHERE id_hotel = :id_hotel ORDER 
 QUERY_HOTELES_RESERVADOS = """
 SELECT DISTINCT h.id_hotel FROM hotel h 
 INNER JOIN reserva r ON r.id_hotel = h.id_hotel
-INNER JOIN detalle_reserva dr ON dr.id_reserva = r.id_reserva
+INNER JOIN detalle_reservas dr ON dr.id_reserva = r.id_reserva
 WHERE (dr.inicio_reserva < :inicio AND :inicio < dr.fin_reserva)
 OR (:fin < dr.fin_reserva AND :fin > dr.inicio_reserva)
 OR (dr.inicio_reserva BETWEEN :inicio AND :fin AND dr.fin_reserva BETWEEN '2023-01-13' AND '2023-01-18')
@@ -20,7 +20,7 @@ QUERY_DISPONIBILIDAD ="""
     SELECT COUNT(*) 
     FROM hotel h 
     INNER JOIN reserva r ON r.id_hotel = h.id_hotel
-    INNER JOIN detalle_reserva dr ON dr.id_reserva = r.id_reserva
+    INNER JOIN detalle_reservas dr ON dr.id_reserva = r.id_reserva
     WHERE h.id_hotel = :hotel_id
       AND dr.activo = 1 
       AND (

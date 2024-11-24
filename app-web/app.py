@@ -6,16 +6,59 @@ app = Flask(__name__)
 
 API_URI = "http://localhost:5001/api/v1"
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     try:
-        response = requests.get(API_URI+'/hoteles')
+        response = requests.get(API_URI + '/hoteles')
         response.raise_for_status()
         hoteles = response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching data: {e}")
+        print(f"Error al obtener información de hoteles: {e}")
         hoteles = []
-    return render_template("index.html",hoteles=hoteles)
+        return render_template("index.html", hoteles=hoteles, error="No se pudieron cargar los hoteles.")
+
+    if request.method == "POST":
+        nombre = request.form.get("nombre")
+        apellido = request.form.get("apellido")
+        dni = request.form.get("dni")
+        inicio_reserva = request.form.get("inicio_reserva")
+        fin_reserva = request.form.get("fin_reserva")
+        id_hotel = request.form.get("id_hotel")
+        print(nombre,apellido,dni,inicio_reserva,fin_reserva,id_hotel)
+
+        if not nombre or not apellido or not dni or not inicio_reserva or not fin_reserva or not id_hotel:
+            return render_template("index.html", hoteles=hoteles, error="Complete todos los campos del formulario.")
+
+        try:
+          
+            response = requests.get( API_URI + f"/disponibilidad?id_hotel={id_hotel}&inicio={inicio_reserva}&fin={fin_reserva}")
+            response.raise_for_status()
+            data = response.json()
+
+            if not data['disponibilidad']:
+                return render_template("index.html", hoteles=hoteles, error="No hay disponibilidad en el hotel para las fechas seleccionadas.")
+
+            data = {
+                "nombre": nombre,
+                "apellido": apellido,
+                "dni": dni,
+                "inicio_reserva": inicio_reserva,
+                "fin_reserva": fin_reserva,
+                "id_hotel": id_hotel
+            }
+            respuesta = requests.post(API_URI + f"/reservas/crear-reserva", json=data)
+            respuesta.raise_for_status()
+            resultdo: dict = respuesta.json()
+
+            error =resultdo.get("error")
+            success =resultdo.get("message")
+
+            return render_template("index.html", hoteles=hoteles, success="Reserva creada exitosamente")
+
+        except requests.exceptions.RequestException as e:
+            return render_template("index.html", hoteles=hoteles, error=f"Error al crear la reserva: {e}")
+
+    return render_template("index.html", hoteles=hoteles)
 
 
 @app.route("/hoteles")
