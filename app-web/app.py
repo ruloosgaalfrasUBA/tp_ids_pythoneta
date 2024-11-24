@@ -8,7 +8,14 @@ API_URI = "http://localhost:5001/api/v1"
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    try:
+        response = requests.get(API_URI+'/hoteles')
+        response.raise_for_status()
+        hoteles = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        hoteles = []
+    return render_template("index.html", hoteles=hoteles)
 
 
 @app.route("/hoteles")
@@ -99,7 +106,15 @@ def cancelar_reserva():
     
 @app.route("/disponibilidad")
 def disponibilidad():
-    return render_template("disponibilidad.html")
+    try:
+        response = requests.get(API_URI+'/hoteles')
+        response.raise_for_status()
+        hoteles = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        hoteles = []
+
+    return render_template("disponibilidad.html", hoteles=hoteles)
 
 
 @app.route("/todos-los-servicios")
