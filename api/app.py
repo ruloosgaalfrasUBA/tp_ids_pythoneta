@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, render_template
 
 import hotel
 import reservas
+import servicios
 
 app = Flask(__name__)
 
