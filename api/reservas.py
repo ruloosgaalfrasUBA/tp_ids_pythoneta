@@ -54,8 +54,7 @@ UPDATE detalle_reservas
 
 """
 QUERY_MODIFICAR_RESERVA_FIN = """
-WHERE numero_reserva = :numero_reserva
-;
+WHERE numero_reserva = :numero_reserva;
 """
 
 def crear_reserva(id_hotel):
@@ -72,7 +71,7 @@ def consultar_reserva(numero_reserva, dni):
     return db.run_query(QUERY_CONSULTAR_RESERVA, datos).fetchall()
 
 def modificar_reserva(numero_reserva, data):
-    query = QUERY_MODIFICAR_RESERVA_INICIO
-    query += "SET ".join([f"{key} = '{value}' \n" for key, value in data.items()])
+    query = QUERY_MODIFICAR_RESERVA_INICIO + "SET "
+    query += ",".join([f"{key} = '{value}' " for key, value in data.items()])
     query += QUERY_MODIFICAR_RESERVA_FIN
     db.run_query(query,{"numero_reserva": numero_reserva})
