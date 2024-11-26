@@ -158,7 +158,7 @@ def crear_reserva():
     try:
         
         data = request.get_json()
-        print(data)
+       # print(data)
 
         for key in keys:
             if key not in data or not data[key]:
@@ -205,27 +205,24 @@ def consultar_reserva(numero_reserva, dni):
 def modificar_reserva():
     return
 
+
 @app.route('/api/v1/disponibilidad', methods=['GET'])
-def verificar_disponibilidad():
+def disponibilidad():
+    id_hotel = request.args.get('id_hotel')
+    inicio_reserva = request.args.get('inicio_reserva')
+    fin_reserva = request.args.get('fin_reserva')
+    print(id_hotel, inicio_reserva, fin_reserva)
+    
+    if not all([id_hotel, inicio_reserva, fin_reserva]):
+        return jsonify({'error': 'Faltan parámetros en la solicitud'}), 400
+
     try:
-        hotel_id = request.args.get('id_hotel')
-        inicio = request.args.get('inicio')
-        fin = request.args.get('fin')
-        print(hotel_id,inicio,fin)
-
-        if not hotel_id or not inicio or not fin:
-            return jsonify({"error": "Faltan parámetros: id_hotel, inicio, fin"}), 400
-
-        reservas_activas = hotel.hoteles_fechas(hotel_id, inicio, fin)
-
-        if reservas_activas >= 3:
-            return jsonify({"disponibilidad": False, "mensaje": "No hay lugar en el hotel."})
-        else:
-            return jsonify({"disponibilidad": True, "mensaje": "Hay lugar disponible en el hotel."})
+        result = hotel.consultar_disponibilidad(id_hotel,inicio_reserva,fin_reserva)
+        return jsonify({'disponibilidad': disponible}), 200
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+        print(f"Error al verificar disponibilidad: {e}")
+        return jsonify({'error': 'Error interno del servidor'}), 500
 
 
 ################################################################################

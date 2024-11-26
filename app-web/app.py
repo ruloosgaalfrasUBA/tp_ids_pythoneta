@@ -24,19 +24,19 @@ def index():
         inicio_reserva = request.form.get("inicio_reserva")
         fin_reserva = request.form.get("fin_reserva")
         id_hotel = request.form.get("id_hotel")
-        print(nombre,apellido,dni,inicio_reserva,fin_reserva,id_hotel)
+       # print(nombre,apellido,dni,inicio_reserva,fin_reserva,id_hotel)
 
         if not nombre or not apellido or not dni or not inicio_reserva or not fin_reserva or not id_hotel:
             return render_template("index.html", hoteles=hoteles, error="Complete todos los campos del formulario.")
 
         try:
           
-            response = requests.get( API_URI + f"/disponibilidad?id_hotel={id_hotel}&inicio={inicio_reserva}&fin={fin_reserva}")
-            response.raise_for_status()
-            data = response.json()
+           # response = requests.get( API_URI + f"/disponibilidad?id_hotel={id_hotel}&inicio={inicio_reserva}&fin={fin_reserva}")
+            #response.raise_for_status()
+           # data = response.json()
 
-            if not data['disponibilidad']:
-                return render_template("index.html", hoteles=hoteles, error="No hay disponibilidad en el hotel para las fechas seleccionadas.")
+            #if not data['disponibilidad']:
+               # return render_template("index.html", hoteles=hoteles, error="No hay disponibilidad en el hotel para las fechas seleccionadas.")
 
             data = {
                 "nombre": nombre,
@@ -155,42 +155,27 @@ def disponibilidad():
         response.raise_for_status()
         hoteles = response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching hotels: {e}")
+        print(f"Error al obtener información de hoteles: {e}")
         hoteles = []
         return render_template("disponibilidad.html", hoteles=hoteles, error="No se pudieron cargar los hoteles.")
-
+    
     if request.method == "POST":
-        hotel_id = request.form.get("id_hotel")
         inicio_reserva = request.form.get("inicio_reserva")
         fin_reserva = request.form.get("fin_reserva")
-
-        if not hotel_id or not inicio_reserva or not fin_reserva:
-            return render_template("disponibilidad.html", hoteles=hoteles, error="Complete los datos requeridos.")
+        id_hotel = request.form.get("id_hotel")
+        print(inicio_reserva,fin_reserva,id_hotel)
+        if not inicio_reserva or not fin_reserva or not id_hotel:
+            return render_template("disponibilidad.html", hoteles=hoteles, error="Complete todos los campos del formulario.")
 
         try:
-            disponibilidad_response = requests.get(
-                API_URI + f"/disponibilidad?id_hotel={hotel_id}&inicio={inicio_reserva}&fin={fin_reserva}"
-            )
-            disponibilidad_response.raise_for_status()
-            respuesta = disponibilidad_response.json()
-
-            if not respuesta.get("disponible"):
-                return render_template(
-                    "disponibilidad.html",
-                    hoteles=hoteles,
-                    error="No hay disponibilidad para esas fechas."
-                )
-
-            return redirect(url_for("index", inicio_reserva=inicio_reserva, fin_reserva=fin_reserva))
-
+            
+            response = requests.get( API_URI + f"/disponibilidad?id_hotel={id_hotel}&inicio_reserva={inicio_reserva}&fin_reserva={fin_reserva}")
+            response.raise_for_status()
+            data = response.json()
+        
         except requests.exceptions.RequestException as e:
-            print(f"Error checking availability: {e}")
-            return render_template(
-                "disponibilidad.html",
-                hoteles=hoteles,
-                error="Error al verificar la disponibilidad. Inténtelo nuevamente."
-            )
-
+                return render_template("disponibilidad.html", hoteles=hoteles, error=f"Error al consultar disponibilidad: {e}")
+        
     return render_template("disponibilidad.html", hoteles=hoteles)
 
 def todos_los_servicios():

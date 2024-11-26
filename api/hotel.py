@@ -17,11 +17,11 @@ OR (dr.inicio_reserva BETWEEN :inicio AND :fin AND dr.fin_reserva BETWEEN '2023-
 
 """
 QUERY_DISPONIBILIDAD ="""
-    SELECT COUNT(*) 
+    SELECT *
     FROM hotel h 
     INNER JOIN reserva r ON r.id_hotel = h.id_hotel
     INNER JOIN detalle_reservas dr ON dr.id_reserva = r.id_reserva
-    WHERE h.id_hotel = :hotel_id
+    WHERE h.id_hotel = :id_hotel
       AND dr.activo = 1 
       AND (
         (dr.inicio_reserva < :inicio AND :inicio < dr.fin_reserva)
@@ -116,3 +116,6 @@ def cancelar_servicio(numero_reserva, id_servicio):
 
 def contratar_servicio(numero_reserva, id_servicio):
     return run_query(QUERY_CONTRATAR_SERVICIO, {"numero_reserva": numero_reserva, "id_servicio": id_servicio})
+
+def consultar_disponibilidad(id_hotel, inicio_reserva, fin_reserva):
+    return run_query(QUERY_DISPONIBILIDAD, {'id_hotel': id_hotel, 'inicio_reserva': inicio_reserva, 'fin_reserva': fin_reserva })
