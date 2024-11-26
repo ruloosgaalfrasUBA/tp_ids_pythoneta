@@ -43,7 +43,7 @@ class Inicio(BoxLayout):
         url = f"{API_URI}/reservas/consultar-reserva/{self.input_nro_reserva.text}/{self.input_dni.text}"
         
         url_servicios = f"{API_URI}/servicios-por-reserva/{self.input_nro_reserva.text}"
-<<<<<<< HEAD
+
 
         url_todos_los_servicios = f"{API_URI}/servicios"
 
@@ -91,50 +91,7 @@ class Inicio(BoxLayout):
 
     def agregar_servicio(self, instance):
         self.agregarAPI()
-
-=======
-
-        payload = {}
-        headers = {}
-<<<<<<< HEAD
         
-        if self.input_dni.text.replace(" ", "") == "" or self.input_nro_reserva.text.replace(" ", "") == "":
-            self.titulo.text = "DATOS INVALIDOS"
-        else:
-            response = requests.request("GET", url, headers=headers, data=payload)
-            self.servicios.text = ""
-            data = response.json()
-            if data.get('nombre') == None:
-                self.titulo.text = "LA RESERVA NO EXISTE " + "\n" + "O FUE CANCELADA."
-            else:
-                servicios = []
-                self.titulo.text = f"{data.get('nombre')}\n{data.get('apellido')}\n{data.get('dni')}"
-                response = requests.request("GET", url_servicios, headers=headers, data=payload)
-                data_servicio = response.json()
-                for i in data_servicio:
-                   self.servicios.text += f"{i['id_servicio']} - {i['nombre_servicio']} \n"
-=======
-
-        payload_servicios = {}
-        headers_servicios = {}
-
-        response = requests.request("GET", url, headers=headers, data=payload)
-        self.servicios.text = ""
-        data = response.json()
-        if data.get('nombre') == None:
-            self.titulo.text = "LA RESERVA NO EXISTE " + "\n" + "O FUE CANCELADA."
-        else: 
-            self.titulo.text = f"{data.get('nombre')}\n{data.get('apellido')}\n{data.get('dni')}"
-            response_servicios = requests.request("GET", url_servicios, headers=headers_servicios, data=payload_servicios)
-            data_servicio = response_servicios.json()
-            for i in data_servicio:
-                self.servicios.text += f"{i['id_servicio']} - {i['nombre_servicio']} \n"
->>>>>>> 3014eff24165a4cc83ec65fa13eba58f66b88f50
-            
-
-        
-        
->>>>>>> aed2c0264edeecda44d595d792c94ba05020eb38
     def on_button_click(self, instance):
         self.consultarAPI()
 
@@ -146,11 +103,6 @@ class Inicio(BoxLayout):
 
         self.titulo = Label(text="Flask Seasons", font_size=20, size_hint=(1, 0.2), color=(0, 0, 0, 1))
         self.add_widget(self.titulo)
-
-<<<<<<< HEAD
-        
-
-        
 
         self.grid_lista = GridLayout(cols=2)        
 
@@ -177,15 +129,9 @@ class Inicio(BoxLayout):
         self.grid.add_widget(self.agregar_button)
 
         
-=======
-<<<<<<< HEAD
-        
 
-=======
->>>>>>> 3014eff24165a4cc83ec65fa13eba58f66b88f50
         self.servicios = Label(text="", font_size=19, size_hint=(1, 0.2), color=(0, 0, 0, 1))
         self.add_widget(self.servicios)
->>>>>>> aed2c0264edeecda44d595d792c94ba05020eb38
 
         self.input_dni = TextInput(hint_text="Documento de identidad", size_hint=(1, None), height=50)
         # self.input_dni.text = "12312345"
@@ -199,12 +145,10 @@ class Inicio(BoxLayout):
         self.consult_button.bind(on_press=self.on_button_click)
         self.grid.add_widget(self.consult_button)
 
-<<<<<<< HEAD
+
 
         self.add_widget(self.grid)
 
-=======
->>>>>>> aed2c0264edeecda44d595d792c94ba05020eb38
 #45659875
 class FlaskSeasonsApp(App):
 
