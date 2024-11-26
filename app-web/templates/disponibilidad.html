@@ -2,6 +2,7 @@
 {%block title%} Hoteles {%endblock title%} 
 
 {%block content%}
+<<<<<<< HEAD
         <div id="reserva-vista">
           <table class="section section-md bg-white text-center" id="reservas_hoteles">
             <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
@@ -20,29 +21,57 @@
                       </select>
                     </div>
                   </div>
+=======
+    
+          <table style="width: 200px;">
+            <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{url_for('disponibilidad')}}" >
+              <div class="range range-sm-bottom spacing-20">
+                <div class="cell-lg-12 cell-md-4">
+                  <p class="text-uppercase">Hotel </p>
+                  <div class="form-wrap">
+                   <input type="hidden" name="id_hotel" id="id_hotel" data-constraints="@Required" required>
+                  <select style="width: 310px;" id="hotel-options" onchange="updateHotelName()">
+                    <option class="form-options" value="">Selecciona un hotel...</option>
+                    {%for i in hoteles %}
+                      <option id="{{ i['id_hotel'] }}" value"{{ i['id_hotel'] }}">{{ i['nombre'] }}</option>
+                    {% endfor %}
+                  </select>
+>>>>>>> Fede
                 </div>
               </div>
-                <div class="cell-sm-6">
+                </div>
+                <div class="cell-lg-12 cell-md-4 cell-sm-6">
                   <p class="text-uppercase">Entrada</p>
                   <div class="form-wrap">
-                    <label class="form-label form-label-icon" for="date-in-reserve"><span class="icon icon-primary fa-calendar "></span><span>Fecha de entrada</span></label>
-                    <input class="form-input" id="date-in-reserve" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
+                    <label class="form-label form-label-icon" for="inicio_reserva"><span class="icon icon-primary fa-calendar"></span><span>Fecha de entrada</span></label>
+                    <input class="form-input" id="inicio_reserva" data-time-picker="date" type="text" name="inicio_reserva" data-constraints="@Required" role="button" required/>
                   </div>
                 </div>
-                <div class="cell-sm-6">
+                <div class="cell-lg-12 cell-md-4 cell-sm-6">
                   <p class="text-uppercase">Salida</p>
                   <div class="form-wrap">
-                    <label class="form-label form-label-icon" for="date-out-reserve"><span class="icon icon-primary fa-calendar"></span><span>Fecha de salida</span></label>
-                    <input class="form-input" id="date-out-reserve" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
+                    <label class="form-label form-label-icon" for="fin_reserva"><span class="icon icon-primary fa-calendar"></span><span>Fecha de salida</span></label>
+                    <input class="form-input" id="fin_reserva" data-time-picker="date" type="text" name="fin_reserva" data-constraints="@Required" role="button" required/>
                   </div>
                 </div>
-                <div class="cell-sm-6 boton-reserva">
-                  <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
+                    <p style="font-size: small ; color:#9b9b9b">*Las reservas estaran sujetas a disponibilidad.</p>
+                </div>
+                  <button class="button button-primary button-square button-block button-effect-ujarak" id="submitForm" formmethod="post" type="submit"><span>Consultar disponibilidad</span></button>
                 </div>
               </div>
             </form>
+<<<<<<< HEAD
           </table>
         </div>
+=======
+              {% if error %}
+              <p class="msj_error">{{ error }}</p>
+          {% elif mensaje %}
+              <p class="msj_error">{{ mensaje }}</p>
+          {% endif %}
+          </table>
+  
+>>>>>>> Fede
         <section class="section section-md bg-white text-center text-sm-left">
           <div class="shell-wide">
             <div class="range range-10 range-middle">
@@ -87,5 +116,40 @@
             </div>
           </div>
         </section>
+<<<<<<< HEAD
         
+=======
+        <script>
+          document.querySelector('#submitForm').addEventListener('click', (event) => {
+            const form = document.querySelector('form');
+      
+            if (form.checkValidity()) {
+                form.submit(); 
+            } else {
+                event.preventDefault(); 
+                alert('Por favor completa todos los campos requeridos.');
+            }
+      
+        });
+      
+        $('#inicio_reserva').on('change', function (event, date) {
+          const fechaInicial = $('#inicio_reserva').attr('data-fecha-inicio');
+          const fechaFinal = $('#fin_reserva').attr('data-fecha-fin');
+          const fechaSeleccionada = moment(date).format('YYYY-MM-DD');
+          $('#fin_reserva').bootstrapMaterialDatePicker('setMinDate', fechaSeleccionada);
+          $('#fin_reserva').bootstrapMaterialDatePicker('setDate', fechaSeleccionada);
+          $('#fin_reserva').val(fechaSeleccionada);
+      
+      
+        });
+      
+        // Habilita el botón de modificar al cambiar la fecha de fin si es distinta a la fecha fin original de la reserva.
+        $('#fin_reserva').on('change', function (event, date) {
+          const fechaInicial = $('#inicio_reserva').attr('data-fecha-inicio');
+          const fechaFinal = $('#fin_reserva').attr('data-fecha-fin');
+          const fechaSeleccionada = moment(date).format('YYYY-MM-DD');
+         
+        });
+        </script>
+>>>>>>> Fede
 {%endblock content%}

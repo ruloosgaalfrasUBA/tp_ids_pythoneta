@@ -6,6 +6,7 @@ import servicios
 
 app = Flask(__name__)
 
+
 ################################################################################
 # HOTELES                                                                      #
 ################################################################################
@@ -31,6 +32,8 @@ def get_all_hoteles_fecha_reserva(inicio, fin):
         indice = 0
         result = hotel.hotel_reservado(inicio, fin)
         hotel = hotel.all_hoteles()
+        result = hotel.hotel_reservado(inicio, fin)
+        hotel = hotel.all_hoteles()
         for i in hotel:
             for j in result:
                 if j[0] == i[0]:
@@ -50,6 +53,7 @@ def get_all_hoteles_fecha_reserva(inicio, fin):
 def get_by_id_hotel(id_hotel):
     try:
         result = hotel.hotel_by_id(id_hotel)
+        result = hotel.hotel_by_id(id_hotel)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -63,6 +67,7 @@ def get_by_id_hotel(id_hotel):
 @app.route("/api/v1/hoteles/<provincia>", methods=["GET"])
 def get_by_provincia(provincia):
     try:
+        result = hotel.hoteles_provincia(provincia)
         result = hotel.hoteles_provincia(provincia)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -130,64 +135,107 @@ def obtener_servicios_por_reserva(numero_reserva):
     return jsonify(response), 200
 
 
-@app.route("/api/v1/servicios/cancelar-servicio/<numero_reserva>/<id_servicio>", methods=["POST"])
+
+################################################################################
+# SERVICIOS                                                                    #
+################################################################################
+
+@app.route('/api/v1/servicios', methods=['GET'])
+def obtener_servicios():
+    try:
+        result = hotel.obtener_todos_los_servicios()
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    response = []
+    for row in result:
+        response.append({'id': row[0], 'nombre': row[1], 'descripcion': row[2]})
+
+    return jsonify(response), 200
+
+
+@app.route('/api/v1/servicios-por-reserva/<numero_reserva>', methods=['GET'])
+def obtener_servicios_por_reserva(numero_reserva):
+    try:
+        numero_reserva = int(numero_reserva)
+        result = hotel.buscar_servicios_por_reserva(numero_reserva)
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+    response = []
+    for row in result:
+        try:
+            servicio = hotel.buscar_servicio_por_id(row[1])
+            for s in servicio:
+                response.append({'numero_reserva': row[0], 'id_servicio': row[1], 'nombre_servicio': s[1]})
+
+        except Exception as e:
+            print(f"Error al buscar servicio por ID: {e}")
+            return jsonify({'error': str(e)}), 500
+
+    return jsonify(response), 200
+
+@app.route('/api/v1/servicios/cancelar-servicio/<numero_reserva>/<id_servicio>', methods=['POST'])
 def quitar_servicio_de_reserva(numero_reserva, id_servicio):
     try:
-        servicios.cancelar_servicio(numero_reserva, id_servicio)
-        return jsonify({"message": "Servicio cancelado exitosamente"}), 200
+        hotel.cancelar_servicio(numero_reserva, id_servicio)
+        return jsonify({'message': 'Servicio cancelado exitosamente'}), 200
     except Exception as e:
         print(f"Error: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e)}), 500
 
 
-@app.route("/api/v1/servicios/contratar-servicio/<numero_reserva>/<id_servicio>", methods=["POST"])
+@app.route('/api/v1/servicios/contratar-servicio/<numero_reserva>/<id_servicio>', methods=['POST'])
 def agregar_servicio_a_reserva(numero_reserva, id_servicio):
     try:
-        servicios.contratar_servicio(numero_reserva, id_servicio)
-        return jsonify({"message": "Servicio contratado exitosamente"}), 200
+        hotel.contratar_servicio(numero_reserva, id_servicio)
+        return jsonify({'message': 'Servicio contratado exitosamente'}), 200
     except Exception as e:
         print(f"Error: {e}")
-        return jsonify({"error": str(e)}), 500
-
+        return jsonify({'error': str(e)}), 500
 
 ################################################################################
 # RESERVAS                                                                     #
 ################################################################################
 
-
-@app.route("/api/v1/reservas/crear-reserva", methods=["POST"])
+@app.route('/api/v1/reservas/crear-reserva', methods=['POST'])
 def crear_reserva():
-    data = request.get_json()
     keys = ("nombre", "apellido", "dni", "inicio_reserva", "fin_reserva", "id_hotel")
-    for key in keys:
-        if key not in data:
-            return jsonify({"error": f"Falta el dato {key}"}), 400
     try:
+        
+        data = request.get_json()
+       # print(data)
+
+        for key in keys:
+            if key not in data or not data[key]:
+                return jsonify({'error': f'Falta el dato {key}'}), 400
+
         id_hotel = data.pop("id_hotel")
         reservas.crear_reserva(id_hotel)
         reservas.crear_detalles_reserva(data)
-        return jsonify(data), 201
+
+        return jsonify({'success': 'Reserva creada exitosamente'}), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e)}), 500
 
 
-@app.route("/api/v1/reservas/cancelar-reserva/<numero_reserva>", methods=["POST"])
+@app.route('/api/v1/reservas/cancelar-reserva/<numero_reserva>', methods=['POST'])
 def cancelar_reserva(numero_reserva):
     try:
         reservas.cancelar_reserva(numero_reserva)
-        return jsonify({"message": "Reserva cancelada exitosamente"}), 200
+        return jsonify({'message': 'Reserva cancelada exitosamente'}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e)}), 500
 
-
-@app.route("/api/v1/reservas/consultar-reserva/<numero_reserva>/<dni>", methods=["GET"])
+@app.route('/api/v1/reservas/consultar-reserva/<numero_reserva>/<dni>', methods=['GET'])
 def consultar_reserva(numero_reserva, dni):
     try:
         result = reservas.consultar_reserva(numero_reserva, dni)
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e)}), 500
     if len(result) == 0:
-        return jsonify({"error": "No se encontró la reserva"}), 404
+        return jsonify({'error': 'No se encontró la reserva'}), 404
     result = result[0]
     response = {
         "nombre": result[0],
@@ -201,7 +249,6 @@ def consultar_reserva(numero_reserva, dni):
     }
     return jsonify(response)
 
-
 @app.route("/api/v1/reservas/modificar-reserva/<numero_reserva>", methods=["POST"])
 def modificar_reserva(numero_reserva):
     try:
@@ -211,8 +258,27 @@ def modificar_reserva(numero_reserva):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/v1/disponibilidad', methods=['GET'])
+def disponibilidad():
+    id_hotel = request.args.get('id_hotel')
+    inicio_reserva = request.args.get('inicio_reserva')
+    fin_reserva = request.args.get('fin_reserva')
+    print(id_hotel, inicio_reserva, fin_reserva)
+    
+    if not all([id_hotel, inicio_reserva, fin_reserva]):
+        return jsonify({'error': 'Faltan parámetros en la solicitud'}), 400
+
+    try:
+        result = hotel.consultar_disponibilidad(id_hotel,inicio_reserva,fin_reserva)
+        return jsonify({'disponibilidad': disponible}), 200
+
+    except Exception as e:
+        print(f"Error al verificar disponibilidad: {e}")
+        return jsonify({'error': 'Error interno del servidor'}), 500
+
 
 ################################################################################
+
 
 if __name__ == "__main__":
     app.run(port="5001", debug=True)

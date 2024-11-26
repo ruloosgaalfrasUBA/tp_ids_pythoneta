@@ -65,7 +65,7 @@
         <div class="hotel-booking-form">
           <h3>Reservar habitación</h3>
           <!-- RD Mailform-->
-          <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
+          <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{url_for('index')}}" >
             <div class="range range-sm-bottom spacing-20">
               <select id="hotel-options" onchange="updateHotelName()">
                 <option value="">Selecciona un hotel...</option>
@@ -74,15 +74,34 @@
                 {% endfor %}
               </select>
               <div class="cell-lg-12 cell-md-4">
+<<<<<<< HEAD
                 <p class="text-uppercase">Nombre</p>
                 <div class="form-wrap">
                   <input class="form-input" id="contact-first-name" type="text" name="name" data-constraints="@Required" autocomplete="on" />
+=======
+                <p class="text-uppercase">Hotel </p>
+                <div class="form-wrap">
+                 <input type="hidden" name="id_hotel" id="id_hotel" data-constraints="@Required" required>
+                <select style="width: 310px;" id="hotel-options" onchange="updateHotelName()">
+                  <option class="form-options" value="">Selecciona un hotel...</option>
+                  {%for i in hoteles %}
+                    <option id="{{ i['id_hotel'] }}" value"{{ i['id_hotel'] }}">{{ i['nombre'] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+              <div class="cell-lg-12 cell-md-4">
+                <p class="text-uppercase">Nombre </p>
+                <div class="form-wrap">
+                  <input class="form-input" id="contact-first-name" type="text" name="nombre" data-constraints="@Required" autocomplete="on" required />
+>>>>>>> Fede
                   <label class="form-label" for="contact-first-name">Nombre</label>
                 </div>
               </div>
               <div class="cell-lg-12 cell-md-4">
                 <p class="text-uppercase">Apellido</p>
                 <div class="form-wrap">
+<<<<<<< HEAD
                   <input class="form-input" id="contact-first-name" type="text" name="lastname" data-constraints="@Required" autocomplete="on" />
                   <label class="form-label" for="contact-first-name">Apellido</label>
                 </div>
@@ -92,25 +111,42 @@
                 <div class="form-wrap">
                   <input class="form-input" id="contact-first-name" type="text" name="dni" data-constraints="@Required" autocomplete="on" />
                   <label class="form-label" for="contact-first-name">Nombre</label>
+=======
+                  <input class="form-input" id="contact-last-name" type="text" name="apellido" data-constraints="@Required" autocomplete="on" required/>
+                  <label class="form-label" for="contact-last-name">Apellido</label>
+>>>>>>> Fede
                 </div>
               </div>
               <div class="cell-lg-12 cell-md-4 cell-sm-6">
                 <p class="text-uppercase">Entrada</p>
                 <div class="form-wrap">
                   <label class="form-label form-label-icon" for="inicio_reserva"><span class="icon icon-primary fa-calendar"></span><span>Fecha de entrada</span></label>
-                  <input class="form-input" id="inicio_reserva" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
+                  <input class="form-input" id="inicio_reserva" data-time-picker="date" type="text" name="inicio_reserva" data-constraints="@Required" role="button" required/>
                 </div>
               </div>
               <div class="cell-lg-12 cell-md-4 cell-sm-6">
                 <p class="text-uppercase">Salida</p>
                 <div class="form-wrap">
                   <label class="form-label form-label-icon" for="fin_reserva"><span class="icon icon-primary fa-calendar"></span><span>Fecha de salida</span></label>
+<<<<<<< HEAD
                   <input class="form-input" id="fin_reserva" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
                 </div>
               </div>
               
+=======
+                  <input class="form-input" id="fin_reserva" data-time-picker="date" type="text" name="fin_reserva" data-constraints="@Required" role="button" required/>
+                </div>
+              </div>
+>>>>>>> Fede
               <div class="cell-lg-12 cell-md-4">
-                <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Ver disponibilidad</span></button>
+                <p class="text-uppercase">DNI</p>
+                <div class="form-wrap">
+                  <input class="form-input" id="dni" type="text" name="dni" data-constraints="@Required" autocomplete="on" required/>
+                  <label class="form-label" for="dni">DNI</label>
+                </div>
+                  <p style="font-size: small ; color:#9b9b9b">*Las reservas estaran sujetas a disponibilidad.</p>
+              </div>
+                <button class="button button-primary button-square button-block button-effect-ujarak" id="submitForm" formmethod="post" type="submit"><span>Reservar</span></button>
               </div>
             </div>
           </form>
@@ -178,4 +214,37 @@
     </div>
   </div>
 </section>
+<script>
+    document.querySelector('#submitForm').addEventListener('click', (event) => {
+      const form = document.querySelector('form');
+
+      if (form.checkValidity()) {
+          form.submit(); 
+      } else {
+          event.preventDefault(); 
+          alert('Por favor completa todos los campos requeridos.');
+      }
+
+  });
+
+  $('#inicio_reserva').on('change', function (event, date) {
+    const fechaInicial = $('#inicio_reserva').attr('data-fecha-inicio');
+    const fechaFinal = $('#fin_reserva').attr('data-fecha-fin');
+    const fechaSeleccionada = moment(date).format('YYYY-MM-DD');
+    $('#fin_reserva').bootstrapMaterialDatePicker('setMinDate', fechaSeleccionada);
+    $('#fin_reserva').bootstrapMaterialDatePicker('setDate', fechaSeleccionada);
+    $('#fin_reserva').val(fechaSeleccionada);
+
+
+  });
+
+  // Habilita el botón de modificar al cambiar la fecha de fin si es distinta a la fecha fin original de la reserva.
+  $('#fin_reserva').on('change', function (event, date) {
+    const fechaInicial = $('#inicio_reserva').attr('data-fecha-inicio');
+    const fechaFinal = $('#fin_reserva').attr('data-fecha-fin');
+    const fechaSeleccionada = moment(date).format('YYYY-MM-DD');
+   
+  });
+</script>
 {%endblock content%}
+

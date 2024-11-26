@@ -1866,9 +1866,18 @@ $(
     }
   })()
 );
+<<<<<<< HEAD
 
+=======
+>>>>>>> Fede
 function updateHotelName() { // SE UTILIZA PARA EL OPTIONS DE EL TEMPLATE DISPONIBILIDAD
-	var select = document.getElementById("hotel-options");
-	var input = document.getElementById("reserve_hotel");  
-	input.value = select.options[select.selectedIndex].text;
+  var select = document.getElementById("hotel-options");
+  var selectedOption = select.options.selectedIndex;
+ 
+  document.getElementById("id_hotel").value=selectedOption ;
+
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Fede

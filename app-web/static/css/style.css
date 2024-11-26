@@ -1745,6 +1745,9 @@ label {
 	transform: translateY(-50%);
 }
 
+
+
+
 .form-label.focus {
 	opacity: 0;
 }
@@ -31827,6 +31830,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	}
 }
 
+<<<<<<< HEAD
 .button-cancelar-servicio {
 	height: 16px;
 	margin-top: 0;
@@ -31851,3 +31855,8 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	font-size: 16px;
 	text-align: center;
 }
+=======
+.msj_error{
+	color: red;
+}
+>>>>>>> Fede
