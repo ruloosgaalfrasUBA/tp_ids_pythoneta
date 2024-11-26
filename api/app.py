@@ -202,9 +202,11 @@ def consultar_reserva(numero_reserva, dni):
     }
     return jsonify(response)
 
-def modificar_reserva():
-    return
-
+def modificar_reserva(numero_reserva, data):
+    try:
+        reservas.modificar_reserva(numero_reserva, data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/v1/disponibilidad', methods=['GET'])
 def disponibilidad():

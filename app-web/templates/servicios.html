@@ -1,0 +1,128 @@
+{% extends 'base.html' %} {%block title%} Servicios {%endblock title%} {%block content%}
+
+<section class="section-md text-center bg-image breadcrumbs-02">
+  <div class="shell shell-fluid">
+    <div class="range range-xs-center">
+      <div class="cell-xs-12 cell-xl-11">
+        <h2 class="text-white">Servicios</h2>
+        <ul class="breadcrumbs-custom">
+          <li><a href="{{url_for('index')}}">Inicio</a></li>
+          <li class="active">Servicios</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section-md bg-white text-center">
+  <div class="shell">
+    <div class="range range-50 range-md-center">
+      <div class="cell-sm-8">
+        <div class="contact-box">      
+          
+          
+          <h3>Todos nuestros <br> servicios</h3>
+          <ul class="lista-servicios">
+            {%for servicio in servicios %}
+            <li class="item-lista-servicio">
+              {{servicio.id}} - {{servicio.nombre}}: {{servicio.descripcion}}
+            </li>
+            <br>
+            {% endfor %}
+          </ul>
+  
+          <br><br><br>
+          
+          <h3>Contratar un <br> servicio </h3>
+          
+          <form action="{{ url_for('agregar_servicios') }}" method="POST">
+            <div class="range range-sm-bottom spacing-20 form-reserva">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
+                <p class="label-form-reserva black-grey">Número de reserva</p>
+                <div class="form-wrap">
+                  <input class="form-input" id="numero_reserva" type="text" name="numero_reserva" autocomplete="on" placeholder="Número"/>
+                </div>
+              </div>
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
+                <p class="label-form-reserva black-grey">ID del servicio</p>
+                <div class="form-wrap">
+                  <input class="form-input" id="id_servicio" type="text" name="id_servicio" autocomplete="on" placeholder="ID servicio"/>
+                </div>
+              </div>
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error or success else 'justify-content-end'}}">
+                <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Agregar a la reserva</span></button>
+              </div>
+            </div>
+          </form>
+
+          <br><br><br>
+          
+          <!-- BUSCAR SERVICIOS CONTRATADOS -->
+          <h3>Consultá tus servicios <br> contratados</h3>
+          
+          <form method="post" action="{{url_for('buscar_servicios')}}">
+            <div class="range range-sm-bottom spacing-20 form-reserva">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
+                <p class="label-form-reserva black-grey">Número de reserva</p>
+                <div class="form-wrap">
+                  <input class="form-input" id="buscar_servicios_reserva" type="text" name="buscar_servicios_reserva" autocomplete="on" placeholder="Número"/>
+                </div>
+              </div>
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error or success else 'justify-content-end'}}">
+                <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="cell-sm-4">
+        <aside class="contact-box-aside text-left">
+          <div class="range range-50">
+            <div class="cell-xs-6 cell-sm-12">
+              <p class="aside-title">Descargá nuestra aplicación</p>
+              <hr class="divider divider-left divider-custom" />
+              <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                <div class="unit__left"><span class="text-middle icon icon-sm fa fa-android icon-primary"></span></div>
+                <div class="unit__body"><a class="text-middle link link-gray-dark" href="#" target="_blank">Solo para dispositivos Android</a></div>
+              </div>
+            </div>
+            <div class="cell-xs-6 cell-sm-12">
+              <p class="aside-title">Consultá por teléfono</p>
+              <hr class="divider divider-left divider-custom" />
+              <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                <div class="unit__left"><span class="text-middle icon icon-sm mdi mdi-phone icon-primary"></span></div>
+                <div class="unit__body"><a class="text-middle link link-gray-dark" href="https://wa.me/541152850586" target="_blank">+54 1152850586</a></div>
+              </div>
+            </div>
+            <div class="cell-xs-6 cell-sm-12">
+              <p class="aside-title">Dirección</p>
+              <hr class="divider divider-left divider-custom" />
+              <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                <div class="unit__left"><span class="text-middle icon icon-sm mdi mdi-map-marker icon-primary"></span></div>
+                <div class="unit__body">
+                  <a class="text-middle link link-gray-dark" href="http://maps.google.com/?q=avenida+paseo+colon+850" target="_blank">Avenida Paseo Colón 850, C.A.B.A., C1063ACV</a>
+                </div>
+              </div>
+            </div>
+            <div class="cell-xs-6 cell-sm-12">
+              <p class="aside-title">Horarios de apertura</p>
+              <hr class="divider divider-left divider-custom" />
+              <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                <div class="unit__left"><span class="text-middle icon icon-sm mdi mdi-clock icon-primary"></span></div>
+                <div class="unit__body text-gray-darker">
+                  <p>Todos los días de 08:00 – 20:00hs</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{%endblock content%}

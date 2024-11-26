@@ -24,9 +24,9 @@ QUERY_DISPONIBILIDAD ="""
     WHERE h.id_hotel = :id_hotel
       AND dr.activo = 1 
       AND (
-        (dr.inicio_reserva < :inicio AND :inicio < dr.fin_reserva)
-        OR (:fin < dr.fin_reserva AND :fin > dr.inicio_reserva)
-        OR (dr.inicio_reserva BETWEEN :inicio AND :fin AND dr.fin_reserva BETWEEN :inicio AND :fin)
+        (dr.inicio_reserva < :inicio_reserva AND :inicio_reserva < dr.fin_reserva)
+        OR (:fin < dr.fin_reserva AND :fin_reserva > dr.inicio_reserva)
+        OR (dr.inicio_reserva BETWEEN :inicio_reserva AND :fin_reserva AND dr.fin_reserva BETWEEN :inicio_reserva AND :fin_reserva)
       );
     """
 
