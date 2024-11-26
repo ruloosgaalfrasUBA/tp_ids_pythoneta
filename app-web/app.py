@@ -146,9 +146,11 @@ def servicios_contratados(numero_reserva):
 
 @app.route("/buscar-servicios", methods=["POST"])
 def buscar_servicios():
-    numero_reserva = request.form["buscar_servicios_reserva"]
-    return servicios_contratados(numero_reserva)
-
+    try:
+        numero_reserva = request.form["buscar_servicios_reserva"]
+        return servicios_contratados(numero_reserva)
+    except:
+        return servicios()
 
 @app.route("/agregar-servicios", methods=["POST"])
 def agregar_servicios():

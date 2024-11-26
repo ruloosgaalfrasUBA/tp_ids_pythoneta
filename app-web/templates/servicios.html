@@ -16,49 +16,53 @@
 
 
 
-
 <section class="section section-md bg-white text-center">
   <div class="shell">
     <div class="range range-50 range-md-center">
       <div class="cell-sm-8">
-        <div class="contact-box">             
+        <div class="contact-box">      
           
           
+          <h3>Todos nuestros <br> servicios</h3>
+          <ul class="lista-servicios">
+            {%for servicio in servicios %}
+            <li class="item-lista-servicio">
+              {{servicio.id}} - {{servicio.nombre}}: {{servicio.descripcion}}
+            </li>
+            <br>
+            {% endfor %}
+          </ul>
+  
+          <br><br><br>
           
+          <h3>Contratar un <br> servicio </h3>
           
-          <table class="tabla-servicios">
-            
-              <h3>Todos nuestros <br> servicios</h3>
-              {%for servicio in servicios %}
-              <tr>
-                {{servicio.id}}: {{servicio.nombre}}, {{servicio.descripcion}}
-              </tr>
-              <br>
-              {% endfor %}
-          </table>
-              
-              <br>
-              <br>
-          
-              <form action="{{ url_for('agregar_servicios') }}" method="POST">
+          <form action="{{ url_for('agregar_servicios') }}" method="POST">
+            <div class="range range-sm-bottom spacing-20 form-reserva">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
                 <p class="label-form-reserva black-grey">Número de reserva</p>
-                <input class="form-input" type="text" name="numero_reserva" id="numero_reserva" placeholder="Número reserva">
-                <br>
+                <div class="form-wrap">
+                  <input class="form-input" id="numero_reserva" type="text" name="numero_reserva" autocomplete="on" placeholder="Número"/>
+                </div>
+              </div>
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
                 <p class="label-form-reserva black-grey">ID del servicio</p>
-                <input class="form-input" type="text" name="id_servicio" id="id_servicio" placeholder="ID servicio">
-                <br>
-                <button  type="submit">Agregar a mi reserva</button>
-              </form>
-          
-              <br>
-              <br>
-              <br>
-              <br>
+                <div class="form-wrap">
+                  <input class="form-input" id="id_servicio" type="text" name="id_servicio" autocomplete="on" placeholder="ID servicio"/>
+                </div>
+              </div>
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error or success else 'justify-content-end'}}">
+                <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Agregar a la reserva</span></button>
+              </div>
+            </div>
+          </form>
+
+          <br><br><br>
           
           <!-- BUSCAR SERVICIOS CONTRATADOS -->
           <h3>Consultá tus servicios <br> contratados</h3>
           
-          <form class="rd-mailform" method="post" action="{{url_for('buscar_servicios')}}">
+          <form method="post" action="{{url_for('buscar_servicios')}}">
             <div class="range range-sm-bottom spacing-20 form-reserva">
               <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
                 <p class="label-form-reserva black-grey">Número de reserva</p>
