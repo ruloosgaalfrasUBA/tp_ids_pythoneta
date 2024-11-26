@@ -187,6 +187,7 @@ def servicios():
 
     return render_template("servicios.html", servicios=servicios)
 
+
 @app.route("/servicios-contratados/reserva:<numero_reserva>")
 def servicios_contratados(numero_reserva):
     try:
@@ -202,11 +203,9 @@ def servicios_contratados(numero_reserva):
 
 @app.route("/buscar-servicios", methods=["POST"])
 def buscar_servicios():
-    try:
-        numero_reserva = request.form["buscar_servicios_reserva"]
-        return servicios_contratados(numero_reserva)
-    except:
-        return servicios()
+    numero_reserva = request.form["buscar_servicios_reserva"]
+    return servicios_contratados(numero_reserva)
+
 
 @app.route("/agregar-servicios", methods=["POST"])
 def agregar_servicios():
@@ -241,17 +240,6 @@ def contratar_servicio(numero_reserva, id_servicio):
         print(f"el error esta acaError: {e}")
 
     return servicios_contratados(numero_reserva)
-def todos_los_servicios():
-    try:
-        response = requests.get(API_URI+'servicios')
-        response.raise_for_status()
-        servicios = response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching data: {e}")
-        servicios = []
-
-    return render_template('pruebasServicio.html', servicios=servicios)
-
 
 
 if __name__ == "__main__":

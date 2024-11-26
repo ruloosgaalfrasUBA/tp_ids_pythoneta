@@ -17,17 +17,22 @@ OR (dr.inicio_reserva BETWEEN :inicio AND :fin AND dr.fin_reserva BETWEEN '2023-
 
 """
 QUERY_DISPONIBILIDAD ="""
-    SELECT *
-    FROM hotel h 
-    INNER JOIN reserva r ON r.id_hotel = h.id_hotel
-    INNER JOIN detalle_reservas dr ON dr.id_reserva = r.id_reserva
-    WHERE h.id_hotel = :id_hotel
-      AND dr.activo = 1 
-      AND (
-        (dr.inicio_reserva < :inicio_reserva AND :inicio_reserva < dr.fin_reserva)
-        OR (:fin < dr.fin_reserva AND :fin_reserva > dr.inicio_reserva)
-        OR (dr.inicio_reserva BETWEEN :inicio_reserva AND :fin_reserva AND dr.fin_reserva BETWEEN :inicio_reserva AND :fin_reserva)
-      );
+    SELECT
+        h.id_hotel,
+        dr.inicio_reserva,
+        COUNT(*) AS num_reservas
+    FROM
+        bbdd_pythoneta.hotel h
+        INNER JOIN bbdd_pythoneta.reserva r ON r.id_hotel = h.id_hotel
+        INNER JOIN bbdd_pythoneta.detalle_reservas dr ON dr.id_reserva = r.id_reserva
+    WHERE
+        h.id_hotel = %(id_hotel)s
+        AND dr.activo = 1
+        AND dr.inicio_reserva BETWEEN %(inicio_reserva)s AND %(fin_reserva)s
+    GROUP BY
+        h.id_hotel, dr.inicio_reserva
+    HAVING
+        COUNT(*) > 3;
     """
 
 QUERY_CONSULTA_RESERVA_POR_ID = """

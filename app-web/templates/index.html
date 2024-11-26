@@ -115,6 +115,9 @@
                 </div>
                   <p style="font-size: small ; color:#9b9b9b">*Las reservas estaran sujetas a disponibilidad.</p>
               </div>
+              {% if error or success %} 
+                  {% include 'mensaje_de_estado.html' %} 
+                {% endif %}
                 <button class="button button-primary button-square button-block button-effect-ujarak" id="submitForm" formmethod="post" type="submit"><span>Reservar</span></button>
               </div>
             </div>
