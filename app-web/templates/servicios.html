@@ -1,43 +1,124 @@
-{% extends 'base.html' %} {%block title%} Reservas {%endblock title%} {%block content%}
-<table>
-  
-    <tr>
-      <th>id servicio</th>
-      <th>nombre servicio</th>
-      <th>descripcion servicio</th>
-    </tr>
-    <tr>
-    {%for servicio in servicios %}
-      <td>{{servicio.id}}</td>
-      <td>{{servicio.nombre}}</td>
-      <td>{{servicio.descripcion}}</td>
-    </tr>
-    {% endfor %}
-  </table>
-    
-    <br>
-    <br>
+{% extends 'base.html' %} {%block title%} Servicios {%endblock title%} {%block content%}
 
-    <form action="{{ url_for('agregar_servicios') }}" method="POST">
-      <label for="numero_reserva">Número de su reserva:</label>
-      <input type="text" name="numero_reserva" id="numero_reserva" placeholder="Número reserva">
-      <br>
-      <label for="id_servicio">ID del servicio que desea contratar:</label>
-      <input type="text" name="id_servicio" id="id_servicio" placeholder="ID servicio">
-      <br>
-      <button type="submit">Agregar a mi reserva</button>
-    </form>
+<section class="section-md text-center bg-image breadcrumbs-02">
+  <div class="shell shell-fluid">
+    <div class="range range-xs-center">
+      <div class="cell-xs-12 cell-xl-11">
+        <h2 class="text-white">Servicios</h2>
+        <ul class="breadcrumbs-custom">
+          <li><a href="{{url_for('index')}}">Inicio</a></li>
+          <li class="active">Servicios</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <br>
-    <br>
 
-    <form method="POST" action="{{ url_for('buscar_servicios') }}">
 
-      <label for="buscar_servicios_reserva">Buscar servicios contratados</label>
-      <br>
-      <input type="text" name="buscar_servicios_reserva" id="buscar_servicios_reserva" placeholder="Ingrese su número de reserva">
-      <button type="submit">Buscar</button>
-    </form>
+
+<section class="section section-md bg-white text-center">
+  <div class="shell">
+    <div class="range range-50 range-md-center">
+      <div class="cell-sm-8">
+        <div class="contact-box">             
+          
+          
+          
+          
+          <table class="tabla-servicios">
+            
+              <h3>Todos nuestros <br> servicios</h3>
+              {%for servicio in servicios %}
+              <tr>
+                {{servicio.id}}: {{servicio.nombre}}, {{servicio.descripcion}}
+              </tr>
+              <br>
+              {% endfor %}
+          </table>
+              
+              <br>
+              <br>
+          
+              <form action="{{ url_for('agregar_servicios') }}" method="POST">
+                <p class="label-form-reserva black-grey">Número de reserva</p>
+                <input class="form-input" type="text" name="numero_reserva" id="numero_reserva" placeholder="Número reserva">
+                <br>
+                <p class="label-form-reserva black-grey">ID del servicio</p>
+                <input class="form-input" type="text" name="id_servicio" id="id_servicio" placeholder="ID servicio">
+                <br>
+                <button  type="submit">Agregar a mi reserva</button>
+              </form>
+          
+              <br>
+              <br>
+              <br>
+              <br>
+          
+          <!-- BUSCAR SERVICIOS CONTRATADOS -->
+          <h3>Consultá tus servicios <br> contratados</h3>
+          
+          <form class="rd-mailform" method="post" action="{{url_for('buscar_servicios')}}">
+            <div class="range range-sm-bottom spacing-20 form-reserva">
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
+                <p class="label-form-reserva black-grey">Número de reserva</p>
+                <div class="form-wrap">
+                  <input class="form-input" id="buscar_servicios_reserva" type="text" name="buscar_servicios_reserva" autocomplete="on" placeholder="Número"/>
+                </div>
+              </div>
+              <div class="cell-xl-12 cell-md-12 cell-sm-12 boton-container-reserva {{'justify-content-between' if error or success else 'justify-content-end'}}">
+                <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="cell-sm-4">
+        <aside class="contact-box-aside text-left">
+          <div class="range range-50">
+            <div class="cell-xs-6 cell-sm-12">
+              <p class="aside-title">Descargá nuestra aplicación</p>
+              <hr class="divider divider-left divider-custom" />
+              <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                <div class="unit__left"><span class="text-middle icon icon-sm fa fa-android icon-primary"></span></div>
+                <div class="unit__body"><a class="text-middle link link-gray-dark" href="#" target="_blank">Solo para dispositivos Android</a></div>
+              </div>
+            </div>
+            <div class="cell-xs-6 cell-sm-12">
+              <p class="aside-title">Consultá por teléfono</p>
+              <hr class="divider divider-left divider-custom" />
+              <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                <div class="unit__left"><span class="text-middle icon icon-sm mdi mdi-phone icon-primary"></span></div>
+                <div class="unit__body"><a class="text-middle link link-gray-dark" href="https://wa.me/541152850586" target="_blank">+54 1152850586</a></div>
+              </div>
+            </div>
+            <div class="cell-xs-6 cell-sm-12">
+              <p class="aside-title">Dirección</p>
+              <hr class="divider divider-left divider-custom" />
+              <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                <div class="unit__left"><span class="text-middle icon icon-sm mdi mdi-map-marker icon-primary"></span></div>
+                <div class="unit__body">
+                  <a class="text-middle link link-gray-dark" href="http://maps.google.com/?q=avenida+paseo+colon+850" target="_blank">Avenida Paseo Colón 850, C.A.B.A., C1063ACV</a>
+                </div>
+              </div>
+            </div>
+            <div class="cell-xs-6 cell-sm-12">
+              <p class="aside-title">Horarios de apertura</p>
+              <hr class="divider divider-left divider-custom" />
+              <div class="unit unit-middle unit-horizontal unit-spacing-xs unit-xs-top">
+                <div class="unit__left"><span class="text-middle icon icon-sm mdi mdi-clock icon-primary"></span></div>
+                <div class="unit__body text-gray-darker">
+                  <p>Todos los días de 08:00 – 20:00hs</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 {%endblock content%}

@@ -96,7 +96,7 @@ def get_by_estrellas(estrellas):
 @app.route("/api/v1/servicios", methods=["GET"])
 def obtener_servicios():
     try:
-        result = hotel.obtener_todos_los_servicios()
+        result = servicios.obtener_todos_los_servicios()
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -111,7 +111,7 @@ def obtener_servicios():
 def obtener_servicios_por_reserva(numero_reserva):
     try:
         numero_reserva = int(numero_reserva)
-        result = hotel.buscar_servicios_por_reserva(numero_reserva)
+        result = servicios.buscar_servicios_por_reserva(numero_reserva)
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": str(e)}), 500
@@ -119,7 +119,7 @@ def obtener_servicios_por_reserva(numero_reserva):
     response = []
     for row in result:
         try:
-            servicio = hotel.buscar_servicio_por_id(row[1])
+            servicio = servicios.buscar_servicio_por_id(row[1])
             for s in servicio:
                 response.append({"numero_reserva": row[0], "id_servicio": row[1], "nombre_servicio": s[1]})
 
@@ -133,7 +133,7 @@ def obtener_servicios_por_reserva(numero_reserva):
 @app.route("/api/v1/servicios/cancelar-servicio/<numero_reserva>/<id_servicio>", methods=["POST"])
 def quitar_servicio_de_reserva(numero_reserva, id_servicio):
     try:
-        hotel.cancelar_servicio(numero_reserva, id_servicio)
+        servicios.cancelar_servicio(numero_reserva, id_servicio)
         return jsonify({"message": "Servicio cancelado exitosamente"}), 200
     except Exception as e:
         print(f"Error: {e}")
@@ -143,7 +143,7 @@ def quitar_servicio_de_reserva(numero_reserva, id_servicio):
 @app.route("/api/v1/servicios/contratar-servicio/<numero_reserva>/<id_servicio>", methods=["POST"])
 def agregar_servicio_a_reserva(numero_reserva, id_servicio):
     try:
-        hotel.contratar_servicio(numero_reserva, id_servicio)
+        servicios.contratar_servicio(numero_reserva, id_servicio)
         return jsonify({"message": "Servicio contratado exitosamente"}), 200
     except Exception as e:
         print(f"Error: {e}")
