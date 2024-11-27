@@ -69,12 +69,11 @@ def hoteles():
 def reservas():
     if request.method == "POST":
         nro_reserva = request.form.get("numero_reserva")
-        dni = request.form.get("dni")
-        if not nro_reserva or not dni:
+        if not nro_reserva:
             return render_template("reservas.html", error="Complete los datos requeridos.")
 
         try:
-            respuesta = requests.get(API_URI + f"/reservas/consultar-reserva/{nro_reserva}/{dni}")
+            respuesta = requests.get(API_URI + f"/reservas/{nro_reserva}")
             datos: dict | list[dict] = respuesta.json()
 
             error = datos.get("error")

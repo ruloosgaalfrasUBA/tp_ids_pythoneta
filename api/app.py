@@ -187,10 +187,10 @@ def cancelar_reserva(numero_reserva):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/v1/reservas/consultar-reserva/<numero_reserva>/<dni>', methods=['GET'])
-def consultar_reserva(numero_reserva, dni):
+@app.route('/api/v1/reservas/<numero_reserva>', methods=['GET'])
+def consultar_reserva(numero_reserva):
     try:
-        result = reservas.consultar_reserva(numero_reserva, dni)
+        result = reservas.consultar_reserva(numero_reserva)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     if len(result) == 0:
