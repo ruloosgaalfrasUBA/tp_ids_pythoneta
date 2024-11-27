@@ -237,11 +237,11 @@ def consultar_reserva(id):
     return jsonify(response)
 
 
-@app.route("/api/v1/reservas/modificar-reserva/<numero_reserva>", methods=["POST"])
-def modificar_reserva(numero_reserva):
+@app.route("/api/v1/reservas/<id>", methods=["PATCH"])
+def modificar_reserva(id):
     try:
         data = request.form
-        reservas.modificar_reserva(numero_reserva, data)
+        reservas.modificar_reserva(id, data)
         return jsonify({"message": "Reserva actualizada exitosamente"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -97,8 +97,8 @@ def modificar_reserva():
         return render_template("reservas.html", error="Error en los datos para modificar.")
 
     try:
-        respuesta = requests.post(
-            API_URI + f"/reservas/modificar-reserva/{numero_reserva}",
+        respuesta = requests.patch(
+            API_URI + f"/reservas/{numero_reserva}",
             data={
                 "inicio_reserva": fecha_inicio,
                 "fin_reserva": fecha_fin,
