@@ -93,11 +93,40 @@ def get_by_estrellas(estrellas):
     return jsonify(response), 200
 
 
+@app.route('/api/v1/disponibilidad', methods=['GET'])
+def disponibilidad():
+    from datetime import datetime
+    
+    id_hotel = request.args.get('id_hotel')
+    inicio_reserva = request.args.get('inicio_reserva')
+    fin_reserva = request.args.get('fin_reserva')
+    print(id_hotel,inicio_reserva,fin_reserva)
+    
+    if not all([id_hotel, inicio_reserva, fin_reserva]):
+        return jsonify({'error': 'Faltan parámetros en la solicitud'}), 400
+
+    try:
+        # Convertir las fechas
+        inicio_reserva_date = datetime.strptime(inicio_reserva, '%Y-%m-%d').date()
+        fin_reserva_date = datetime.strptime(fin_reserva, '%Y-%m-%d').date()
+
+        # Verificar disponibilidad
+        count = hotel.consultar_disponibilidad(id_hotel, inicio_reserva_date, fin_reserva_date)
+
+        if count > 3:
+            return jsonify({'disponibilidad': 'No hay lugar'}), 200
+        else:
+            return jsonify({'disponibilidad': 'Disponible'}), 200
+
+    except Exception as e:
+        print(f"Error al verificar disponibilidad: {e}")
+        return jsonify({'error': 'Error interno del servidor'}), 500
 
 
 ################################################################################
 # SERVICIOS                                                                    #
 ################################################################################
+
 
 @app.route('/api/v1/servicios', methods=['GET'])
 def obtener_servicios():
@@ -135,6 +164,7 @@ def obtener_servicios_por_reserva(numero_reserva):
 
     return jsonify(response), 200
 
+
 @app.route('/api/v1/servicios/cancelar-servicio/<numero_reserva>/<id_servicio>', methods=['POST'])
 def quitar_servicio_de_reserva(numero_reserva, id_servicio):
     try:
@@ -154,43 +184,41 @@ def agregar_servicio_a_reserva(numero_reserva, id_servicio):
         print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
 
+
 ################################################################################
 # RESERVAS                                                                     #
 ################################################################################
 
-@app.route('/api/v1/reservas/crear-reserva', methods=['POST'])
+
+@app.route('/api/v1/reservas', methods=['POST'])
 def crear_reserva():
     keys = ("nombre", "apellido", "dni", "inicio_reserva", "fin_reserva", "id_hotel")
     try:
-        
         data = request.get_json()
-       # print(data)
-
         for key in keys:
             if key not in data or not data[key]:
                 return jsonify({'error': f'Falta el dato {key}'}), 400
-
         id_hotel = data.pop("id_hotel")
         reservas.crear_reserva(id_hotel)
         reservas.crear_detalles_reserva(data)
-
         return jsonify({'success': 'Reserva creada exitosamente'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 
-@app.route('/api/v1/reservas/cancelar-reserva/<numero_reserva>', methods=['POST'])
-def cancelar_reserva(numero_reserva):
+@app.route('/api/v1/reservas/<id>', methods=['DELETE'])
+def cancelar_reserva(id):
     try:
-        reservas.cancelar_reserva(numero_reserva)
+        reservas.cancelar_reserva(id)
         return jsonify({'message': 'Reserva cancelada exitosamente'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/v1/reservas/consultar-reserva/<numero_reserva>/<dni>', methods=['GET'])
-def consultar_reserva(numero_reserva, dni):
+
+@app.route('/api/v1/reservas/<id>', methods=['GET'])
+def consultar_reserva(id):
     try:
-        result = reservas.consultar_reserva(numero_reserva, dni)
+        result = reservas.consultar_reserva(id)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     if len(result) == 0:
@@ -208,47 +236,18 @@ def consultar_reserva(numero_reserva, dni):
     }
     return jsonify(response)
 
-@app.route("/api/v1/reservas/modificar-reserva/<numero_reserva>", methods=["POST"])
-def modificar_reserva(numero_reserva):
+
+@app.route("/api/v1/reservas/<id>", methods=["PATCH"])
+def modificar_reserva(id):
     try:
         data = request.form
-        reservas.modificar_reserva(numero_reserva, data)
+        reservas.modificar_reserva(id, data)
         return jsonify({"message": "Reserva actualizada exitosamente"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/v1/disponibilidad', methods=['GET'])
-def disponibilidad():
-    from datetime import datetime
-    
-    id_hotel = request.args.get('id_hotel')
-    inicio_reserva = request.args.get('inicio_reserva')
-    fin_reserva = request.args.get('fin_reserva')
-    print(id_hotel,inicio_reserva,fin_reserva)
-    
-    if not all([id_hotel, inicio_reserva, fin_reserva]):
-        return jsonify({'error': 'Faltan parámetros en la solicitud'}), 400
-
-    try:
-        # Convertir las fechas
-        inicio_reserva_date = datetime.strptime(inicio_reserva, '%Y-%m-%d').date()
-        fin_reserva_date = datetime.strptime(fin_reserva, '%Y-%m-%d').date()
-
-        # Verificar disponibilidad
-        count = hotel.consultar_disponibilidad(id_hotel, inicio_reserva_date, fin_reserva_date)
-
-        if count > 3:
-            return jsonify({'disponibilidad': 'No hay lugar'}), 200
-        else:
-            return jsonify({'disponibilidad': 'Disponible'}), 200
-
-    except Exception as e:
-        print(f"Error al verificar disponibilidad: {e}")
-        return jsonify({'error': 'Error interno del servidor'}), 500
-
 
 ################################################################################
-
 
 if __name__ == "__main__":
     app.run(port="5001", debug=True)

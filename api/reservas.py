@@ -44,7 +44,6 @@ FROM detalle_reservas dr
 INNER JOIN reserva r ON dr.id_reserva = r.id_reserva
 INNER JOIN hotel h ON r.id_hotel = h.id_hotel
 WHERE dr.numero_reserva = :numero_reserva 
-  AND dr.dni = :dni
   AND dr.activo = 1
 ;
 """
@@ -66,9 +65,8 @@ def crear_detalles_reserva(data):
 def cancelar_reserva(numero_reserva):
     db.run_query(QUERY_CANCELAR_RESERVA, {"numero_reserva": numero_reserva})
 
-def consultar_reserva(numero_reserva, dni):
-    datos = {"numero_reserva": numero_reserva, "dni": dni}
-    return db.run_query(QUERY_CONSULTAR_RESERVA, datos).fetchall()
+def consultar_reserva(numero_reserva):
+    return db.run_query(QUERY_CONSULTAR_RESERVA, {"numero_reserva": numero_reserva}).fetchall()
 
 def modificar_reserva(numero_reserva, data):
     query = QUERY_MODIFICAR_RESERVA_INICIO + "SET "

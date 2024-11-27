@@ -3,8 +3,8 @@ import requests
 
 app = Flask(__name__)
 
-
 API_URI = "http://localhost:5001/api/v1"
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -13,7 +13,6 @@ def index():
         response.raise_for_status()
         hoteles = response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error al obtener información de hoteles: {e}")
         hoteles = []
         return render_template("index.html", hoteles=hoteles, error="No se pudieron cargar los hoteles.")
 
@@ -24,7 +23,6 @@ def index():
         inicio_reserva = request.form.get("inicio_reserva")
         fin_reserva = request.form.get("fin_reserva")
         id_hotel = request.form.get("id_hotel")
-       # print(nombre,apellido,dni,inicio_reserva,fin_reserva,id_hotel)
 
         if not nombre or not apellido or not dni or not inicio_reserva or not fin_reserva or not id_hotel:
             return render_template("index.html", hoteles=hoteles, error="Complete todos los campos del formulario.")
@@ -32,10 +30,10 @@ def index():
         try:
           
            # response = requests.get( API_URI + f"/disponibilidad?id_hotel={id_hotel}&inicio={inicio_reserva}&fin={fin_reserva}")
-            #response.raise_for_status()
+           # response.raise_for_status()
            # data = response.json()
 
-            #if not data['disponibilidad']:
+            # if not data['disponibilidad']:
                # return render_template("index.html", hoteles=hoteles, error="No hay disponibilidad en el hotel para las fechas seleccionadas.")
 
             data = {
@@ -46,7 +44,7 @@ def index():
                 "fin_reserva": fin_reserva,
                 "id_hotel": id_hotel
             }
-            respuesta = requests.post(API_URI + f"/reservas/crear-reserva", json=data)
+            respuesta = requests.post(API_URI + f"/reservas", json=data)
             respuesta.raise_for_status()
             resultdo: dict = respuesta.json()
 
@@ -65,16 +63,16 @@ def index():
 def hoteles():
     return render_template("hoteles.html")
 
+
 @app.route("/reservas", methods=["GET", "POST"])
 def reservas():
     if request.method == "POST":
         nro_reserva = request.form.get("numero_reserva")
-        dni = request.form.get("dni")
-        if not nro_reserva or not dni:
+        if not nro_reserva:
             return render_template("reservas.html", error="Complete los datos requeridos.")
 
         try:
-            respuesta = requests.get(API_URI + f"/reservas/consultar-reserva/{nro_reserva}/{dni}")
+            respuesta = requests.get(API_URI + f"/reservas/{nro_reserva}")
             datos: dict | list[dict] = respuesta.json()
 
             error = datos.get("error")
@@ -99,8 +97,8 @@ def modificar_reserva():
         return render_template("reservas.html", error="Error en los datos para modificar.")
 
     try:
-        respuesta = requests.post(
-            API_URI + f"/reservas/modificar-reserva/{numero_reserva}",
+        respuesta = requests.patch(
+            API_URI + f"/reservas/{numero_reserva}",
             data={
                 "inicio_reserva": fecha_inicio,
                 "fin_reserva": fecha_fin,
@@ -122,6 +120,7 @@ def modificar_reserva():
     except requests.exceptions.RequestException:
         return render_template("reservas.html", error="Error interno.")
 
+
 @app.route("/cancelar_reserva", methods=["POST"])
 def cancelar_reserva():
     numero_reserva = request.form.get("numero_reserva")
@@ -129,11 +128,8 @@ def cancelar_reserva():
         return render_template("reservas.html", error="Error en los datos para modificar.")
 
     try:
-        respuesta = requests.post(
-            API_URI + f"/reservas/cancelar-reserva/{numero_reserva}",
-            data={
-                "numero_reserva": numero_reserva,
-            },
+        respuesta = requests.delete(
+            API_URI + f"/reservas/{numero_reserva}",
         )
         resultado: dict = respuesta.json()
 
@@ -187,6 +183,7 @@ def disponibilidad():
     
     return render_template("disponibilidad.html", hoteles=hoteles)
 
+
 @app.route("/servicios")
 def servicios():
     try:
@@ -220,6 +217,7 @@ def buscar_servicios():
         return servicios_contratados(numero_reserva)
     except:
         return servicios()
+
 
 @app.route("/agregar-servicios", methods=["POST"])
 def agregar_servicios():
@@ -261,7 +259,7 @@ def contratar_servicio(numero_reserva, id_servicio):
     return servicios_contratados(numero_reserva)
 
 
-
+################################################################################
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

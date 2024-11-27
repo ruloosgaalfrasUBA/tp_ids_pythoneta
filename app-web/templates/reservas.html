@@ -28,13 +28,6 @@
           <form class="rd-mailform" method="post" action="{{url_for('reservas')}}">
             <div class="range range-sm-bottom spacing-20 form-reserva">
               <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
-                <p class="label-form-reserva black-grey">Documento de identidad</p>
-                <div class="form-wrap">
-                  <input class="form-input" id="identity-document" type="text" name="dni" data-constraints="@Numeric @Required" autocomplete="on" />
-                  <label class="form-label" for="identity-document">Número</label>
-                </div>
-              </div>
-              <div class="cell-xl-12 cell-md-12 cell-sm-12 cell-form">
                 <p class="label-form-reserva black-grey">Número de reserva</p>
                 <div class="form-wrap">
                   <input class="form-input" id="booking-number" type="text" name="numero_reserva" data-constraints="@Numeric @Required" autocomplete="on" />
@@ -47,6 +40,7 @@
                 {% endif %}
                 <button class="button button-primary button-square button-block button-effect-ujarak" type="submit"><span>Consultar</span></button>
               </div>
+
             </div>
           </form>
           {% endif %}
