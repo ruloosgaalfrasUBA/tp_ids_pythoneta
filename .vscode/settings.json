@@ -12,7 +12,7 @@
             "name": "bbdd",
             "database": "bbdd_pythoneta",
             "username": "root",
-            "password": "root"
+            "password": "1234"
         }
     ]
 }

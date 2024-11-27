@@ -15,19 +15,21 @@ OR (:fin < dr.fin_reserva AND :fin > dr.inicio_reserva)
 OR (dr.inicio_reserva BETWEEN :inicio AND :fin AND dr.fin_reserva BETWEEN '2023-01-13' AND '2023-01-18')
 
 """
-QUERY_DISPONIBILIDAD ="""
-    SELECT *
+QUERY_DISPONIBILIDAD = """
+    SELECT COUNT(*) as count
     FROM hotel h 
     INNER JOIN reserva r ON r.id_hotel = h.id_hotel
     INNER JOIN detalle_reservas dr ON dr.id_reserva = r.id_reserva
     WHERE h.id_hotel = :id_hotel
       AND dr.activo = 1 
       AND (
-        (dr.inicio_reserva < :inicio AND :inicio < dr.fin_reserva)
-        OR (:fin < dr.fin_reserva AND :fin > dr.inicio_reserva)
-        OR (dr.inicio_reserva BETWEEN :inicio AND :fin AND dr.fin_reserva BETWEEN :inicio AND :fin)
+        (dr.inicio_reserva < :inicio_reserva AND :inicio_reserva < dr.fin_reserva)
+        OR (:fin_reserva < dr.fin_reserva AND :fin_reserva > dr.inicio_reserva)
+        OR (dr.inicio_reserva BETWEEN :inicio_reserva AND :fin_reserva 
+            AND dr.fin_reserva BETWEEN :inicio_reserva AND :fin_reserva)
       );
-    """
+"""
+
 
 QUERY_CONSULTA_RESERVA_POR_ID = """
 SELECT h.id_hotel, r.id_reserva, dr.id_numero_reserva, dr.nombre 
@@ -77,7 +79,12 @@ def hoteles_estrellas(estrellas):
 
 def hoteles_provincia(provincia):
     return db.run_query(QUERY_SELECT_HOTEL_POR_UBICACION, {'provincia': provincia}).fetchall()
-
 def consultar_disponibilidad(id_hotel, inicio_reserva, fin_reserva):
-    return db.run_query(QUERY_DISPONIBILIDAD, {'id_hotel': id_hotel, 'inicio_reserva': inicio_reserva, 'fin_reserva': fin_reserva }).fetchall()
+    result = db.run_query(
+        QUERY_DISPONIBILIDAD, 
+        {'id_hotel': id_hotel, 'inicio_reserva': inicio_reserva, 'fin_reserva': fin_reserva}
+    ).fetchone()
+    
+  
+    return result['count'] if result and 'count' in result else 0
 

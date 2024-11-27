@@ -67,18 +67,7 @@
           <!-- RD Mailform-->
           <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{url_for('index')}}" >
             <div class="range range-sm-bottom spacing-20">
-              <select id="hotel-options" onchange="updateHotelName()">
-                <option value="">Selecciona un hotel...</option>
-                {% for i in hoteles %}
-                  <option value="{{ i['id_hotel'] }}">{{ i['nombre'] }}</option>
-                {% endfor %}
-              </select>
               <div class="cell-lg-12 cell-md-4">
-<<<<<<< HEAD
-                <p class="text-uppercase">Nombre</p>
-                <div class="form-wrap">
-                  <input class="form-input" id="contact-first-name" type="text" name="name" data-constraints="@Required" autocomplete="on" />
-=======
                 <p class="text-uppercase">Hotel </p>
                 <div class="form-wrap">
                  <input type="hidden" name="id_hotel" id="id_hotel" data-constraints="@Required" required>
@@ -94,27 +83,14 @@
                 <p class="text-uppercase">Nombre </p>
                 <div class="form-wrap">
                   <input class="form-input" id="contact-first-name" type="text" name="nombre" data-constraints="@Required" autocomplete="on" required />
->>>>>>> Fede
                   <label class="form-label" for="contact-first-name">Nombre</label>
                 </div>
               </div>
               <div class="cell-lg-12 cell-md-4">
                 <p class="text-uppercase">Apellido</p>
                 <div class="form-wrap">
-<<<<<<< HEAD
-                  <input class="form-input" id="contact-first-name" type="text" name="lastname" data-constraints="@Required" autocomplete="on" />
-                  <label class="form-label" for="contact-first-name">Apellido</label>
-                </div>
-              </div>
-              <div class="cell-lg-12 cell-md-4">
-                <p class="text-uppercase">DNI</p>
-                <div class="form-wrap">
-                  <input class="form-input" id="contact-first-name" type="text" name="dni" data-constraints="@Required" autocomplete="on" />
-                  <label class="form-label" for="contact-first-name">Nombre</label>
-=======
                   <input class="form-input" id="contact-last-name" type="text" name="apellido" data-constraints="@Required" autocomplete="on" required/>
                   <label class="form-label" for="contact-last-name">Apellido</label>
->>>>>>> Fede
                 </div>
               </div>
               <div class="cell-lg-12 cell-md-4 cell-sm-6">
@@ -128,16 +104,9 @@
                 <p class="text-uppercase">Salida</p>
                 <div class="form-wrap">
                   <label class="form-label form-label-icon" for="fin_reserva"><span class="icon icon-primary fa-calendar"></span><span>Fecha de salida</span></label>
-<<<<<<< HEAD
-                  <input class="form-input" id="fin_reserva" data-time-picker="date" type="text" name="date" data-constraints="@Required" role="button"/>
-                </div>
-              </div>
-              
-=======
                   <input class="form-input" id="fin_reserva" data-time-picker="date" type="text" name="fin_reserva" data-constraints="@Required" role="button" required/>
                 </div>
               </div>
->>>>>>> Fede
               <div class="cell-lg-12 cell-md-4">
                 <p class="text-uppercase">DNI</p>
                 <div class="form-wrap">

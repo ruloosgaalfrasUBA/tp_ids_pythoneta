@@ -1866,10 +1866,6 @@ $(
     }
   })()
 );
-<<<<<<< HEAD
-
-=======
->>>>>>> Fede
 function updateHotelName() { // SE UTILIZA PARA EL OPTIONS DE EL TEMPLATE DISPONIBILIDAD
   var select = document.getElementById("hotel-options");
   var selectedOption = select.options.selectedIndex;
@@ -1877,7 +1873,3 @@ function updateHotelName() { // SE UTILIZA PARA EL OPTIONS DE EL TEMPLATE DISPON
   document.getElementById("id_hotel").value=selectedOption ;
 
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> Fede

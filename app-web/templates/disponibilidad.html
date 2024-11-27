@@ -2,26 +2,6 @@
 {%block title%} Hoteles {%endblock title%} 
 
 {%block content%}
-<<<<<<< HEAD
-        <div id="reserva-vista">
-          <table class="section section-md bg-white text-center" id="reservas_hoteles">
-            <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
-              <div class="range range-sm-bottom spacing-20">
-                <div>
-                  <div class="cell-sm-6">
-                    <div class="form-wrap">
-                      <p class="text-uppercase">Elegi el hotel</p>
-                      <label for="reserve_hotel" id="contact-first-name"></label>
-                      <input class="form-input" id="reserve_hotel" type="text" name="hotel" data-constraints="@Required" readonly role="button" style="display: none;" />
-                      <select id="hotel-options" onchange="updateHotelName()">
-                        <option value="">Selecciona un hotel...</option>
-                        {% for hotel in hoteles %}
-                          <option value="{{ hotel['id_hotel'] }}">{{ hotel['nombre'] }}</option>
-                        {% endfor %}
-                      </select>
-                    </div>
-                  </div>
-=======
     
           <table style="width: 200px;">
             <form class="rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{url_for('disponibilidad')}}" >
@@ -36,7 +16,6 @@
                       <option id="{{ i['id_hotel'] }}" value"{{ i['id_hotel'] }}">{{ i['nombre'] }}</option>
                     {% endfor %}
                   </select>
->>>>>>> Fede
                 </div>
               </div>
                 </div>
@@ -60,10 +39,6 @@
                 </div>
               </div>
             </form>
-<<<<<<< HEAD
-          </table>
-        </div>
-=======
               {% if error %}
               <p class="msj_error">{{ error }}</p>
           {% elif mensaje %}
@@ -71,7 +46,6 @@
           {% endif %}
           </table>
   
->>>>>>> Fede
         <section class="section section-md bg-white text-center text-sm-left">
           <div class="shell-wide">
             <div class="range range-10 range-middle">
@@ -116,9 +90,6 @@
             </div>
           </div>
         </section>
-<<<<<<< HEAD
-        
-=======
         <script>
           document.querySelector('#submitForm').addEventListener('click', (event) => {
             const form = document.querySelector('form');
@@ -151,5 +122,4 @@
          
         });
         </script>
->>>>>>> Fede
 {%endblock content%}
