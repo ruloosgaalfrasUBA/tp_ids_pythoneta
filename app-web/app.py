@@ -128,11 +128,8 @@ def cancelar_reserva():
         return render_template("reservas.html", error="Error en los datos para modificar.")
 
     try:
-        respuesta = requests.post(
-            API_URI + f"/reservas/cancelar-reserva/{numero_reserva}",
-            data={
-                "numero_reserva": numero_reserva,
-            },
+        respuesta = requests.delete(
+            API_URI + f"/reservas/{numero_reserva}",
         )
         resultado: dict = respuesta.json()
 

@@ -179,18 +179,18 @@ def crear_reserva():
         return jsonify({'error': str(e)}), 500
 
 
-@app.route('/api/v1/reservas/cancelar-reserva/<numero_reserva>', methods=['POST'])
-def cancelar_reserva(numero_reserva):
+@app.route('/api/v1/reservas/<id>', methods=['DELETE'])
+def cancelar_reserva(id):
     try:
-        reservas.cancelar_reserva(numero_reserva)
+        reservas.cancelar_reserva(id)
         return jsonify({'message': 'Reserva cancelada exitosamente'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/v1/reservas/<numero_reserva>', methods=['GET'])
-def consultar_reserva(numero_reserva):
+@app.route('/api/v1/reservas/<id>', methods=['GET'])
+def consultar_reserva(id):
     try:
-        result = reservas.consultar_reserva(numero_reserva)
+        result = reservas.consultar_reserva(id)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     if len(result) == 0:
