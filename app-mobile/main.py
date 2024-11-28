@@ -75,21 +75,22 @@ class Servicios(BoxLayout, Screen):
 
         self.titulo = Label(
             text="Servicios Disponibles",
-            font_size=20,
+            font_size=35,
             size_hint=(1, 1),
             color=(0, 0, 0, 1),
         )
         self.add_widget(self.titulo)
 
         for indice, item in enumerate(self.datos_todos_los_servicios):
-            fila = BoxLayout(orientation="horizontal", size_hint=(1, None), height=20)
+            fila = BoxLayout(orientation="horizontal", size_hint=(1, None), height=40)
 
             checkbox = CheckBox(size_hint_x=0.1, active=True if item.get("activo") else False)
 
-            label = Label(text=f"{item["nombre"]}", size_hint_x=0.9, halign="left", valign="middle", color=(0, 0, 0, 1))
+            label = Label(text=f"{item['nombre']}", size_hint_x=0.9, halign="left", valign="middle", color=(0, 0, 0, 1))
             label.bind(size=label.setter("text_size"))
 
             checkbox.bind(active=lambda checkbox, valor, indice_servicio=indice: self.click_en_checkbox(checkbox, valor, indice_servicio))
+
 
             fila.add_widget(checkbox)
             fila.add_widget(label)
@@ -98,14 +99,14 @@ class Servicios(BoxLayout, Screen):
         self.bloque = BoxLayout(orientation="vertical", size_hint=(1, 1))
         self.add_widget(self.bloque)
 
-        self.texto_error = Label(text="", font_size=12, size_hint=(1, None), color="red", height=50)
+        self.texto_error = Label(text="", font_size=25, size_hint=(1, None), color="red", height=50)
         self.bloque.add_widget(self.texto_error)
 
-        self.boton_volver_a_inicio = Button(text="Volver", size_hint=(1, None), height=50, background_color=(0.961, 0.961, 0.961, 0.5))
+        self.boton_volver_a_inicio = Button(text="Volver", size_hint=(1, None), height=100, background_color=(0.961, 0.961, 0.961, 0.5))
         self.boton_volver_a_inicio.bind(on_press=self.volver_a_inicio)
         self.bloque.add_widget(self.boton_volver_a_inicio)
 
-        self.boton_guardar_servicios = Button(text="Guardar", size_hint=(1, None), height=50, background_color=(0.6, 0.4, 0.8, 1))
+        self.boton_guardar_servicios = Button(text="Guardar", size_hint=(1, None), height=100, background_color=(0.6, 0.4, 0.8, 1))
         self.boton_guardar_servicios.bind(on_press=self.guardar_click)
         self.bloque.add_widget(self.boton_guardar_servicios)
 
@@ -176,7 +177,7 @@ class Inicio(BoxLayout, Screen):
             return None
 
     def consultar_click(self, instance):
-        if (len(self.input_dni.text) != 8) | (len(self.input_nro_reserva.text) < 3):
+        if (len(self.input_nro_reserva.text) < 3):
             self.texto_error.text = "Datos Inválidos"
         else:
             self.consultar_reserva()
@@ -187,27 +188,23 @@ class Inicio(BoxLayout, Screen):
         self.padding = 20
         self.spacing = 15
 
-        self.titulo = Label(text="Flask Seasons", font_size=26, size_hint=(1, 0.2), color=(0, 0, 0, 1))
+        self.titulo = Label(text="Flask Seasons", font_size=35, size_hint=(1, 0.2), color=(0, 0, 0, 1))
         self.add_widget(self.titulo)
 
-        self.texto_error = Label(text="", font_size=12, size_hint=(1, None), color="red", height=50)
+        self.texto_error = Label(text="", font_size=25, size_hint=(1, None), color="red", height=100)
         self.add_widget(self.texto_error)
 
-        self.texto_exito = Label(text="", font_size=12, size_hint=(1, None), color="green", height=50)
+        self.texto_exito = Label(text="", font_size=25, size_hint=(1, None), color="green", height=100)
         self.add_widget(self.texto_exito)
 
-        self.input_dni = TextInput(hint_text="Documento de identidad", size_hint=(1, None), height=50)
-        self.input_dni.text = "12312345"
-        self.add_widget(self.input_dni)
+        self.input_nro_reserva = TextInput(hint_text="Número de reserva", size_hint=(1, None), height=100)
 
-        self.input_nro_reserva = TextInput(hint_text="Número de reserva", size_hint=(1, None), height=50)
-        self.input_nro_reserva.text = "100"
         self.add_widget(self.input_nro_reserva)
 
         self.consultar_boton = Button(
             text="Consultar",
             size_hint=(1, None),
-            height=50,
+            height=100,
             background_color=(0.6, 0.4, 0.8, 1),
         )
         self.consultar_boton.bind(on_press=self.consultar_click)
@@ -218,7 +215,6 @@ class FlaskSeasonsApp(App):
 
     def configurar_ventana(self):
         Window.clearcolor = (1, 1, 1, 1)
-        Window.size = (400, 700)
 
     def configurar_screen_manager(self):
         sm = ScreenManager()
