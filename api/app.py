@@ -26,6 +26,21 @@ def get_all_hoteles():
     return jsonify(response), 200
 
 
+@app.route("/api/v1/hoteles/<int:id>", methods=["GET"])
+def get_by_id_hotel(id):
+    try:
+        result = hotel.hotel_by_id(id)
+        result = hotel.hotel_by_id(id)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    if len(result) == 0:
+        return jsonify({"error": "No se encontró el hotel"}), 404  # Not found
+
+    result = result[0]
+    return jsonify({"id_hotel": result[0], "nombre": result[1], "descripcion": result[2], "provincia": result[3], "estrellas": result[4]}), 200
+
+
 @app.route("/api/v1/hoteles/inicio$<inicio>/fin$<fin>", methods=["GET"])
 def get_all_hoteles_fecha_reserva(inicio, fin):
     try:
@@ -47,21 +62,6 @@ def get_all_hoteles_fecha_reserva(inicio, fin):
         response.append({"id_hotel": row[0], "nombre": row[1], "descripcion": row[2], "provincia": row[3], "estrellas": row[4]})
 
     return jsonify(response), 200
-
-
-@app.route("/api/v1/hoteles/<int:id_hotel>", methods=["GET"])
-def get_by_id_hotel(id_hotel):
-    try:
-        result = hotel.hotel_by_id(id_hotel)
-        result = hotel.hotel_by_id(id_hotel)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-    if len(result) == 0:
-        return jsonify({"error": "No se encontró el hotel"}), 404  # Not found
-
-    result = result[0]
-    return jsonify({"id_hotel": result[0], "nombre": result[1], "descripcion": result[2], "provincia": result[3], "estrellas": result[4]}), 200
 
 
 @app.route("/api/v1/hoteles/<provincia>", methods=["GET"])
@@ -100,7 +100,6 @@ def disponibilidad():
     id_hotel = request.args.get('id_hotel')
     inicio_reserva = request.args.get('inicio_reserva')
     fin_reserva = request.args.get('fin_reserva')
-    print(id_hotel,inicio_reserva,fin_reserva)
     
     if not all([id_hotel, inicio_reserva, fin_reserva]):
         return jsonify({'error': 'Faltan parámetros en la solicitud'}), 400
