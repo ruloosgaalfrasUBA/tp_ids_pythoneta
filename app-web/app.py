@@ -200,7 +200,7 @@ def servicios():
 @app.route("/servicios-contratados/reserva:<numero_reserva>")
 def servicios_contratados(numero_reserva):
     try:
-        response = requests.get(API_URI + f"/servicios-por-reserva/{numero_reserva}")
+        response = requests.get(API_URI + f"/reservas/{numero_reserva}/servicios")
         response.raise_for_status()
         servicios_contratados = response.json()
     except requests.exceptions.RequestException as e:

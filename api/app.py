@@ -142,11 +142,11 @@ def obtener_servicios():
     return jsonify(response), 200
 
 
-@app.route('/api/v1/servicios-por-reserva/<numero_reserva>', methods=['GET'])
-def obtener_servicios_por_reserva(numero_reserva):
+@app.route('/api/v1/reservas/<id>/servicios', methods=['GET'])
+def obtener_servicios_por_reserva(id):
     try:
-        numero_reserva = int(numero_reserva)
-        result = servicios.buscar_servicios_por_reserva(numero_reserva)
+        id = int(id)
+        result = servicios.buscar_servicios_por_reserva(id)
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
