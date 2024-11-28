@@ -23,7 +23,7 @@ class Servicios(BoxLayout, Screen):
         self.manager.current = "inicio"
 
     def contratar_servicio(self, id_servicio):
-        url = f"{API_URI}/servicios/contratar-servicio/{self.nro_reserva}/{id_servicio}"
+        url = f"{API_URI}/reservas/{self.nro_reserva}/servicios/{id_servicio}"
 
         try:
             requests.request("POST", url)
@@ -34,10 +34,10 @@ class Servicios(BoxLayout, Screen):
             self.texto_error.text = "Error al contratar servicios"
 
     def cancelar_servicio(self, id_servicio):
-        url = f"{API_URI}/servicios/cancelar-servicio/{self.nro_reserva}/{id_servicio}"
+        url = f"{API_URI}/reservas/{self.nro_reserva}/servicios/{id_servicio}"
 
         try:
-            requests.request("POST", url)
+            requests.request("DELETE", url)
             self.texto_exito = "Guardado exitosamente"
             self.hubo_cambios = True
         except:
@@ -121,7 +121,7 @@ class Inicio(BoxLayout, Screen):
         self.manager.current = "servicios"
 
     def conseguir_servicios_contratados(self):
-        url = f"{API_URI}/servicios-por-reserva/{self.input_nro_reserva.text}"
+        url = f"{API_URI}/reservas/{self.input_nro_reserva.text}/servicios"
 
         try:
             respuesta = requests.get(url)

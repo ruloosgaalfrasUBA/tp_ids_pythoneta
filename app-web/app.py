@@ -200,7 +200,7 @@ def servicios():
 @app.route("/servicios-contratados/reserva:<numero_reserva>")
 def servicios_contratados(numero_reserva):
     try:
-        response = requests.get(API_URI + f"/servicios-por-reserva/{numero_reserva}")
+        response = requests.get(API_URI + f"/reservas/{numero_reserva}/servicios")
         response.raise_for_status()
         servicios_contratados = response.json()
     except requests.exceptions.RequestException as e:
@@ -238,7 +238,7 @@ def cancelar_servicio():
     id_servicio = request.form.get("id_servicio")
 
     try:
-        response = requests.post(API_URI + f"/servicios/cancelar-servicio/{(numero_reserva)}/{id_servicio}")
+        response = requests.delete(API_URI + f"/reservas/{numero_reserva}/servicios/{id_servicio}")
         response.raise_for_status()
         return servicios_contratados(numero_reserva)
 
@@ -251,15 +251,13 @@ def cancelar_servicio():
 @app.route("/contratar-servicio/<numero_reserva>/<id_servicio>")
 def contratar_servicio(numero_reserva, id_servicio):
     try:
-        response = requests.post(API_URI + "/servicios/contratar-servicio/" + numero_reserva + "/" + id_servicio)
+        response = requests.post(API_URI + f"/reservas/{numero_reserva}/servicios/{id_servicio}")
         response.raise_for_status()
     except Exception as e:
         print(f"el error esta acaError: {e}")
 
     return servicios_contratados(numero_reserva)
 
-
-################################################################################
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
