@@ -238,7 +238,7 @@ def cancelar_servicio():
     id_servicio = request.form.get("id_servicio")
 
     try:
-        response = requests.post(API_URI + f"/servicios/cancelar-servicio/{(numero_reserva)}/{id_servicio}")
+        response = requests.delete(API_URI + f"/reservas/{numero_reserva}/servicios/{id_servicio}")
         response.raise_for_status()
         return servicios_contratados(numero_reserva)
 
@@ -258,8 +258,6 @@ def contratar_servicio(numero_reserva, id_servicio):
 
     return servicios_contratados(numero_reserva)
 
-
-################################################################################
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

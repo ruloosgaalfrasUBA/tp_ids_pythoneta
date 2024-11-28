@@ -165,10 +165,10 @@ def obtener_servicios_por_reserva(id):
     return jsonify(response), 200
 
 
-@app.route('/api/v1/servicios/cancelar-servicio/<numero_reserva>/<id_servicio>', methods=['POST'])
-def quitar_servicio_de_reserva(numero_reserva, id_servicio):
+@app.route('/api/v1/reservas/<id>/servicios/<id_servicio>', methods=['DELETE'])
+def quitar_servicio_de_reserva(id, id_servicio):
     try:
-        servicios.cancelar_servicio(numero_reserva, id_servicio)
+        servicios.cancelar_servicio(id, id_servicio)
         return jsonify({'message': 'Servicio cancelado exitosamente'}), 200
     except Exception as e:
         print(f"Error: {e}")
