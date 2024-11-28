@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
+from datetime import datetime
 
 import hotel
 import reservas
@@ -95,8 +96,6 @@ def get_by_estrellas(estrellas):
 
 @app.route('/api/v1/disponibilidad', methods=['GET'])
 def disponibilidad():
-    from datetime import datetime
-    
     id_hotel = request.args.get('id_hotel')
     inicio_reserva = request.args.get('inicio_reserva')
     fin_reserva = request.args.get('fin_reserva')
@@ -159,7 +158,7 @@ def obtener_servicios_por_reserva(id):
 
         except Exception as e:
             print(f"Error al buscar servicio por ID: {e}")
-            return jsonify({'error': str(e)}), 500
+            return jsonify({'error': str(e)}), 404
 
     return jsonify(response), 200
 
@@ -233,7 +232,7 @@ def consultar_reserva(id):
         "nombre_hotel": result[6],
         "provincia": result[7],
     }
-    return jsonify(response)
+    return jsonify(response), 200
 
 
 @app.route("/api/v1/reservas/<id>", methods=["PATCH"])

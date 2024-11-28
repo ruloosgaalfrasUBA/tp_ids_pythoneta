@@ -1,0 +1,312 @@
+openapi: 3.0.3
+info:
+  
+  title: Flask Seasons - API 1.0
+  
+  description: |-
+    Esta es la API para los aplicativos de Flask Seasons.
+    
+    Algunos links útiles:
+    - [Flask Seasons - repositorio en Github](https://github.com/ruloosgaalfrasUBA/tp_ids_pythoneta)
+    - [Código fuente de la API para nuestros aplicativos](https://github.com/ruloosgaalfrasUBA/tp_ids_pythoneta/blob/master/api/app.py)
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5001/api/v1
+  
+tags:
+
+  - name: reservas
+    description: Todo sobre las reservas
+  - name: servicios
+    description: Todo sobre los servicios
+  - name: hoteles
+    description: Todo sobre los hoteles
+    
+paths:
+  
+  /servicios:
+    get:
+      tags:
+        - servicios
+      summary: Obtener todos los servicios
+      description: Obtener todos los servicios ofrecidos por los hoteles.
+      responses:
+        '200':
+          description: Consulta realizada exitosamente
+        '500':
+          description: Error interno del servidor
+  
+  /reservas/{id}/servicios:
+    get:
+      tags:
+        - servicios
+      summary: Obtener servicios contratados
+      description: Obtener todos los servicios contratados asociados a una reserva utilizando el número de reserva.
+      parameters:
+        - name: id
+          in: path
+          description: número de reserva
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Consulta realizada exitosamente
+        '404':
+          description: Error al buscar servicio por id
+        '500':
+          description: Error interno del servidor
+  
+  /reservas/{id}/servicios/{id_servicio}:
+    post:
+      tags:
+        - servicios
+      summary: Contratar un servicio
+      description: Contratar un servicio utilizando el id del servicio para la reserva asociada al número de reserva.
+      parameters:
+        - name: id
+          in: path
+          description: número de reserva
+          required: true
+          schema:
+            type: integer
+        - name: id_servicio
+          in: path
+          description: id del servicio
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Servicio contratado exitosamente
+        '500':
+          description: Error interno del servidor
+    delete:
+      tags:
+        - servicios
+      summary: Cancelar un servicio
+      description: Cancelar un servicio utilizando el id del servicio para la reserva asociada al número de reserva.
+      parameters:
+        - name: id
+          in: path
+          description: número de reserva
+          required: true
+          schema:
+            type: integer
+        - name: id_servicio
+          in: path
+          description: id del servicio
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Servicio cancelado exitosamente
+        '500':
+          description: Error interno del servidor
+  
+  /reservas:
+    post:
+      tags:
+        - reservas
+      summary: Crear una reserva
+      description: Creación de una reserva enviando todos los datos necesarios.
+      requestBody:
+        description: Objeto creado por el usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reserva'
+      responses:
+        '201':
+          description: Reserva creada exitosamente
+        '400':
+          description: Falta un dato requerido
+        '500':
+          description: Error interno del servidor
+
+  /reservas/{id}:
+    get:
+      tags:
+        - reservas
+      summary: Obtener detalles de reserva
+      description: Obtener los detalles de una reserva a partir del número de reserva.
+      parameters:
+        - name: id
+          in: path
+          description: número de reserva
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Consulta realizada exitosamente
+        '404':
+          description: No se encontró la reserva
+        '500':
+          description: Error interno del servidor
+    delete:
+      tags:
+        - reservas
+      summary: Cancelar una reserva
+      description: Cancelar una reserva a partir del número de reserva.
+      parameters:
+        - name: id
+          in: path
+          description: número de reserva
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Reserva cancelada exitosamente
+        '500':
+          description: Error interno del servidor
+    patch:
+      tags:
+        - reservas
+      summary: Modificar una reserva
+      description: Modificar una reserva a partir del número de reserva.
+      parameters:
+        - name: id
+          in: path
+          description: número de reserva
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Reserva actualizada exitosamente
+        '500':
+          description: Error interno del servidor
+  /hoteles:
+    get:
+      tags:
+        - hoteles
+      summary: Obtener todos los hoteles
+      description: Obtener todos los hoteles.
+      responses:
+        '200':
+          description: Consulta realizada exitosamente
+        '500':
+          description: Error interno del servidor
+  /disponibilidad:
+    get:
+      tags:
+        - hoteles
+      summary: Obtener disponibilidad
+      description: Obtener la disponibilidad de un hotel.
+      requestBody:
+        description: Objeto creado por el usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Disponibilidad'      
+      responses:
+        '200':
+          description: No hay lugar/disponible
+        '400':
+          description: Faltan parámetros en la solicitud
+        '500':
+          description: Error interno del servidor
+  /hoteles/{inicio}/{fin}:
+    get:
+      tags:
+        - hoteles
+      summary: Obtener hoteles por fechas
+      description: Obtener todos los hoteles según las fechas.
+      parameters:
+        - name: inicio
+          in: path
+          description: fecha de inicio
+          required: true
+          schema:
+            type: integer
+        - name: fin
+          in: path
+          description: fecha de fin
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Consulta realizada exitosamente
+        '500':
+          description: Error interno del servidor
+  /hoteles/{provincia}:
+    get:
+      tags:
+        - hoteles
+      summary: Obtener hoteles por provincia
+      description: Obtener todos los hoteles según la provincia.
+      parameters:
+        - name: provincia
+          in: path
+          description: provincia
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Consulta realizada exitosamente
+        '500':
+          description: Error interno del servidor
+  /hoteles/{estrellas}:
+    get:
+      tags:
+        - hoteles
+      summary: Obtener hoteles por estrellas
+      description: Obtener todos los hoteles según las estrellas.
+      parameters:
+        - name: estrellas
+          in: path
+          description: estrellas
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Consulta realizada exitosamente
+        '500':
+          description: Error interno del servidor      
+
+components:
+  schemas:
+    Reserva:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: Juan
+        apellido:
+          type: string
+          example: Perez
+        dni:
+          type: integer
+          example: 40987362
+        inicio_reserva:
+          type: string
+          format: date
+          example: 2024-12-02
+        fin_reserva:
+          type: string
+          format: date
+          example: 2024-12-07
+        id_hotel:
+          type: integer
+          example: 2
+    Disponibilidad:
+      type: object
+      properties:
+        id_hotel:
+          type: integer
+          example: 2
+        inicio_reserva:
+          type: string
+          format: date
+          example: 2024-12-02
+        fin_reserva:
+          type: string
+          format: date
+          example: 2024-12-07
