@@ -1,3 +1,6 @@
 .venv
 __pycache__/
 .prettierrc
+.buildozer
+bin
+buildozer.spec
