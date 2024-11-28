@@ -143,9 +143,8 @@ class Inicio(BoxLayout, Screen):
 
     def consultar_reserva(self):
         nro_reserva = self.input_nro_reserva.text
-        dni = self.input_dni.text
 
-        url = f"{API_URI}/reservas/consultar-reserva/{nro_reserva}/{dni}"
+        url = f"{API_URI}/reservas/{nro_reserva}"
 
         try:
             respuesta = requests.get(url)
