@@ -175,10 +175,10 @@ def quitar_servicio_de_reserva(id, id_servicio):
         return jsonify({'error': str(e)}), 500
 
 
-@app.route('/api/v1/servicios/contratar-servicio/<numero_reserva>/<id_servicio>', methods=['POST'])
-def agregar_servicio_a_reserva(numero_reserva, id_servicio):
+@app.route('/api/v1/reservas/<id>/servicios/<id_servicio>', methods=['POST'])
+def agregar_servicio_a_reserva(id, id_servicio):
     try:
-        servicios.contratar_servicio(numero_reserva, id_servicio)
+        servicios.contratar_servicio(id, id_servicio)
         return jsonify({'message': 'Servicio contratado exitosamente'}), 200
     except Exception as e:
         print(f"Error: {e}")

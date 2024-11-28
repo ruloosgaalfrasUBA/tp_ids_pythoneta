@@ -23,7 +23,7 @@ class Servicios(BoxLayout, Screen):
         self.manager.current = "inicio"
 
     def contratar_servicio(self, id_servicio):
-        url = f"{API_URI}/servicios/contratar-servicio/{self.nro_reserva}/{id_servicio}"
+        url = f"{API_URI}/reservas/{self.nro_reserva}/servicios/{id_servicio}"
 
         try:
             requests.request("POST", url)

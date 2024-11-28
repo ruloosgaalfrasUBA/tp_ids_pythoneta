@@ -251,7 +251,7 @@ def cancelar_servicio():
 @app.route("/contratar-servicio/<numero_reserva>/<id_servicio>")
 def contratar_servicio(numero_reserva, id_servicio):
     try:
-        response = requests.post(API_URI + "/servicios/contratar-servicio/" + numero_reserva + "/" + id_servicio)
+        response = requests.post(API_URI + f"/reservas/{numero_reserva}/servicios/{id_servicio}")
         response.raise_for_status()
     except Exception as e:
         print(f"el error esta acaError: {e}")
